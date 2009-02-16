@@ -15,6 +15,7 @@ slm_client::slm_client(QWidget *parent) :
 void slm_client::initiateClient(QString clientName, QString clientIPAddress)
 {
     slmclientName = clientName;
+
     slmclientIPAddress = clientIPAddress;
     this->setWindowTitle(clientName+ " @ " + clientIPAddress);
 
