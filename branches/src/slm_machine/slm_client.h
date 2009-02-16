@@ -31,6 +31,7 @@ public:
     void readMessagefromBuddy(QString, QHostAddress);
     void setGuiKey(bool);
     bool getGuiKey();
+    void setEncryptionKey(QString);
 
 signals:
    void destroyClient(QString);
@@ -41,6 +42,7 @@ public slots:
 
 private:
     bool guiKey;
+    QString EncryptionKey;
     Ui::slm_clientWindow *m_ui;
 };
 

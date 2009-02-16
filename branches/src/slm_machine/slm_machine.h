@@ -6,8 +6,11 @@
 #include <QtGui/qevent.h>
 #include <QHostAddress>
 #include <QStringListModel>
+#include <QSystemTrayIcon>
+#include <QMenu>
 #include "slm_client.h"
 #include "ui_slm_machine.h"
+#include "ui_encryptionKeyDialog.h"
 #include "ui_addBuddy.h"
 #include "ui_aboutQT.h"
 #include "ui_aboutSLM.h"
@@ -29,6 +32,7 @@ public:
     QDialog *addBuddyScreenDialog;
     QDialog *aboutQt;
     QDialog *aboutSLM;
+    QDialog *encryptionKeyWindow;
     QStringListModel *buddyModel;
 
     QList<slm_client *> clientList;
@@ -52,12 +56,16 @@ public slots:
     void closeAboutQtDialog();
     void aboutSLMPressed();
     void closeAboutSLMDialog();
+    void encryptionKeyPressed();
+    void setEncryptionKey();
+    void cancelEncryptionKey();
 
 private:
     Ui::slm_machineClass *ui;
     Ui::addBuddyScreen *ui_addBuddyScreen;
     Ui::aboutQTDialog *ui_aboutQT;
     Ui::aboutSLMDialog *ui_aboutSLM;
+    Ui::encryptionKeyDialog * ui_encryption;
 
     bool IPAddressValidator(QString);
     void clientCreation(int);

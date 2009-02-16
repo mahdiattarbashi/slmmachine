@@ -30,6 +30,8 @@ slm_machine::slm_machine(QWidget *parent)
     connect(ui->buddyList, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(buddyPressed(QModelIndex)));
     connect(ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(aboutQTPressed()));
     connect(ui->actionAbout_SLM, SIGNAL(triggered()), this, SLOT(aboutSLMPressed()));
+    connect(ui->actionEncryption_Key, SIGNAL(triggered()), this, SLOT(encryptionKeyPressed()));
+
 }
 
 void slm_machine::addBuddyPressed()
@@ -128,6 +130,7 @@ void slm_machine::clientCreation(int buddyIndex)
     if(!activeClientAliasList.contains(buddies->AliasBuddyList[buddyIndex],Qt::CaseInsensitive))
     {
         newClient = new slm_client();
+        newClient->setEncryptionKey(buddies->getKey());
         clientList << newClient;
         clientList.last()->show();
         clientList.last()->setGuiKey(1); // set the gui key to one to indicate it is opened
@@ -183,6 +186,37 @@ bool slm_machine::IPAddressValidator(QString IPtobeValidated)
     return return_value;
 }
 
+void slm_machine::encryptionKeyPressed()
+{
+    encryptionKeyWindow = new QDialog();
+    ui_encryption = new Ui::encryptionKeyDialog();
+    ui_encryption->setupUi(encryptionKeyWindow);
+    encryptionKeyWindow->setWindowTitle("Enter Encryption Key");
+
+    connect(ui_encryption->encryptionKeyButtons, SIGNAL(accepted()),this, SLOT(setEncryptionKey()));
+    connect(ui_encryption->encryptionKeyButtons, SIGNAL(rejected()), this, SLOT(cancelEncryptionKey()));
+
+    ui_encryption->encryptionKeyLine->setText(buddies->getKey());
+
+    encryptionKeyWindow->show();
+}
+
+void slm_machine::setEncryptionKey()
+{
+    if(ui_encryption->encryptionKeyLine->text().isEmpty())
+    {
+        QMessageBox::warning(this,QString("Empty Encryption Field!"),QString("Encryption Key Field cannot be empty!"));
+    }
+    else
+    {
+        buddies->setKey(ui_encryption->encryptionKeyLine->text());
+    }
+}
+
+void slm_machine::cancelEncryptionKey()
+{
+    encryptionKeyWindow->close();
+}
 
 void slm_machine::aboutQTPressed()
 {
