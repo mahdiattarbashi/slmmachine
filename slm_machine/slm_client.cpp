@@ -52,10 +52,10 @@ void slm_client::sendMessagetoBuddy()
 
     qDebug() << "Unencrypted Text :: " << outGoingTextString;
 
-    shownMessage =  currentTime.currentDateTime().toString() + " From " + this->slmclientName + ": " + "\n" + "\n" + outGoingTextString + "\n";
+    shownMessage =  currentTime.currentDateTime().toString() + " Outgoing Message:" + "\n" + "\n" + outGoingTextString + "\n";
     m_ui->slm_clientIncomingTextArea->append(shownMessage);
 
-    outGoingTextString = encryptionObject.dencrypt(outGoingTextString,"qweertesdjhfgjhsdfsmg2008xbnxcvbnxvashgdahgdhafdajhfdvsbdcvgsdvf");
+    outGoingTextString = encryptionObject.dencrypt(outGoingTextString, this->EncryptionKey);
 
     qDebug() << "Ecrypted Text" << "::" << outGoingTextString;
 
@@ -72,7 +72,7 @@ void slm_client::readMessagefromBuddy(QString incomingMessage, QHostAddress peer
     QString shownMessage;
 
     //decrypt the message
-    incomingMessage = encryptionObject.dencrypt(incomingMessage, "qweertesdjhfgjhsdfsmg2008xbnxcvbnxvashgdahgdhafdajhfdvsbdcvgsdvf");
+    incomingMessage = encryptionObject.dencrypt(incomingMessage, this->EncryptionKey);
 
     qDebug() << "Decrypted Text :: " << incomingMessage;
 
@@ -87,7 +87,7 @@ void slm_client::readMessagefromBuddy(QString incomingMessage, QHostAddress peer
         this->activateWindow();// if it is already opened, activate it before writing the message
     }
     //show the message to the user by adding current data and time
-    shownMessage =  currentTime.currentDateTime().toString() + " From " + peerAddress.toString() + ": " + "\n" + "\n" + incomingMessage + "\n";
+    shownMessage =  currentTime.currentDateTime().toString() + " Incoming Message From " + peerAddress.toString() + ": " + "\n" + "\n" + incomingMessage + "\n";
     m_ui->slm_clientIncomingTextArea->append(shownMessage);
 }
 
@@ -107,6 +107,11 @@ void slm_client::setGuiKey(bool key)
 bool slm_client::getGuiKey()
 {
     return guiKey;
+}
+
+void slm_client::setEncryptionKey(QString Key)
+{
+    EncryptionKey = Key;
 }
 
 slm_client::~slm_client()

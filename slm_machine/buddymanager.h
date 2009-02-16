@@ -2,11 +2,7 @@
 #define BUDDYMANAGER_H
 
 #include <QObject>
-//#include <QHash>
-//#include <QFile>
-//#include <QFileInfo>
-//#include <QTextStream>
- #include <QSettings>
+#include <QSettings>
 #include <QStringList>
 
 class buddyManager : public QObject
@@ -17,11 +13,15 @@ public:
 
     void loadBuddiesAndIPs();
     void storeBuddies();
+    QString getKey();
+    void setKey(QString);
 
     QStringList AliasBuddyList;
     QStringList IPBuddyList;
 
     QSettings persistentBuddyData;
+private:
+    QString key;
 
 };
 

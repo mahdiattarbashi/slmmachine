@@ -57,13 +57,15 @@
      <x>0</x>
      <y>0</y>
      <width>224</width>
-     <height>25</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMenu">
     <property name="title">
      <string>Menu</string>
     </property>
+    <addaction name="actionEncryption_Key"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
@@ -89,6 +91,11 @@
   <action name="actionAbout_SLM">
    <property name="text">
     <string>About SLM</string>
+   </property>
+  </action>
+  <action name="actionEncryption_Key">
+   <property name="text">
+    <string>Encryption Key</string>
    </property>
   </action>
  </widget>

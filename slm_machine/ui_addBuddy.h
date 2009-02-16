@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading ui file 'addBuddy.ui'
 **
-** Created: Mon 16. Feb 08:43:38 2009
-**      by: Qt User Interface Compiler version 4.4.3
+** Created: Mon Feb 16 22:45:10 2009
+**      by: Qt User Interface Compiler version 4.5.0-rc1
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
 ********************************************************************************/
@@ -16,6 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
 #include <QtGui/QHBoxLayout>
+#include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
@@ -43,91 +44,91 @@ public:
 
     void setupUi(QDialog *addBuddyScreen)
     {
-    if (addBuddyScreen->objectName().isEmpty())
-        addBuddyScreen->setObjectName(QString::fromUtf8("addBuddyScreen"));
-    addBuddyScreen->setWindowModality(Qt::ApplicationModal);
-    addBuddyScreen->resize(248, 107);
-    QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    sizePolicy.setHorizontalStretch(0);
-    sizePolicy.setVerticalStretch(0);
-    sizePolicy.setHeightForWidth(addBuddyScreen->sizePolicy().hasHeightForWidth());
-    addBuddyScreen->setSizePolicy(sizePolicy);
-    QFont font;
-    font.setFamily(QString::fromUtf8("Sans Serif"));
-    addBuddyScreen->setFont(font);
-    verticalLayout = new QVBoxLayout(addBuddyScreen);
-    verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-    horizontalLayout_2 = new QHBoxLayout();
-    horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-    L_buddyAliasLabel = new QLabel(addBuddyScreen);
-    L_buddyAliasLabel->setObjectName(QString::fromUtf8("L_buddyAliasLabel"));
+        if (addBuddyScreen->objectName().isEmpty())
+            addBuddyScreen->setObjectName(QString::fromUtf8("addBuddyScreen"));
+        addBuddyScreen->setWindowModality(Qt::ApplicationModal);
+        addBuddyScreen->resize(248, 107);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(addBuddyScreen->sizePolicy().hasHeightForWidth());
+        addBuddyScreen->setSizePolicy(sizePolicy);
+        QFont font;
+        font.setFamily(QString::fromUtf8("Sans Serif"));
+        addBuddyScreen->setFont(font);
+        verticalLayout = new QVBoxLayout(addBuddyScreen);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        L_buddyAliasLabel = new QLabel(addBuddyScreen);
+        L_buddyAliasLabel->setObjectName(QString::fromUtf8("L_buddyAliasLabel"));
 
-    horizontalLayout_2->addWidget(L_buddyAliasLabel);
+        horizontalLayout_2->addWidget(L_buddyAliasLabel);
 
-    horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    horizontalLayout_2->addItem(horizontalSpacer_2);
+        horizontalLayout_2->addItem(horizontalSpacer_2);
 
-    L_buddyAliasLine = new QLineEdit(addBuddyScreen);
-    L_buddyAliasLine->setObjectName(QString::fromUtf8("L_buddyAliasLine"));
+        L_buddyAliasLine = new QLineEdit(addBuddyScreen);
+        L_buddyAliasLine->setObjectName(QString::fromUtf8("L_buddyAliasLine"));
 
-    horizontalLayout_2->addWidget(L_buddyAliasLine);
-
-
-    verticalLayout->addLayout(horizontalLayout_2);
-
-    horizontalLayout_3 = new QHBoxLayout();
-    horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-    L_buddyIPAddressLabel = new QLabel(addBuddyScreen);
-    L_buddyIPAddressLabel->setObjectName(QString::fromUtf8("L_buddyIPAddressLabel"));
-
-    horizontalLayout_3->addWidget(L_buddyIPAddressLabel);
-
-    horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-    horizontalLayout_3->addItem(horizontalSpacer_3);
-
-    L_buddyIPAddressLine = new QLineEdit(addBuddyScreen);
-    L_buddyIPAddressLine->setObjectName(QString::fromUtf8("L_buddyIPAddressLine"));
-
-    horizontalLayout_3->addWidget(L_buddyIPAddressLine);
+        horizontalLayout_2->addWidget(L_buddyAliasLine);
 
 
-    verticalLayout->addLayout(horizontalLayout_3);
+        verticalLayout->addLayout(horizontalLayout_2);
 
-    horizontalLayout = new QHBoxLayout();
-    horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-    horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
+        L_buddyIPAddressLabel = new QLabel(addBuddyScreen);
+        L_buddyIPAddressLabel->setObjectName(QString::fromUtf8("L_buddyIPAddressLabel"));
 
-    horizontalLayout->addItem(horizontalSpacer);
+        horizontalLayout_3->addWidget(L_buddyIPAddressLabel);
 
-    L_addBuddyButton = new QPushButton(addBuddyScreen);
-    L_addBuddyButton->setObjectName(QString::fromUtf8("L_addBuddyButton"));
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-    horizontalLayout->addWidget(L_addBuddyButton);
+        horizontalLayout_3->addItem(horizontalSpacer_3);
 
-    L_cancelAddBuddyButton = new QPushButton(addBuddyScreen);
-    L_cancelAddBuddyButton->setObjectName(QString::fromUtf8("L_cancelAddBuddyButton"));
+        L_buddyIPAddressLine = new QLineEdit(addBuddyScreen);
+        L_buddyIPAddressLine->setObjectName(QString::fromUtf8("L_buddyIPAddressLine"));
 
-    horizontalLayout->addWidget(L_cancelAddBuddyButton);
-
-
-    verticalLayout->addLayout(horizontalLayout);
+        horizontalLayout_3->addWidget(L_buddyIPAddressLine);
 
 
-    retranslateUi(addBuddyScreen);
+        verticalLayout->addLayout(horizontalLayout_3);
 
-    QMetaObject::connectSlotsByName(addBuddyScreen);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer);
+
+        L_addBuddyButton = new QPushButton(addBuddyScreen);
+        L_addBuddyButton->setObjectName(QString::fromUtf8("L_addBuddyButton"));
+
+        horizontalLayout->addWidget(L_addBuddyButton);
+
+        L_cancelAddBuddyButton = new QPushButton(addBuddyScreen);
+        L_cancelAddBuddyButton->setObjectName(QString::fromUtf8("L_cancelAddBuddyButton"));
+
+        horizontalLayout->addWidget(L_cancelAddBuddyButton);
+
+
+        verticalLayout->addLayout(horizontalLayout);
+
+
+        retranslateUi(addBuddyScreen);
+
+        QMetaObject::connectSlotsByName(addBuddyScreen);
     } // setupUi
 
     void retranslateUi(QDialog *addBuddyScreen)
     {
-    addBuddyScreen->setWindowTitle(QApplication::translate("addBuddyScreen", "Dialog", 0, QApplication::UnicodeUTF8));
-    L_buddyAliasLabel->setText(QApplication::translate("addBuddyScreen", "Alias", 0, QApplication::UnicodeUTF8));
-    L_buddyIPAddressLabel->setText(QApplication::translate("addBuddyScreen", "IP Address", 0, QApplication::UnicodeUTF8));
-    L_addBuddyButton->setText(QApplication::translate("addBuddyScreen", "Add", 0, QApplication::UnicodeUTF8));
-    L_cancelAddBuddyButton->setText(QApplication::translate("addBuddyScreen", "Cancel", 0, QApplication::UnicodeUTF8));
-    Q_UNUSED(addBuddyScreen);
+        addBuddyScreen->setWindowTitle(QApplication::translate("addBuddyScreen", "Dialog", 0, QApplication::UnicodeUTF8));
+        L_buddyAliasLabel->setText(QApplication::translate("addBuddyScreen", "Alias", 0, QApplication::UnicodeUTF8));
+        L_buddyIPAddressLabel->setText(QApplication::translate("addBuddyScreen", "IP Address", 0, QApplication::UnicodeUTF8));
+        L_addBuddyButton->setText(QApplication::translate("addBuddyScreen", "Add", 0, QApplication::UnicodeUTF8));
+        L_cancelAddBuddyButton->setText(QApplication::translate("addBuddyScreen", "Cancel", 0, QApplication::UnicodeUTF8));
+        Q_UNUSED(addBuddyScreen);
     } // retranslateUi
 
 };

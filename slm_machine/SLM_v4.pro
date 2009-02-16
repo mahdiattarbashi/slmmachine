@@ -21,4 +21,5 @@ FORMS += slm_machine.ui \
     addBuddy.ui \
     slm_client.ui \
     aboutQT.ui \
-    aboutSLM.ui
+    aboutSLM.ui \
+    encryptionKeyDialog.ui
