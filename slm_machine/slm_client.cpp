@@ -33,10 +33,10 @@ void slm_client::displayError(QAbstractSocket::SocketError socketError)
          case QAbstractSocket::RemoteHostClosedError:
                 break;
          case QAbstractSocket::HostNotFoundError:
-                QMessageBox::information(this, tr("SLM"),tr("The host was not found. Please check the host name and port settings."));
+                QMessageBox::information(this, tr("SLM"),tr("The host was not found. Please check the host name."));
                 break;
          case QAbstractSocket::ConnectionRefusedError:
-                QMessageBox::information(this, tr("SLM"), tr("The connection was refused by the peer. Make sure the fortune server is running, and check that the host name and port settings are correct."));
+                QMessageBox::information(this, tr("SLM"), tr("The connection was refused by the peer. Make sure the other client is running, and check that the host name is correct."));
                 break;
          default:
                 QMessageBox::information(this, tr("SLM"), tr("The following error occurred: %1.").arg(outgoingSocket->errorString()));
