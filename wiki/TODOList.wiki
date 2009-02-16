@@ -18,4 +18,4 @@
  # File Transfer Support will be added
  # Buddy Icon support will be added
  # Emotion support will be added
- # ContexMenu will be implemented for user list
+ # Contex Menu will be implemented for user list
