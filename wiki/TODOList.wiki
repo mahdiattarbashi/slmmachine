@@ -1,0 +1,21 @@
+#summary TO DO List of the SMG LAN Messenger
+#labels Featured
+
+= Introduction =
+TO DO for the Beta Relase
+-------------------------
+1- System Tray Support will be added
+2- Encryption Key will be made a configuration Item
+3- Application Icon will be created
+4- More intelligent IP validation code will be written with QRegExp
+5- Application fonts will be review and changed if necessary
+6- Application setups will be created for Ubuntu and Windows XP
+7- A button will be added to the client window for cleaning the chat window
+8- Encryption algorithm will be changed to blowfish using qt extension library
+9- Code will be commented for better understanding between developers
+10- Documentation will be prepared in google docs.
+11- Project svn folder will be re-arranged and header files will be changed accordingly
+12- Debug Codes will be eliminated using a global macro.
+13- File Transfer Support will be added
+14- Buddy Icon support will be added
+15- Emotion support will be added
