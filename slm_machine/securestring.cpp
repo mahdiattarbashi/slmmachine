@@ -34,18 +34,18 @@ QString securestring::dencrypt(QString data, QString encryptionKey)
 
 QByteArray securestring::eliminateSpecialTurkishCharacters(QByteArray turkishString)
 {
-    turkishString.replace("Ä±","i");
-    turkishString.replace("Ä°","I");
-    turkishString.replace("Ã¶","o");
-    turkishString.replace("Ã–","O");
-    turkishString.replace("ÄŸ","g");
-    turkishString.replace("Äž","G");
-    turkishString.replace("ÅŸ","s");
-    turkishString.replace("Åž","S");
-    turkishString.replace("Ã¼","u");
-    turkishString.replace("Ãœ","U");
-    turkishString.replace("Ã§","c");
-    turkishString.replace("Ã‡","C");
+    turkishString.replace("ý","i");
+    turkishString.replace("Ý","I");
+    turkishString.replace("ö","o");
+    turkishString.replace("Ö","O");
+    turkishString.replace("ð","g");
+    turkishString.replace("Ð","G");
+    turkishString.replace("þ","s");
+    turkishString.replace("Þ","S");
+    turkishString.replace("ü","u");
+    turkishString.replace("Ü","U");
+    turkishString.replace("ç","c");
+    turkishString.replace("Ç","C");
 
     return turkishString;
 }
