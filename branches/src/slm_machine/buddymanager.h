@@ -21,13 +21,6 @@ public:
     QStringList AliasBuddyList;
     QStringList IPBuddyList;
 
-    //QFile AliasBuddyListFile;
-    //QFile IPBuddyListFile;
-
-    //QTextStream AliasBuddyListFileTextStream;
-    //QTextStream IPBuddyListFileTextStream;
-
-
     QSettings persistentBuddyData;
 
 };
