@@ -20,7 +20,5 @@ HEADERS += slm_machine.h \
 FORMS += slm_machine.ui \
     addBuddy.ui \
     slm_client.ui \
-    aboutQT.ui \
-    aboutSLM.ui \
     encryptionKeyDialog.ui
 RESOURCES += resources/slm_resources.qrc

@@ -220,40 +220,15 @@ void slm_machine::cancelEncryptionKey()
 
 void slm_machine::aboutQTPressed()
 {
-    aboutQt = new QDialog();
-    ui_aboutQT = new Ui::aboutQTDialog();
-    ui_aboutQT->setupUi(aboutQt);
-    aboutQt->setWindowTitle(":: About QT ::");
-    aboutQt->setFixedSize(350,350);
-
-    connect(ui_aboutQT->aboutQT_OKButton, SIGNAL(clicked()), this, SLOT(closeAboutQtDialog()));
-
-    aboutQt->show();
+    QMessageBox::aboutQt(this, QString(":: SMG LAN Messenger ::"));
 }
 
 void slm_machine::aboutSLMPressed()
 {
-    aboutSLM = new QDialog();
-    ui_aboutSLM = new Ui::aboutSLMDialog();
-    ui_aboutSLM->setupUi(aboutSLM);
-    aboutSLM->setWindowTitle(":: About SLM ::");
-    aboutSLM->setFixedSize(400,380);
-
-    connect(ui_aboutSLM->aboutSLM_OKButton, SIGNAL(clicked()), this, SLOT(closeAboutSLMDialog()));
-
-    aboutSLM->show();
+    QString AboutSLM = "SMG LAN MESSENGER\n\nSLM stands for SMG LAN Messenger developed for hobby purposes only.\n\nThis program is free software; you can redistribute it and-or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nDevelopers\nAhmet KURUKOSE (ahmetkurukose@yahoo.com)\nFatih AKSEL\n\nConsultants\nUmut DENIZ\nCengiz YILMAZ";
+    QMessageBox::about(this, QString(":: SMG LAN Messenger ::"), AboutSLM);
 }
 
-
-void slm_machine::closeAboutQtDialog()
-{
-    aboutQt->close();
-}
-
-void slm_machine::closeAboutSLMDialog()
-{
-    aboutSLM->close();
-}
 void slm_machine::closeEvent(QCloseEvent *closeEvent)
 {
     closeEvent->type(); //dummy line for preventing compiler warnings
