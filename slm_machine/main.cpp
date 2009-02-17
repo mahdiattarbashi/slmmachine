@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     //Style Sheet
-    QFile file(":/settings/slm_style.qss");
+    QFile file(":/settings/style");
     QString fileName = file.fileName();
     bool opened = file.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(file.readAll());
