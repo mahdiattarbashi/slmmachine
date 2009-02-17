@@ -2,4 +2,7 @@
     <qresource prefix="/icons" >
         <file alias="SLM_Logo" >icons/slmLogo.png</file>
     </qresource>
+    <qresource prefix="/settings" >
+        <file>slm_style.qss</file>
+    </qresource>
 </RCC>
