@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/icons" >
+        <file alias="SLM_Logo" >icons/slmLogo.png</file>
+    </qresource>
+</RCC>
