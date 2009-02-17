@@ -5,7 +5,7 @@
 ----
  # System Tray Support will be added
  # ~~Encryption Key will be made a configuration Item~~ * Completed *
- # Application Icon will be created
+ # ~~Application Icon will be created~~ * Completed *
  # More intelligent IP validation code will be written with QRegExp
  # Application fonts will be review and changed if necessary
  # Application setups will be created for Ubuntu and Windows XP
