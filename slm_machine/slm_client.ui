@@ -21,6 +21,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources/slm_resources.qrc">
+    <normaloff>:/icons/SLM_Logo</normaloff>:/icons/SLM_Logo</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -59,6 +63,8 @@
   <tabstop>slm_client_outgoingTextArea</tabstop>
   <tabstop>slm_clientIncomingTextArea</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="resources/slm_resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
