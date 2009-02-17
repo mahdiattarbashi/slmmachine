@@ -39,6 +39,7 @@ public:
     slm_client *newClient;
 
     void closeEvent( QCloseEvent *closeEvent );
+    void changeEvent(QEvent *event); // to catch minimize event and send the application to the Tray
 
 public slots:
     void addBuddyPressed();
