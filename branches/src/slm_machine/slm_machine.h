@@ -8,6 +8,7 @@
 #include <QStringListModel>
 #include <QSystemTrayIcon>
 #include <QMenu>
+#include <QSystemTrayIcon>
 #include "slm_client.h"
 #include "ui_slm_machine.h"
 #include "ui_encryptionKeyDialog.h"
@@ -53,6 +54,7 @@ public slots:
     void encryptionKeyPressed();
     void setEncryptionKey();
     void cancelEncryptionKey();
+    void iconActivated(QSystemTrayIcon::ActivationReason);
 
 private:
     Ui::slm_machineClass *ui;
@@ -61,6 +63,15 @@ private:
 
     bool IPAddressValidator(QString);
     void clientCreation(int);
+
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
+
+    QAction *restoreAction;
+    QAction *quitAction;
+
+    void createTrayIcon();
+    void createActions();
 };
 
 #endif // SLM_MACHINE_H

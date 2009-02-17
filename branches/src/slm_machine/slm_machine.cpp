@@ -32,6 +32,16 @@ slm_machine::slm_machine(QWidget *parent)
     connect(ui->actionAbout_SLM, SIGNAL(triggered()), this, SLOT(aboutSLMPressed()));
     connect(ui->actionEncryption_Key, SIGNAL(triggered()), this, SLOT(encryptionKeyPressed()));
 
+    //Tray Icon
+    this->createActions();
+    this->createTrayIcon();
+
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+
+    trayIcon->setIcon(QIcon(":/icons/SLM_Logo"));
+
+    trayIcon->show();
+
 }
 
 void slm_machine::addBuddyPressed()
@@ -235,6 +245,39 @@ void slm_machine::closeEvent(QCloseEvent *closeEvent)
     this->closeApplication();
 }
 
+void slm_machine::createActions()
+{
+    restoreAction = new QAction(tr("&Restore"), this);
+    connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+
+    quitAction = new QAction(tr("&Quit"), this);
+    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+}
+
+void slm_machine::createTrayIcon()
+{
+    trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(quitAction);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setContextMenu(trayIconMenu);
+}
+
+void slm_machine::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason)
+    {
+        //case QSystemTrayIcon::Context:
+        //TODO
+        case QSystemTrayIcon::DoubleClick:
+        case QSystemTrayIcon::Trigger:
+        case QSystemTrayIcon::MiddleClick:
+        default:
+         break;
+     }
+}
 slm_machine::~slm_machine()
 {
     delete ui;

@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/icons" >
         <file alias="SLM_Logo" >icons/slmLogo.png</file>
+        <file alias="SLM_Alt_Logo" >icons/slmAlternativeLogo.png</file>
     </qresource>
     <qresource prefix="/settings" >
-        <file>slm_style.qss</file>
+        <file alias="style" >slm_style.qss</file>
     </qresource>
 </RCC>
