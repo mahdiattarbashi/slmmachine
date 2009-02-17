@@ -23,3 +23,4 @@ FORMS += slm_machine.ui \
     aboutQT.ui \
     aboutSLM.ui \
     encryptionKeyDialog.ui
+RESOURCES += resources/slm_resources.qrc
