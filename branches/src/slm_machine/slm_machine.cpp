@@ -44,6 +44,20 @@ slm_machine::slm_machine(QWidget *parent)
 
 }
 
+void slm_machine::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::WindowStateChange)
+     {
+         if (isMinimized())
+         {
+             event->ignore();
+             hide();
+             return;
+         }
+     }
+    QMainWindow::changeEvent(event);
+}
+
 void slm_machine::addBuddyPressed()
 {
     addBuddyScreenDialog = new QDialog();
@@ -269,15 +283,16 @@ void slm_machine::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason)
     {
-        //case QSystemTrayIcon::Context:
-        //TODO
         case QSystemTrayIcon::DoubleClick:
+                                            showNormal();
+                                            break;
         case QSystemTrayIcon::Trigger:
         case QSystemTrayIcon::MiddleClick:
         default:
          break;
      }
 }
+
 slm_machine::~slm_machine()
 {
     delete ui;
