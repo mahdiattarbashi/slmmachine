@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources/slm_resources.qrc">
+    <normaloff>:/icons/SLM_Logo</normaloff>:/icons/SLM_Logo</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLineEdit" name="encryptionKeyLine"/>
@@ -29,7 +33,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources/slm_resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>encryptionKeyButtons</sender>
