@@ -12,8 +12,6 @@
 #include "ui_slm_machine.h"
 #include "ui_encryptionKeyDialog.h"
 #include "ui_addBuddy.h"
-#include "ui_aboutQT.h"
-#include "ui_aboutSLM.h"
 #include "buddymanager.h"
 
 
@@ -30,8 +28,6 @@ public:
     slm_machine(QWidget *parent = 0);
     ~slm_machine();
     QDialog *addBuddyScreenDialog;
-    QDialog *aboutQt;
-    QDialog *aboutSLM;
     QDialog *encryptionKeyWindow;
     QStringListModel *buddyModel;
 
@@ -53,9 +49,7 @@ public slots:
     void buddyPressed(QModelIndex);
     void clearClientFromActiveList(QString);
     void aboutQTPressed();
-    void closeAboutQtDialog();
     void aboutSLMPressed();
-    void closeAboutSLMDialog();
     void encryptionKeyPressed();
     void setEncryptionKey();
     void cancelEncryptionKey();
@@ -63,8 +57,6 @@ public slots:
 private:
     Ui::slm_machineClass *ui;
     Ui::addBuddyScreen *ui_addBuddyScreen;
-    Ui::aboutQTDialog *ui_aboutQT;
-    Ui::aboutSLMDialog *ui_aboutSLM;
     Ui::encryptionKeyDialog * ui_encryption;
 
     bool IPAddressValidator(QString);
