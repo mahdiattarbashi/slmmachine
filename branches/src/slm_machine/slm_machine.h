@@ -56,6 +56,7 @@ public slots:
     void setEncryptionKey();
     void cancelEncryptionKey();
     void iconActivated(QSystemTrayIcon::ActivationReason);
+    void slotPlaceToTray();
 
 private:
     Ui::slm_machineClass *ui;
@@ -73,6 +74,9 @@ private:
 
     void createTrayIcon();
     void createActions();
+
+signals:
+    void signalPlaceToTray();
 };
 
 #endif // SLM_MACHINE_H
