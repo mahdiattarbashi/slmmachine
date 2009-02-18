@@ -103,10 +103,11 @@ void slm_client::readMessagefromBuddy(QString incomingMessage, QHostAddress peer
 
 void slm_client::closeEvent(QCloseEvent *event)
 {
-    event->type();
+    event->ignore();
     this->setGuiKey(0); // set the gui key to zero to indicate it is closed
     outgoingSocket->disconnectFromHost();
     emit destroyClient(slmclientName);
+    this->hide();
 }
 
 void slm_client::setGuiKey(bool key)
