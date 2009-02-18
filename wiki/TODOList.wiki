@@ -16,6 +16,9 @@
  # Project svn folder will be re-arranged and header files will be changed accordingly
  # Debug Codes will be eliminated using a global macro.
  # File Transfer Support will be added
+ 
+=TO DO for the RC Relase=
+
  # Buddy Icon support will be added
  # Emotion support will be added
  # Contex Menu will be implemented for user list
