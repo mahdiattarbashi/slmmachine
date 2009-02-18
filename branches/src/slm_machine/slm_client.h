@@ -39,6 +39,7 @@ signals:
 public slots:
    void sendMessagetoBuddy();
    void displayError(QAbstractSocket::SocketError socketError);
+   void clearTextArea();
 
 private:
     bool guiKey;

@@ -10,6 +10,7 @@ slm_client::slm_client(QWidget *parent) :
     connect(m_ui->slm_client_outgoingTextArea, SIGNAL(returnPressed()), this, SLOT(sendMessagetoBuddy()));
     this->setGuiKey(0);
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowMaximizeButtonHint);
+    connect(m_ui->clearButton,SIGNAL(clicked()),this,SLOT(clearTextArea()));
 }
 
 void slm_client::initiateClient(QString clientName, QString clientIPAddress)
@@ -25,8 +26,12 @@ void slm_client::initiateClient(QString clientName, QString clientIPAddress)
     //Socket Connection Check
     connect(outgoingSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
 }
-
-//Socket Connection Error Slot
+void slm_client::clearTextArea()
+{
+    m_ui->slm_clientIncomingTextArea->clear();
+    m_ui->slm_client_outgoingTextArea->setFocus();
+}
+    //Socket Connection Error Slot
 void slm_client::displayError(QAbstractSocket::SocketError socketError)
  {
      switch (socketError)
