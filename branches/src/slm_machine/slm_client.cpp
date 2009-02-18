@@ -32,15 +32,20 @@ void slm_client::displayError(QAbstractSocket::SocketError socketError)
      switch (socketError)
      {
          case QAbstractSocket::RemoteHostClosedError:
+                this->close();
                 break;
          case QAbstractSocket::HostNotFoundError:
                 QMessageBox::information(this, tr("SLM"),tr("The host was not found. Please check the host name."));
+                this->close();
                 break;
          case QAbstractSocket::ConnectionRefusedError:
                 QMessageBox::information(this, tr("SLM"), tr("The connection was refused by the peer. Make sure the other client is running, and check that the host name is correct."));
+                this->close();
                 break;
          default:
                 QMessageBox::information(this, tr("SLM"), tr("The following error occurred: %1.").arg(outgoingSocket->errorString()));
+                this->close();
+                break;
      }
  }
 void slm_client::sendMessagetoBuddy()
