@@ -37,7 +37,7 @@ slm_machine::slm_machine(QWidget *parent)
     this->createTrayIcon();
 
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-
+    connect(this, SIGNAL(signalPlaceToTray()),this, SLOT(slotPlaceToTray()),Qt::QueuedConnection);
     trayIcon->setIcon(QIcon(":/icons/SLM_Logo"));
 
     trayIcon->show();
@@ -50,8 +50,8 @@ void slm_machine::changeEvent(QEvent *event)
      {
          if (isMinimized())
          {
+             emit signalPlaceToTray();
              event->ignore();
-             hide();
              return;
          }
      }
@@ -70,6 +70,10 @@ void slm_machine::addBuddyPressed()
     addBuddyScreenDialog->show();
 }
 
+void slm_machine::slotPlaceToTray()
+{
+     this->hide();
+}
 void slm_machine::L_addBuddyButtonPressed()
 {
 
@@ -285,6 +289,7 @@ void slm_machine::iconActivated(QSystemTrayIcon::ActivationReason reason)
     {
         case QSystemTrayIcon::DoubleClick:
                                             showNormal();
+                                            this->activateWindow();
                                             break;
         case QSystemTrayIcon::Trigger:
         case QSystemTrayIcon::MiddleClick:
