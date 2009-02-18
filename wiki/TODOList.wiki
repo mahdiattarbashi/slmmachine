@@ -9,7 +9,7 @@
  # More intelligent IP validation code will be written with QRegExp
  # Application fonts will be review and changed if necessary
  # Application setups will be created for Ubuntu and Windows XP
- # A button will be added to the client window for cleaning the chat window
+ # ~~A button will be added to the client window for cleaning the chat window~~ * Completed *
  # Encryption algorithm will be changed to blowfish using qt extension library
  # Code will be commented for better understanding between developers
  # Documentation will be prepared in google docs.
