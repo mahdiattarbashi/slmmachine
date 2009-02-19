@@ -8,7 +8,8 @@
  # ~~Application Icon will be created~~ * Completed *
  # More intelligent IP validation code will be written with QRegExp
  # Application fonts will be review and changed if necessary
- # Application setups will be created for Ubuntu and Windows XP
+ # ~~Application setup will be created for Windows XP~~ * Completed *
+ # Application setup will be created for Ubuntu
  # ~~A button will be added to the client window for cleaning the chat window~~ * Completed *
  # Encryption algorithm will be changed to blowfish using qt extension library
  # Code will be commented for better understanding between developers
