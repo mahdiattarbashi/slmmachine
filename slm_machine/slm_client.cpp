@@ -37,6 +37,7 @@ void slm_client::displayError(QAbstractSocket::SocketError socketError)
      switch (socketError)
      {
          case QAbstractSocket::RemoteHostClosedError:
+                QMessageBox::warning(this,tr("SLM"),tr("Client closed the application"));
                 this->close();
                 break;
          case QAbstractSocket::HostNotFoundError:
