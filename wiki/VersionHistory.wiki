@@ -1,0 +1,10 @@
+#Version history and changes in SLM Machine.
+
+= SLM Machine Version History =
+
+----
+
+*Pre-Alpha* 
+ * Encrypted messaging implemented.
+
+----
