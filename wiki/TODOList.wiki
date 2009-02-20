@@ -23,3 +23,4 @@
  # Buddy Icon support will be added
  # Emotion support will be added
  # Contex Menu will be implemented for user list
+  * Check Buddy's offline/online status manually (Eg: rigth click check status)
