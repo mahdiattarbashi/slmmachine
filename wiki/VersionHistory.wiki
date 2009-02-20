@@ -1,4 +1,5 @@
-#Version history and changes in SLM Machine.
+#summary Version history and changes in SLM Machine.
+#labels Featured,Phase-Implementation
 
 = SLM Machine Version History =
 
