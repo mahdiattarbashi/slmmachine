@@ -11,6 +11,7 @@ slm_client::slm_client(QWidget *parent) :
     this->setGuiKey(0);
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowMaximizeButtonHint);
     connect(m_ui->clearButton,SIGNAL(clicked()),this,SLOT(clearTextArea()));
+    connect(m_ui->sendFileButton,SIGNAL(clicked()),this,SLOT(sendFileToBuddy()));
 }
 
 void slm_client::initiateClient(QString clientName, QString clientIPAddress)
@@ -126,6 +127,21 @@ void slm_client::setEncryptionKey(QString Key)
     EncryptionKey = Key;
 }
 
+void slm_client::sendFileToBuddy()
+{
+	//TODO
+	// function will be implemented. Following Code is only for test purposes and will be discarded after real implementation.
+    crypto.startEnc("C:/slmLogo.png","C:/denemeEncryted.png");
+    QTimer::singleShot(10000,this,SLOT(startDecoding()));
+}
+
+//TODO
+//Following Code is only for test purposes and will be discarded after real implementation.
+void slm_client::startDecoding()
+{
+    crypto.startDec("C:/denemeEncryted.png","C:/deneme2.png");
+}
+//
 slm_client::~slm_client()
 {
     delete m_ui;

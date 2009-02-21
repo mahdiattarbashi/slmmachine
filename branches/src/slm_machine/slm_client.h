@@ -7,6 +7,8 @@
 #include <QHostAddress>
 #include "ui_slm_client.h"
 #include "securestring.h"
+#include "fileCrypto/filecrypter.h"
+#include <QTimer>
 
 namespace Ui {
     class slm_client;
@@ -25,6 +27,7 @@ public:
     QString outGoingTextString;
     QByteArray outGoingTextArray;
     securestring encryptionObject;
+    fileCrypter crypto;
 
     void initiateClient(QString, QString);
     void closeEvent(QCloseEvent *event);
@@ -40,6 +43,12 @@ public slots:
    void sendMessagetoBuddy();
    void displayError(QAbstractSocket::SocketError socketError);
    void clearTextArea();
+   
+   //TODO
+   //Following Code is only for test purposes and will be discarded after real implementation.
+   void sendFileToBuddy();
+   void startDecoding();
+   //
 
 private:
     bool guiKey;
