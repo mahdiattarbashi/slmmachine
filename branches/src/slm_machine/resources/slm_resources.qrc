@@ -3,6 +3,7 @@
         <file alias="SLM_Logo" >icons/slmLogo.png</file>
         <file alias="SLM_Alt_Logo" >icons/slmAlternativeLogo.png</file>
         <file alias="cleearIcon" >icons/clearIcon.png</file>
+        <file alias="sendFile" >icons/senFile.png</file>
     </qresource>
     <qresource prefix="/settings" >
         <file alias="style" >slm_style.qss</file>
