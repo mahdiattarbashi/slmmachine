@@ -5,10 +5,13 @@
 #include <QTcpSocket>
 #include <QDateTime>
 #include <QHostAddress>
+#include <QTimer>
+#include <QCloseEvent>
+#include <QMessageBox>
 #include "ui_slm_client.h"
 #include "securestring.h"
 #include "fileCrypto/filecrypter.h"
-#include <QTimer>
+#include "dosyagondericis.h"
 
 namespace Ui {
     class slm_client;
@@ -54,6 +57,7 @@ private:
     bool guiKey;
     QString EncryptionKey;
     Ui::slm_clientWindow *m_ui;
+    DosyaGondericis *yyy;
 };
 
 #endif // SLM_CLIENT_H
