@@ -1,7 +1,7 @@
 #include <QtGui/QApplication>
-#include "slm_machine.h"
 #include <qtextcodec.h>
 #include <QFile>
+#include "slm_machine.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,13 +13,17 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf8"));
 
     QApplication a(argc, argv);
-    //Style Sheet
-    QFile file(":/settings/style");
-    QString fileName = file.fileName();
-    bool opened = file.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(file.readAll());
-    a.setStyleSheet(styleSheet);
-
+    
+    //TODO
+    //Write Style Sheet Code
+    
+    // Style Sheet
+    // QFile file(":/settings/style");
+    // QString fileName = file.fileName();
+    // bool opened = file.open(QFile::ReadOnly);
+    // QString styleSheet = QLatin1String(file.readAll());
+    // a.setStyleSheet(styleSheet);
+ 
     slm_machine w;
     w.setWindowFlags(w.windowFlags() & ~Qt::WindowMaximizeButtonHint); //disable maximize button
     w.show();

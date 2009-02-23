@@ -1,8 +1,5 @@
 #include "slm_machine.h"
 #include "slm_server.h"
-#include <QDebug>
-#include <QMessageBox>
-
 
 slm_machine::slm_machine(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::slm_machineClass)
@@ -19,9 +16,18 @@ slm_machine::slm_machine(QWidget *parent)
     ui->buddyList->setModel(buddyModel);
     ui->buddyList->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    //Server Management
+    //Message Server Management
     slm_server *ahmet = slm_server::getInstance();
     connect(ahmet, SIGNAL(sendtoUI(QByteArray,QHostAddress)),this,SLOT(messageHandler(QByteArray,QHostAddress)));
+
+    //File Server Management
+    //TODO Following Code will be updated
+    xxx = new DosyaSunucusu;
+    connect(xxx,SIGNAL(yeniDosyaGeldi(QString,QString)),this,SLOT(incomingFileSlot(QString,QString)),Qt::QueuedConnection);
+    connect(xxx,SIGNAL(GonderimTamamlandi()),this,SLOT(incomingFileTransferCompleted()),Qt::QueuedConnection);
+
+    xxx->start();
+
 
     //UI connections
     connect(ui->addBuddyButton, SIGNAL(clicked()),this, SLOT(addBuddyPressed()));
@@ -43,7 +49,14 @@ slm_machine::slm_machine(QWidget *parent)
     trayIcon->show();
 
 }
-
+void slm_machine::incomingFileSlot(QString fileName, QString infoString)
+{
+    QMessageBox::warning(this,QString("SLM File Transfer"),QString("Incoming file: %1 (%2)").arg(fileName).arg(infoString));
+}
+void slm_machine::incomingFileTransferCompleted()
+{
+    QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Completed"));
+}
 void slm_machine::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::WindowStateChange)

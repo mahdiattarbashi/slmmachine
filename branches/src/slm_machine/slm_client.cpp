@@ -1,6 +1,4 @@
 #include "slm_client.h"
-#include <QCloseEvent>
-#include <QMessageBox>
 
 slm_client::slm_client(QWidget *parent) :
     QMainWindow(parent),
@@ -131,8 +129,12 @@ void slm_client::sendFileToBuddy()
 {
 	//TODO
 	// function will be implemented. Following Code is only for test purposes and will be discarded after real implementation.
-    crypto.startEnc("C:/slmLogo.png","C:/denemeEncryted.png");
-    QTimer::singleShot(10000,this,SLOT(startDecoding()));
+    
+    //crypto.startEnc("C:/slmLogo.png","C:/denemeEncryted.png");
+    //QTimer::singleShot(10000,this,SLOT(startDecoding()));
+    
+    yyy=new DosyaGondericis();
+    yyy->start();
 }
 
 //TODO

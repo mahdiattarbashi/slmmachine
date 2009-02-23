@@ -11,14 +11,18 @@ SOURCES += main.cpp \
     buddymanager.cpp \
     slm_client.cpp \
     securestring.cpp \
-    fileCrypto/filecrypter.cpp
+    fileCrypto/filecrypter.cpp \
+    dosyasunucusu.cpp \
+    dosyagondericis.cpp
 HEADERS += slm_machine.h \
     slm_server.h \
     slm_socketmanager.h \
     buddymanager.h \
     slm_client.h \
     securestring.h \
-    fileCrypto/filecrypter.h
+    fileCrypto/filecrypter.h \
+    dosyasunucusu.h \
+    dosyagondericis.h
 FORMS += slm_machine.ui \
     addBuddy.ui \
     slm_client.ui \

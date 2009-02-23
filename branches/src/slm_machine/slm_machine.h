@@ -9,11 +9,15 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QSystemTrayIcon>
+#include <QFileDialog>
+#include <QDebug>
+#include <QMessageBox>
 #include "slm_client.h"
 #include "ui_slm_machine.h"
 #include "ui_encryptionKeyDialog.h"
 #include "ui_addBuddy.h"
 #include "buddymanager.h"
+#include "dosyasunucusu.h"
 
 
 namespace Ui
@@ -57,6 +61,8 @@ public slots:
     void cancelEncryptionKey();
     void iconActivated(QSystemTrayIcon::ActivationReason);
     void slotPlaceToTray();
+    void incomingFileSlot(QString,QString);
+    void incomingFileTransferCompleted();
 
 private:
     Ui::slm_machineClass *ui;
@@ -71,7 +77,7 @@ private:
 
     QAction *restoreAction;
     QAction *quitAction;
-
+DosyaSunucusu *xxx;
     void createTrayIcon();
     void createActions();
 
