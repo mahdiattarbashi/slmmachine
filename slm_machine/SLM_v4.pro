@@ -12,8 +12,8 @@ SOURCES += main.cpp \
     slm_client.cpp \
     securestring.cpp \
     fileCrypto/filecrypter.cpp \
-    dosyasunucusu.cpp \
-    fileSenderThread/filesender.cpp
+    fileSenderThread/filesender.cpp \
+    fileServerThread/fileserver.cpp
 HEADERS += slm_machine.h \
     slm_server.h \
     slm_socketmanager.h \
@@ -21,8 +21,8 @@ HEADERS += slm_machine.h \
     slm_client.h \
     securestring.h \
     fileCrypto/filecrypter.h \
-    dosyasunucusu.h \
-    fileSenderThread/filesender.h
+    fileSenderThread/filesender.h \
+    fileServerThread/fileserver.h
 FORMS += slm_machine.ui \
     addBuddy.ui \
     slm_client.ui \
