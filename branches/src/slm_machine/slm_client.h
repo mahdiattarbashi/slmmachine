@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QCloseEvent>
 #include <QMessageBox>
+#include <QFileDialog>
 #include "ui_slm_client.h"
 #include "securestring.h"
 #include "fileCrypto/filecrypter.h"
@@ -31,6 +32,7 @@ public:
     QByteArray outGoingTextArray;
     securestring encryptionObject;
     fileCrypter crypto;
+    fileSender *fileSenderThread;
 
     void initiateClient(QString, QString);
     void closeEvent(QCloseEvent *event);
@@ -57,7 +59,7 @@ private:
     bool guiKey;
     QString EncryptionKey;
     Ui::slm_clientWindow *m_ui;
-    fileSender *yyy;
+
 };
 
 #endif // SLM_CLIENT_H

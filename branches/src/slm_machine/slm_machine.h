@@ -63,6 +63,8 @@ public slots:
     void slotPlaceToTray();
     void incomingFileSlot(QString,QString);
     void incomingFileTransferCompleted();
+    void transferIsCancelled();
+    void ongoingTransferExists();
 
 private:
     Ui::slm_machineClass *ui;

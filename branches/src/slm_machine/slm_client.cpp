@@ -127,14 +127,21 @@ void slm_client::setEncryptionKey(QString Key)
 
 void slm_client::sendFileToBuddy()
 {
-	//TODO
-	// function will be implemented. Following Code is only for test purposes and will be discarded after real implementation.
-    
     //crypto.startEnc("C:/slmLogo.png","C:/denemeEncryted.png");
     //QTimer::singleShot(10000,this,SLOT(startDecoding()));
-    
-    yyy=new fileSender();
-    yyy->start();
+    QString filepathString;
+    filepathString = QFileDialog::getOpenFileName(this, "Choose a file");
+    if(filepathString != "")
+    {
+        fileSenderThread =new fileSender();
+        fileSenderThread->filePathOfOutgoingFile = filepathString;
+        fileSenderThread->peerIP = this->slmclientIPAddress;
+        fileSenderThread->start();
+    }
+    else
+    {
+        QMessageBox::warning(this,QString("SLM File Transfer"),QString("Please Choose a File!"));
+    }
 }
 
 //TODO
