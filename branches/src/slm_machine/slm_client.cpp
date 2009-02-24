@@ -133,7 +133,7 @@ void slm_client::sendFileToBuddy()
     //crypto.startEnc("C:/slmLogo.png","C:/denemeEncryted.png");
     //QTimer::singleShot(10000,this,SLOT(startDecoding()));
     
-    yyy=new DosyaGondericis();
+    yyy=new fileSender();
     yyy->start();
 }
 
