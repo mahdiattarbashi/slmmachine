@@ -25,6 +25,8 @@ slm_machine::slm_machine(QWidget *parent)
     xxx = new fileServer();
     connect(xxx,SIGNAL(newDocumentArrived(QString,QString)),this,SLOT(incomingFileSlot(QString,QString)),Qt::QueuedConnection);
     connect(xxx,SIGNAL(transferCompleted()),this,SLOT(incomingFileTransferCompleted()),Qt::QueuedConnection);
+    connect(xxx,SIGNAL(transferCanceled()),this,SLOT(transferIsCancelled()),Qt::QueuedConnection);
+    connect(xxx,SIGNAL(ongoingTransfer()),this,SLOT(ongoingTransferExists()),Qt::QueuedConnection);
 
     xxx->start();
 
@@ -51,11 +53,33 @@ slm_machine::slm_machine(QWidget *parent)
 }
 void slm_machine::incomingFileSlot(QString fileName, QString infoString)
 {
-    QMessageBox::warning(this,QString("SLM File Transfer"),QString("Incoming file: %1 (%2)").arg(fileName).arg(infoString));
+    int gui_return_answer;
+    gui_return_answer = QMessageBox::question(this, "SLM File Transfer",
+                                     tr("Incoming file: %1 (%2). Do you want to save it?")
+                                     .arg(fileName).arg(infoString),
+                                     QMessageBox::Yes|QMessageBox::Default,
+                                     QMessageBox::No|QMessageBox::Escape);
+
+    xxx->answerSemaphore->acquire();
+
+    xxx->userAnswered = 1;
+    xxx->userAnswer = (gui_return_answer & QMessageBox::Yes);
+
+    xxx->answerSemaphore->release();
+}
+void slm_machine::ongoingTransferExists()
+{
+    QMessageBox::warning(this,QString("SLM File Transfer"),QString("There is an on-going Transfer!"));
+}
+void slm_machine::transferIsCancelled()
+{
+    QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Cancelled"));
+    newClient->fileSenderThread->quit();
 }
 void slm_machine::incomingFileTransferCompleted()
 {
     QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Completed"));
+    newClient->fileSenderThread->quit();
 }
 void slm_machine::changeEvent(QEvent *event)
 {

@@ -8,10 +8,12 @@ fileServer::fileServer(QObject *parent):QThread(parent)
 }
 void fileServer::initializeVariables()
 {
-
+    answerSemaphore = new QSemaphore(1);
     block_size = 0;
     IncomingFileSize = 0;
     serverState = 0;
+    userAnswer = 0;
+    userAnswered = 0;
     bytesWritten = 0;
     fileContents.clear();
 }
@@ -46,8 +48,7 @@ void fileServer::peerConnection()
     }
     else
     {
-        //TODO
-        //Inform GUI Thread that there is an ongoing transfer!
+        emit ongoingTransfer();
     }
 }
 void fileServer::readMessage()
@@ -90,12 +91,33 @@ void fileServer::readMessage()
         //Inform GUI Thread about incoming file
         emit newDocumentArrived(incomingFileName, fileDescriptorString);
 
+        //Wait For user input whether accepted or rejected!
         //TODO
-        //following code block will be updated!!!!!!!!!
-        getUserAnswer(1,"C:/deneme.bmp");
+        //Add Timeout condition
+
+        while(1)
+        {
+            answerSemaphore->acquire();
+            if(userAnswer == 1 && userAnswered==1)
+            {
+                getUserAnswer(1,("C:/" + incomingFileName));
+                break;
+            }
+            else if(userAnswer == 0 && userAnswered == 1)
+            {
+                QObject::disconnect(socket, SIGNAL(readyRead()), 0, 0);
+                QObject::connect(socket,SIGNAL(readyRead()),this, SLOT(readMessage()),Qt::DirectConnection );
+                initializeVariables();
+                emit transferCanceled();
+                break;
+            }
+            answerSemaphore->release();
+        }
+
     }
     else
     {
+        emit unknownMessageArrived();
     }
 
 }
@@ -120,11 +142,10 @@ void fileServer::getUserAnswer(bool cevap, QString DosyaYeri)
     }
     else
     {
-        //TODO
-        //Inform GUI transfer is canceled and Go back to listening State again
         QObject::disconnect(socket, SIGNAL(readyRead()), 0, 0);
         QObject::connect(socket,SIGNAL(readyRead()),this, SLOT(readMessage()),Qt::DirectConnection );
         initializeVariables();
+        emit transferCanceled();
     }
 }
 void fileServer::sendAcceptMessage()
@@ -157,7 +178,9 @@ void fileServer::finishDocument()
         newDocument->flush();
         newDocument->close();
         emit transferCompleted();
-  }
+        delete answerSemaphore;
+        initializeVariables();
+      }
 }
 void fileServer::destroySocket()
 {

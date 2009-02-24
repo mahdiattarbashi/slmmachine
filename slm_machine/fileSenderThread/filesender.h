@@ -16,10 +16,11 @@ public:
     fileSender(QObject *parent=0);
     virtual ~fileSender(){}
     void run();
-private:
-    QTcpSocket *socket; //soket
     QString peerIP; //karsiIP
     QString filePathOfOutgoingFile; //gidecekDosyaYolu
+private:
+    QTcpSocket *socket; //soket
+
     QString fileNameofOutgoingFile; //gidecekDosyaIsmi
     QFile *outgoingFile;//gonderilenDosya
 

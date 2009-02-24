@@ -7,8 +7,8 @@ fileSender::fileSender(QObject *parent):QThread(parent)
 }
 void fileSender::run()
 {
-    peerIP = "127.0.0.1";
-    filePathOfOutgoingFile = "D:/My Pictures/untitled.bmp";
+    //peerIP = "127.0.0.1";
+    //filePathOfOutgoingFile = "D:/My Pictures/untitled.bmp";
 
     block_size = 0;
     bytesWritten = 0;

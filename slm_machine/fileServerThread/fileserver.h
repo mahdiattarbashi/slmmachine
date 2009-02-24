@@ -6,7 +6,10 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QDataStream>
+#include <QTimer>
 #include <QFile>
+#include <QMutex>
+#include <QSemaphore>
 
 class fileServer :public QThread
 {
@@ -14,6 +17,9 @@ class fileServer :public QThread
 public:
     fileServer(QObject *parent=0);
     void run();
+    bool userAnswer;
+    bool userAnswered;
+    QSemaphore *answerSemaphore;
 
 private:
     QTcpServer *server;//sunucu
@@ -35,9 +41,13 @@ public slots:
     void destroySocket();//soketImha
     void getUserAnswer(bool,QString);//kullaniciCevabiniAl
     void finishDocument();//dosyayiTamamla
+
 signals:
     void newDocumentArrived(QString,QString);//yeniDosyaGeldi
     void transferCompleted();//GonderimTamamlandi
+    void transferCanceled();
+    void unknownMessageArrived();
+    void ongoingTransfer();
 };
 
 #endif // FILESERVER_H
