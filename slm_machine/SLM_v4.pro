@@ -13,7 +13,7 @@ SOURCES += main.cpp \
     securestring.cpp \
     fileCrypto/filecrypter.cpp \
     dosyasunucusu.cpp \
-    dosyagondericis.cpp
+    fileSenderThread/filesender.cpp
 HEADERS += slm_machine.h \
     slm_server.h \
     slm_socketmanager.h \
@@ -22,7 +22,7 @@ HEADERS += slm_machine.h \
     securestring.h \
     fileCrypto/filecrypter.h \
     dosyasunucusu.h \
-    dosyagondericis.h
+    fileSenderThread/filesender.h
 FORMS += slm_machine.ui \
     addBuddy.ui \
     slm_client.ui \

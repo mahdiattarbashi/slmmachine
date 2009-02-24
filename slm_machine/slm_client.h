@@ -11,7 +11,7 @@
 #include "ui_slm_client.h"
 #include "securestring.h"
 #include "fileCrypto/filecrypter.h"
-#include "dosyagondericis.h"
+#include "fileSenderThread/filesender.h"
 
 namespace Ui {
     class slm_client;
@@ -57,7 +57,7 @@ private:
     bool guiKey;
     QString EncryptionKey;
     Ui::slm_clientWindow *m_ui;
-    DosyaGondericis *yyy;
+    fileSender *yyy;
 };
 
 #endif // SLM_CLIENT_H
