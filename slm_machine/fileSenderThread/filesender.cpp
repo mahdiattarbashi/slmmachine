@@ -7,8 +7,6 @@ fileSender::fileSender(QObject *parent):QThread(parent)
 }
 void fileSender::run()
 {
-    //peerIP = "127.0.0.1";
-    //filePathOfOutgoingFile = "D:/My Pictures/untitled.bmp";
 
     block_size = 0;
     bytesWritten = 0;
@@ -20,7 +18,7 @@ void fileSender::run()
 
     QObject::connect(socket, SIGNAL(connected()),this, SLOT(peerConnectionEstablished()),Qt::DirectConnection );
     QObject::connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(continueFileTransfer(qint64)),Qt::DirectConnection );
-    QObject::connect(socket, SIGNAL(disconnected()),this, SLOT(peerConnectionClosed()),Qt::DirectConnection );
+    QObject::connect(socket, SIGNAL(disconnected()),this, SLOT(peerConnectionBroken()),Qt::DirectConnection );
 
     socket->connectToHost(peerIP,3333,QIODevice::ReadWrite);
 
@@ -31,9 +29,9 @@ void fileSender::peerConnectionEstablished()
     sendFileInfo();
     QObject::connect(socket,SIGNAL(readyRead()),this,SLOT(readPeerMessage()),Qt::DirectConnection );
 }
-void fileSender::peerConnectionClosed()
+void fileSender::peerConnectionBroken()
 {
-    //TODO
+    emit peerConnectionClosed();
 }
 void fileSender::continueFileTransfer(qint64 miktar)
 {
@@ -46,22 +44,16 @@ void fileSender::continueFileTransfer(qint64 miktar)
         bytesRemaining -= (int)socket->write(fileContensOfOutgoingFile.left(qMin(bytesRemaining, PAYLOADSIZE)));
   }
 
-  if(bytesWritten >= fileSizeOfOutgoingFile)
+  if(bytesWritten >= fileSizeOfOutgoingFile && fileSizeOfOutgoingFile != 0)
   {
-    //Inform GUI Thread that file Transfer is completed!
-      //Stop the Thread
+      qDebug() << fileSizeOfOutgoingFile;
+      qDebug() << "Bytes Written: " << bytesWritten;
+      emit transferFinished();
   }
 }
 void fileSender::sendFileInfo()
 {
     QFile dosya(filePathOfOutgoingFile);
-
-    if(!dosya.exists())
-    {
-        //TODO
-        //Inform GUI Thread that file does not exists so sending is canceled
-        //Stop the thread
-    }
 
     //extract filename only (without the path)
     int index = filePathOfOutgoingFile.lastIndexOf('/');
@@ -103,8 +95,7 @@ void fileSender::readPeerMessage()
     }
     else
     {
-        //TODO
-        //Inform GUI Thread that an unknown Message is received.
+        emit unknownMessageReceived();
     }
 }
 
@@ -112,13 +103,7 @@ void fileSender::startFileTransfer()
 {
     outgoingFile = new QFile(filePathOfOutgoingFile);
 
-    if(!outgoingFile->open(QIODevice::ReadOnly))
-    {
-        //TODO
-        //Inform GUI thread that file cannot be opened. Transfer cancelled,
-        //Stop the thread
-    }
-
+    outgoingFile->open(QIODevice::ReadOnly);
     fileSizeOfOutgoingFile = outgoingFile->size();
     fileContensOfOutgoingFile = outgoingFile->read(PAYLOADSIZE);
 

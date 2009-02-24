@@ -134,6 +134,11 @@ void slm_client::sendFileToBuddy()
     if(filepathString != "")
     {
         fileSenderThread =new fileSender();
+
+        connect(fileSenderThread,SIGNAL(transferFinished()),this,SLOT(fileSentCompleted()),Qt::QueuedConnection);
+        connect(fileSenderThread,SIGNAL(unknownMessageReceived()),this,SLOT(unknownMessage()),Qt::QueuedConnection);
+        connect(fileSenderThread,SIGNAL(peerConnectionClosed()),this,SLOT(connectionBroken()),Qt::QueuedConnection);
+
         fileSenderThread->filePathOfOutgoingFile = filepathString;
         fileSenderThread->peerIP = this->slmclientIPAddress;
         fileSenderThread->start();
@@ -143,7 +148,18 @@ void slm_client::sendFileToBuddy()
         QMessageBox::warning(this,QString("SLM File Transfer"),QString("Please Choose a File!"));
     }
 }
-
+void slm_client::connectionBroken()
+{
+    QMessageBox::warning(this,QString("SLM File Transfer"),QString("Connection is closed, Transfer is canceled!"));
+}
+void slm_client::fileSentCompleted()
+{
+    QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Completed"));
+}
+void slm_client::unknownMessage()
+{
+    QMessageBox::warning(this,QString("SLM File Transfer"),QString("An unknown message is received from the Buddy, Transfer is canceled!"));
+}
 //TODO
 //Following Code is only for test purposes and will be discarded after real implementation.
 void slm_client::startDecoding()

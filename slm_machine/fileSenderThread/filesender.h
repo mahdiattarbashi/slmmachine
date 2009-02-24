@@ -36,8 +36,12 @@ private:
 public slots:
     void peerConnectionEstablished();//baglantiKuruldu
     void continueFileTransfer(qint64);//DosyaAkatarimiDevam
-    void peerConnectionClosed();//baglantiKesildi
+    void peerConnectionBroken();//baglantiKesildi
     void readPeerMessage();//mesajOku
+signals:
+    void transferFinished();
+    void unknownMessageReceived();
+    void peerConnectionClosed();
 };
 
 #endif // FILESENDER_H

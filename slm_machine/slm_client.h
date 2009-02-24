@@ -48,10 +48,12 @@ public slots:
    void sendMessagetoBuddy();
    void displayError(QAbstractSocket::SocketError socketError);
    void clearTextArea();
-   
+   void fileSentCompleted();
+   void sendFileToBuddy();
+   void unknownMessage();
+   void connectionBroken();
    //TODO
    //Following Code is only for test purposes and will be discarded after real implementation.
-   void sendFileToBuddy();
    void startDecoding();
    //
 
