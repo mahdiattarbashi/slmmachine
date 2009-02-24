@@ -22,9 +22,9 @@ slm_machine::slm_machine(QWidget *parent)
 
     //File Server Management
     //TODO Following Code will be updated
-    xxx = new DosyaSunucusu;
-    connect(xxx,SIGNAL(yeniDosyaGeldi(QString,QString)),this,SLOT(incomingFileSlot(QString,QString)),Qt::QueuedConnection);
-    connect(xxx,SIGNAL(GonderimTamamlandi()),this,SLOT(incomingFileTransferCompleted()),Qt::QueuedConnection);
+    xxx = new fileServer();
+    connect(xxx,SIGNAL(newDocumentArrived(QString,QString)),this,SLOT(incomingFileSlot(QString,QString)),Qt::QueuedConnection);
+    connect(xxx,SIGNAL(transferCompleted()),this,SLOT(incomingFileTransferCompleted()),Qt::QueuedConnection);
 
     xxx->start();
 

@@ -17,7 +17,7 @@
 #include "ui_encryptionKeyDialog.h"
 #include "ui_addBuddy.h"
 #include "buddymanager.h"
-#include "dosyasunucusu.h"
+#include "fileServerThread/fileserver.h"
 
 
 namespace Ui
@@ -77,7 +77,7 @@ private:
 
     QAction *restoreAction;
     QAction *quitAction;
-DosyaSunucusu *xxx;
+    fileServer *xxx;
     void createTrayIcon();
     void createActions();
 
