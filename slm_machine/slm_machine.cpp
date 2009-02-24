@@ -74,12 +74,16 @@ void slm_machine::ongoingTransferExists()
 void slm_machine::transferIsCancelled()
 {
     QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Cancelled"));
-    newClient->fileSenderThread->quit();
+    //TODO
+    //following line results in a crash in the receiving condition
+    //newClient->fileSenderThread->quit();
 }
 void slm_machine::incomingFileTransferCompleted()
 {
     QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Completed"));
-    newClient->fileSenderThread->quit();
+    //TODO
+    //following line results in a crash in the receiving condition
+    //newClient->fileSenderThread->quit();
 }
 void slm_machine::changeEvent(QEvent *event)
 {
