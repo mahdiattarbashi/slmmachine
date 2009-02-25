@@ -19,7 +19,7 @@
  # Encrypted File Transfer Support will be added
  # Refactoring will be performed on the code. Before the relase candidate release.
  
-=TO DO for the Release Candidate(RC) Relase=
+=TO DO for the Release Candidate(RC) Release=
 
  # Buddy Icon support will be added
  # Emotion support will be added
