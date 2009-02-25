@@ -20,6 +20,7 @@ void fileServer::initializeVariables()
 void fileServer::run()
 {
     server = new QTcpServer();
+
     // start listen for incoming connections
     if(!server->listen(QHostAddress::Any, 3333))
     {
@@ -95,10 +96,17 @@ void fileServer::readMessage()
         //TODO
         //Add Timeout condition
 
-
         //Construct the necessary directory
-        QDir defaultSaveDirectory;
-        defaultSaveDirectory.mkpath("C:/SLM_Downloads");
+        QDir defaultSaveDirectoryObject;
+
+#ifdef Q_WS_WIN32
+        defaultSaveDirectoryObject.mkpath("C:/SLM_Downloads");
+        defaultSaveDirectory = "C:/SLM_Downloads/";
+#endif
+#ifdef Q_WS_X11
+        defaultSaveDirectoryObject.mkpath("/tmp/SLM_Downloads");
+        defaultSaveDirectory = "/tmp/SLM_Downloads/";
+#endif
 
         //Wait For user input whether accepted or rejected!
         while(1)
@@ -106,7 +114,7 @@ void fileServer::readMessage()
             answerSemaphore->acquire();
             if(userAnswer == 1 && userAnswered==1)
             {
-                getUserAnswer(1,("C:/SLM_Downloads/" + incomingFileName));
+                getUserAnswer(1,(defaultSaveDirectory + incomingFileName));
                 break;
             }
             else if(userAnswer == 0 && userAnswered == 1)
