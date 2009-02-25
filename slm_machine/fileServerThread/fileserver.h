@@ -9,7 +9,6 @@
 #include <QTimer>
 #include <QFile>
 #include <QDir>
-#include <QMutex>
 #include <QSemaphore>
 
 class fileServer :public QThread
@@ -23,29 +22,30 @@ public:
     QSemaphore *answerSemaphore;
 
 private:
-    QTcpServer *server;//sunucu
-    QTcpSocket *socket;//soket
-    QFile *newDocument;//yeniDokuman
+    QTcpServer *server;
+    QTcpSocket *socket;
+    QFile *newDocument;
 
-    void sendAcceptMessage();//KabulMesajiGonder
+    void sendAcceptMessage();
 
     quint16 block_size;
-    quint32 IncomingFileSize;//DosyaBoyutu
-    quint32 bytesWritten;//gelenDosyaMiktari
-    QByteArray fileContents;//DosyaIcerigi
-    bool serverState;//sunucuDurumu
-    void initializeVariables();//initializeVariables
+    quint32 IncomingFileSize;
+    quint32 bytesWritten;
+    QByteArray fileContents;
+    bool serverState;
+    void initializeVariables();
+    QString defaultSaveDirectory;
 
 public slots:
-    void peerConnection();//sunucuBaglantisi
-    void readMessage();//mesajOku
-    void destroySocket();//soketImha
-    void getUserAnswer(bool,QString);//kullaniciCevabiniAl
-    void finishDocument();//dosyayiTamamla
+    void peerConnection();
+    void readMessage();
+    void destroySocket();
+    void getUserAnswer(bool,QString);
+    void finishDocument();
 
 signals:
-    void newDocumentArrived(QString,QString,quint32);//yeniDosyaGeldi
-    void transferCompleted();//GonderimTamamlandi
+    void newDocumentArrived(QString,QString,quint32);
+    void transferCompleted();
     void transferCanceled();
     void unknownMessageArrived();
     void ongoingTransfer();

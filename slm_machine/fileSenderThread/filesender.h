@@ -7,7 +7,6 @@
 #include <QFile>
 #include <QByteArray>
 #include <QDataStream>
-#include <QRunnable>
 
 class fileSender : public QThread
 {
@@ -16,28 +15,28 @@ public:
     fileSender(QObject *parent=0);
     virtual ~fileSender(){}
     void run();
-    QString peerIP; //karsiIP
-    QString filePathOfOutgoingFile; //gidecekDosyaYolu
+    QString peerIP;
+    QString filePathOfOutgoingFile;
 private:
-    QTcpSocket *socket; //soket
+    QTcpSocket *socket;
 
-    QString fileNameofOutgoingFile; //gidecekDosyaIsmi
-    QFile *outgoingFile;//gonderilenDosya
+    QString fileNameofOutgoingFile;
+    QFile *outgoingFile;
 
     quint16 block_size;
-    quint32 bytesWritten;//gonderilenMiktar
-    quint32 bytesRemaining;//gonderilecekMiktar
-    quint32 fileSizeOfOutgoingFile;//dosyaBoyutu
-    QByteArray fileContensOfOutgoingFile;//dosyaIcerigi
+    quint32 bytesWritten;
+    quint32 bytesRemaining;
+    quint32 fileSizeOfOutgoingFile;
+    QByteArray fileContensOfOutgoingFile;
 
-    void sendFileInfo();//dosyaBilgisiGonder
-    void startFileTransfer();//dosyaGonderBasla
+    void sendFileInfo();
+    void startFileTransfer();
 
 public slots:
-    void peerConnectionEstablished();//baglantiKuruldu
-    void continueFileTransfer(qint64);//DosyaAkatarimiDevam
-    void peerConnectionBroken();//baglantiKesildi
-    void readPeerMessage();//mesajOku
+    void peerConnectionEstablished();
+    void continueFileTransfer(qint64);
+    void peerConnectionBroken();
+    void readPeerMessage();
 signals:
     void sendingStarted(quint32);
     void sendingCondition(quint32);
