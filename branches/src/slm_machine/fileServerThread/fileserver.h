@@ -8,6 +8,7 @@
 #include <QDataStream>
 #include <QTimer>
 #include <QFile>
+#include <QDir>
 #include <QMutex>
 #include <QSemaphore>
 

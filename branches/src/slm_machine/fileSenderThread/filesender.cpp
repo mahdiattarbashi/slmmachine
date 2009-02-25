@@ -7,7 +7,6 @@ fileSender::fileSender(QObject *parent):QThread(parent)
 }
 void fileSender::run()
 {
-
     block_size = 0;
     bytesWritten = 0;
     bytesRemaining = 0;
