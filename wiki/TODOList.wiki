@@ -16,7 +16,8 @@
  # Documentation will be prepared in google docs.
  # Project svn folder will be re-arranged and header files will be changed accordingly
  # Debug Codes will be eliminated using a global macro.
- # File Transfer Support will be added
+ # Encrypted File Transfer Support will be added
+ # Refactoring will be performed on the code.
  
 =TO DO for the RC Relase=
 
