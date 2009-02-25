@@ -1,7 +1,7 @@
 #summary TO DO List of the SMG LAN Messenger
 #labels Featured
 
-=TO DO for the Beta Relase=
+=TO DO for the Beta Release=
 ----
  # ~~System Tray Support will be added~~ *Completed*
  # ~~Encryption Key will be made a configuration Item~~ * Completed *
