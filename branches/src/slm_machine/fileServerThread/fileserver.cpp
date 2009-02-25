@@ -107,7 +107,10 @@ void fileServer::readMessage()
         defaultSaveDirectoryObject.mkpath("/tmp/SLM_Downloads");
         defaultSaveDirectory = "/tmp/SLM_Downloads/";
 #endif
-
+#ifdef Q_WS_MAC
+		defaultSaveDirectoryObject.mkpath("/tmp/SLM_Downloads");
+        defaultSaveDirectory = "/tmp/SLM_Downloads/";
+#endif
         //Wait For user input whether accepted or rejected!
         while(1)
         {
