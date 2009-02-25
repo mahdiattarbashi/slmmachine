@@ -17,11 +17,13 @@
  # Project svn folder will be re-arranged and header files will be changed accordingly
  # Debug Codes will be eliminated using a global macro.
  # Encrypted File Transfer Support will be added
- # Refactoring will be performed on the code.
+ # Refactoring will be performed on the code. Before the relase candidate release.
  
-=TO DO for the RC Relase=
+=TO DO for the Release Candidate(RC) Relase=
 
  # Buddy Icon support will be added
  # Emotion support will be added
  # Contex Menu will be implemented for user list
   * Check Buddy's offline/online status manually (Eg: rigth click check status)
+
+=TO DO for the Gold Release =
