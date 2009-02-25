@@ -39,6 +39,8 @@ public slots:
     void peerConnectionBroken();//baglantiKesildi
     void readPeerMessage();//mesajOku
 signals:
+    void sendingStarted(quint32);
+    void sendingCondition(quint32);
     void transferFinished();
     void unknownMessageReceived();
     void peerConnectionClosed();

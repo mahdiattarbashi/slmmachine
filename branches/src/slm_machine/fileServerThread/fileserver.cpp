@@ -89,7 +89,7 @@ void fileServer::readMessage()
         }
 
         //Inform GUI Thread about incoming file
-        emit newDocumentArrived(incomingFileName, fileDescriptorString);
+        emit newDocumentArrived(incomingFileName, fileDescriptorString, (static_cast<double>(IncomingFileSize)));
 
 
         //TODO
@@ -175,6 +175,7 @@ void fileServer::finishDocument()
       fileContents = socket->readAll();
 
       newDocument->write(fileContents);
+      emit receivingProgress(bytesWritten);
 
       if(bytesWritten == IncomingFileSize)
       {

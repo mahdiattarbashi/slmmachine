@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QMessageBox>
+#include <QProgressDialog>
 #include "slm_client.h"
 #include "ui_slm_machine.h"
 #include "ui_encryptionKeyDialog.h"
@@ -35,6 +36,8 @@ public:
     QDialog *addBuddyScreenDialog;
     QDialog *encryptionKeyWindow;
     QStringListModel *buddyModel;
+    QProgressDialog *progress;
+    quint32 receivingFileSize;
 
     QList<slm_client *> clientList;
     QStringList activeClientAliasList;
@@ -61,10 +64,11 @@ public slots:
     void cancelEncryptionKey();
     void iconActivated(QSystemTrayIcon::ActivationReason);
     void slotPlaceToTray();
-    void incomingFileSlot(QString,QString);
+    void incomingFileSlot(QString,QString,quint32);
     void incomingFileTransferCompleted();
     void transferIsCancelled();
     void ongoingTransferExists();
+    void updateReceivingProgress(quint32);
 
 private:
     Ui::slm_machineClass *ui;
@@ -79,7 +83,7 @@ private:
 
     QAction *restoreAction;
     QAction *quitAction;
-    fileServer *xxx;
+    fileServer *FServer;
     void createTrayIcon();
     void createActions();
 

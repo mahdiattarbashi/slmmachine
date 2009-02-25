@@ -22,13 +22,14 @@ slm_machine::slm_machine(QWidget *parent)
 
     //File Server Management
     //TODO Following Code will be updated
-    xxx = new fileServer();
-    connect(xxx,SIGNAL(newDocumentArrived(QString,QString)),this,SLOT(incomingFileSlot(QString,QString)),Qt::QueuedConnection);
-    connect(xxx,SIGNAL(transferCompleted()),this,SLOT(incomingFileTransferCompleted()),Qt::QueuedConnection);
-    connect(xxx,SIGNAL(transferCanceled()),this,SLOT(transferIsCancelled()),Qt::QueuedConnection);
-    connect(xxx,SIGNAL(ongoingTransfer()),this,SLOT(ongoingTransferExists()),Qt::QueuedConnection);
+    FServer = new fileServer();
+    connect(FServer,SIGNAL(newDocumentArrived(QString,QString,quint32)),this,SLOT(incomingFileSlot(QString,QString,quint32)),Qt::QueuedConnection);
+    connect(FServer,SIGNAL(transferCompleted()),this,SLOT(incomingFileTransferCompleted()),Qt::QueuedConnection);
+    connect(FServer,SIGNAL(transferCanceled()),this,SLOT(transferIsCancelled()),Qt::QueuedConnection);
+    connect(FServer,SIGNAL(ongoingTransfer()),this,SLOT(ongoingTransferExists()),Qt::QueuedConnection);
+    connect(FServer,SIGNAL(receivingProgress(quint32)),this,SLOT(updateReceivingProgress(quint32)),Qt::QueuedConnection);
 
-    xxx->start();
+    FServer->start();
 
 
     //UI connections
@@ -51,7 +52,7 @@ slm_machine::slm_machine(QWidget *parent)
     trayIcon->show();
 
 }
-void slm_machine::incomingFileSlot(QString fileName, QString infoString)
+void slm_machine::incomingFileSlot(QString fileName, QString infoString, quint32 fileSize)
 {
     int gui_return_answer;
     gui_return_answer = QMessageBox::question(this, "SLM File Transfer",
@@ -60,12 +61,22 @@ void slm_machine::incomingFileSlot(QString fileName, QString infoString)
                                      QMessageBox::Yes|QMessageBox::Default,
                                      QMessageBox::No|QMessageBox::Escape);
 
-    xxx->answerSemaphore->acquire();
+    FServer->answerSemaphore->acquire();
 
-    xxx->userAnswered = 1;
-    xxx->userAnswer = (gui_return_answer & QMessageBox::Yes);
+    FServer->userAnswered = 1;
+    FServer->userAnswer = (gui_return_answer & QMessageBox::Yes);
 
-    xxx->answerSemaphore->release();
+    FServer->answerSemaphore->release();
+    if((gui_return_answer & QMessageBox::Yes))
+    {
+        receivingFileSize = fileSize;
+        progress = new QProgressDialog("Receiving File...", "Abort Copy", 0, fileSize, this);
+        progress->setValue(0);
+    }
+}
+void slm_machine::updateReceivingProgress(quint32 size)
+{
+    progress->setValue(size*2);
 }
 void slm_machine::ongoingTransferExists()
 {
@@ -80,6 +91,7 @@ void slm_machine::transferIsCancelled()
 }
 void slm_machine::incomingFileTransferCompleted()
 {
+    progress->setValue(receivingFileSize);
     QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Completed"));
     //TODO
     //following line results in a crash in the receiving condition
