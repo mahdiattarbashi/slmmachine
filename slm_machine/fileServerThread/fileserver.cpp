@@ -91,16 +91,22 @@ void fileServer::readMessage()
         //Inform GUI Thread about incoming file
         emit newDocumentArrived(incomingFileName, fileDescriptorString);
 
-        //Wait For user input whether accepted or rejected!
+
         //TODO
         //Add Timeout condition
 
+
+        //Construct the necessary directory
+        QDir defaultSaveDirectory;
+        defaultSaveDirectory.mkpath("C:/SLM_Downloads");
+
+        //Wait For user input whether accepted or rejected!
         while(1)
         {
             answerSemaphore->acquire();
             if(userAnswer == 1 && userAnswered==1)
             {
-                getUserAnswer(1,("C:/" + incomingFileName));
+                getUserAnswer(1,("C:/SLM_Downloads/" + incomingFileName));
                 break;
             }
             else if(userAnswer == 0 && userAnswered == 1)
