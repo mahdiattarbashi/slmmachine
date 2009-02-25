@@ -44,11 +44,12 @@ public slots:
     void finishDocument();//dosyayiTamamla
 
 signals:
-    void newDocumentArrived(QString,QString);//yeniDosyaGeldi
+    void newDocumentArrived(QString,QString,quint32);//yeniDosyaGeldi
     void transferCompleted();//GonderimTamamlandi
     void transferCanceled();
     void unknownMessageArrived();
     void ongoingTransfer();
+    void receivingProgress(quint32);
 };
 
 #endif // FILESERVER_H

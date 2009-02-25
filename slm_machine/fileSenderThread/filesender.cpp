@@ -41,12 +41,14 @@ void fileSender::continueFileTransfer(qint64 miktar)
   {
         fileContensOfOutgoingFile = outgoingFile->read(PAYLOADSIZE);
         bytesRemaining -= (int)socket->write(fileContensOfOutgoingFile.left(qMin(bytesRemaining, PAYLOADSIZE)));
+        emit sendingCondition(bytesWritten);
   }
 
   if(bytesWritten >= fileSizeOfOutgoingFile && fileSizeOfOutgoingFile != 0)
   {
       qDebug() << fileSizeOfOutgoingFile;
       qDebug() << "Bytes Written: " << bytesWritten;
+
       emit transferFinished();
   }
 }
@@ -105,6 +107,6 @@ void fileSender::startFileTransfer()
     outgoingFile->open(QIODevice::ReadOnly);
     fileSizeOfOutgoingFile = outgoingFile->size();
     fileContensOfOutgoingFile = outgoingFile->read(PAYLOADSIZE);
-
+    emit sendingStarted(fileSizeOfOutgoingFile);
     bytesRemaining = fileSizeOfOutgoingFile - (int)socket->write(fileContensOfOutgoingFile);
 }

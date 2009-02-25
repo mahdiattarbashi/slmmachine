@@ -138,6 +138,8 @@ void slm_client::sendFileToBuddy()
         connect(fileSenderThread,SIGNAL(transferFinished()),this,SLOT(fileSentCompleted()),Qt::QueuedConnection);
         connect(fileSenderThread,SIGNAL(unknownMessageReceived()),this,SLOT(unknownMessage()),Qt::QueuedConnection);
         connect(fileSenderThread,SIGNAL(peerConnectionClosed()),this,SLOT(connectionBroken()),Qt::QueuedConnection);
+        connect(fileSenderThread,SIGNAL(sendingStarted(quint32)),this,SLOT(createFileProgress(quint32)),Qt::BlockingQueuedConnection);
+        connect(fileSenderThread,SIGNAL(sendingCondition(quint32)),this,SLOT(updateFileProgress(quint32)),Qt::BlockingQueuedConnection);
 
         fileSenderThread->filePathOfOutgoingFile = filepathString;
         fileSenderThread->peerIP = this->slmclientIPAddress;
@@ -148,12 +150,24 @@ void slm_client::sendFileToBuddy()
         QMessageBox::warning(this,QString("SLM File Transfer"),QString("Please Choose a File!"));
     }
 }
+void slm_client::createFileProgress(quint32 fileSize)
+{
+    qDebug() << "File Size: " <<fileSize;
+    file_size_ = fileSize;
+    progress = new QProgressDialog("Sending File...", "Abort Copy", 0, (int)fileSize, this);
+    progress->setValue(0);
+}
+void slm_client::updateFileProgress(quint32 writtenBytes)
+{
+    progress->setValue(((int)writtenBytes * 2));
+}
 void slm_client::connectionBroken()
 {
     QMessageBox::warning(this,QString("SLM File Transfer"),QString("Connection is closed, Transfer is canceled!"));
 }
 void slm_client::fileSentCompleted()
 {
+    progress->setValue(file_size_);
     QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Completed"));
 }
 void slm_client::unknownMessage()
