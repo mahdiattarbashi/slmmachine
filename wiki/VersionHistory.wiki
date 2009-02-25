@@ -7,5 +7,6 @@
 
 *Pre-Alpha* 
  * Encrypted messaging implemented.
+ * Encrypted file transfer implemented.
 
 ----
