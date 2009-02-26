@@ -16,7 +16,8 @@
  # Documentation will be prepared in google docs.
  # Project svn folder will be re-arranged and header files will be changed accordingly
  # Debug Codes will be eliminated using a global macro.
- # Encrypted File Transfer Support will be added
+ # ~~File Transfer Support will be added~~~ * Completed *
+ # Encryption support will be added to file transfer
  # Refactoring will be performed on the code. Before the relase candidate release.
  
 =TO DO for the Release Candidate(RC) Release=
