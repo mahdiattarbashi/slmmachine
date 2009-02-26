@@ -4,33 +4,10 @@
 slm_machine::slm_machine(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::slm_machineClass)
 {
+/************************** UI and Buddy Management *******************************/
     ui->setupUi(this);
-
-    //Buddy Management
-    buddies = new buddyManager();
-    buddies->loadBuddiesAndIPs();
-    buddyModel = new QStringListModel();
-    buddyModel->setStringList(buddies->AliasBuddyList);
-
-    // Buddy List UI Management
     ui->buddyList->setModel(buddyModel);
     ui->buddyList->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-    //Message Server Management
-    slm_server *ahmet = slm_server::getInstance();
-    connect(ahmet, SIGNAL(sendtoUI(QByteArray,QHostAddress)),this,SLOT(messageHandler(QByteArray,QHostAddress)));
-
-    //File Server Management
-    //TODO Following Code will be updated
-    FServer = new fileServer();
-    connect(FServer,SIGNAL(newDocumentArrived(QString,QString,quint32)),this,SLOT(incomingFileSlot(QString,QString,quint32)),Qt::QueuedConnection);
-    connect(FServer,SIGNAL(transferCompleted()),this,SLOT(incomingFileTransferCompleted()),Qt::QueuedConnection);
-    connect(FServer,SIGNAL(transferCanceled()),this,SLOT(transferIsCancelled()),Qt::QueuedConnection);
-    connect(FServer,SIGNAL(ongoingTransfer()),this,SLOT(ongoingTransferExists()),Qt::QueuedConnection);
-    connect(FServer,SIGNAL(receivingProgress(quint32)),this,SLOT(updateReceivingProgress(quint32)),Qt::QueuedConnection);
-
-    FServer->start();
-
 
     //UI connections
     connect(ui->addBuddyButton, SIGNAL(clicked()),this, SLOT(addBuddyPressed()));
@@ -41,17 +18,58 @@ slm_machine::slm_machine(QWidget *parent)
     connect(ui->actionAbout_SLM, SIGNAL(triggered()), this, SLOT(aboutSLMPressed()));
     connect(ui->actionEncryption_Key, SIGNAL(triggered()), this, SLOT(encryptionKeyPressed()));
 
-    //Tray Icon
+    //Buddy Management
+    buddies = new buddyManager();
+    buddies->loadBuddiesAndIPs();
+    buddyModel = new QStringListModel();
+    buddyModel->setStringList(buddies->AliasBuddyList);
+/************************************************************************************/
+
+/************************** Message Server Management *******************************/
+    messageServer = slm_server::getInstance();
+    connect(messageServer, SIGNAL(sendtoUI(QByteArray,QHostAddress)),this,SLOT(messageHandler(QByteArray,QHostAddress)));
+/************************************************************************************/
+
+/***************************** File Server Management *******************************/
+    FServer = new fileServer();
+
+    //File Server Connections
+    connect(FServer,SIGNAL(newDocumentArrived(QString,QString,quint32)),this,SLOT(incomingFileSlot(QString,QString,quint32)),Qt::QueuedConnection);
+    connect(FServer,SIGNAL(transferCompleted()),this,SLOT(incomingFileTransferCompleted()),Qt::QueuedConnection);
+    connect(FServer,SIGNAL(transferCanceled()),this,SLOT(transferIsCancelled()),Qt::QueuedConnection);
+    connect(FServer,SIGNAL(ongoingTransfer()),this,SLOT(ongoingTransferExists()),Qt::QueuedConnection);
+    connect(FServer,SIGNAL(receivingProgress(quint32)),this,SLOT(updateReceivingProgress(quint32)),Qt::QueuedConnection);
+
+    //Start the File Server Thread
+    FServer->start();
+/***********************************************************************************/
+
+/***************************** Tray Icon Management ********************************/
+    //Create tray icon and contex menu actions
     this->createActions();
     this->createTrayIcon();
 
+    //Tray Icon Connections
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
     connect(this, SIGNAL(signalPlaceToTray()),this, SLOT(slotPlaceToTray()),Qt::QueuedConnection);
+
+    //Show application icon in the tray
     trayIcon->setIcon(QIcon(":/icons/SLM_Logo"));
-
     trayIcon->show();
-
+/**********************************************************************************/
 }
+
+/********************************************************************************************/
+/*
+* File Server Slots:
+* ------------------
+* 1- void incomingFileSlot(QString, QString, quint32);
+* 2- void updateReceivingProgress(quint32);
+* 3- void ongoingTransferExists();
+* 4- void transferIsCancelled();
+* 5- void incomingFileTransferCompleted();
+* 6- void showTrayMessageFileSentCompleted();
+*/
 void slm_machine::incomingFileSlot(QString fileName, QString infoString, quint32 fileSize)
 {
     int gui_return_answer;
@@ -94,6 +112,14 @@ void slm_machine::incomingFileTransferCompleted()
     progress->setValue(receivingFileSize);
     trayIcon->showMessage("SLM File Transfer (Receiving)", "File Transfer Completed",QSystemTrayIcon::Information,10000);
 }
+void slm_machine::showTrayMessageFileSentCompleted()
+{
+    trayIcon->showMessage("SLM File Transfer (Sending)", "File Transfer Completed",QSystemTrayIcon::Information,10000);
+}
+/********************************************************************************************/
+
+
+
 void slm_machine::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::WindowStateChange)
@@ -223,10 +249,6 @@ void slm_machine::clientCreation(int buddyIndex)
         clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->setWindowState(clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->windowState() & ~Qt::WindowMinimized | Qt::WindowActive);
         clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->activateWindow();
     }
-}
-void slm_machine::showTrayMessageFileSentCompleted()
-{
-    trayIcon->showMessage("SLM File Transfer (Sending)", "File Transfer Completed",QSystemTrayIcon::Information,10000);
 }
 // TODO
 // Write more intelligent IP validating Code using RegExp!!

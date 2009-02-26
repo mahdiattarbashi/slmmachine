@@ -43,6 +43,7 @@ public:
     QStringList activeClientAliasList;
 
     buddyManager *buddies;
+    slm_server *messageServer;
     slm_client *newClient;
 
     void closeEvent( QCloseEvent *closeEvent );
@@ -64,27 +65,31 @@ public slots:
     void cancelEncryptionKey();
     void iconActivated(QSystemTrayIcon::ActivationReason);
     void slotPlaceToTray();
+
+    /**********File Server Slots******************/
     void incomingFileSlot(QString,QString,quint32);
-    void incomingFileTransferCompleted();
-    void transferIsCancelled();
-    void ongoingTransferExists();
     void updateReceivingProgress(quint32);
+    void ongoingTransferExists();
+    void transferIsCancelled();
+    void incomingFileTransferCompleted();
     void showTrayMessageFileSentCompleted();
+    /********************************************/
 
 private:
     Ui::slm_machineClass *ui;
     Ui::addBuddyScreen *ui_addBuddyScreen;
     Ui::encryptionKeyDialog * ui_encryption;
 
+    fileServer *FServer;
+
     bool IPAddressValidator(QString);
     void clientCreation(int);
 
+    //Tray Icon Related
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
-
     QAction *restoreAction;
     QAction *quitAction;
-    fileServer *FServer;
     void createTrayIcon();
     void createActions();
 
