@@ -92,10 +92,7 @@ void slm_machine::transferIsCancelled()
 void slm_machine::incomingFileTransferCompleted()
 {
     progress->setValue(receivingFileSize);
-    QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Completed"));
-    //TODO
-    //following line results in a crash in the receiving condition
-    //newClient->fileSenderThread->quit();
+    trayIcon->showMessage("SLM File Transfer (Receiving)", "File Transfer Completed",QSystemTrayIcon::Information,10000);
 }
 void slm_machine::changeEvent(QEvent *event)
 {
@@ -217,6 +214,7 @@ void slm_machine::clientCreation(int buddyIndex)
         clientList.last()->setGuiKey(1); // set the gui key to one to indicate it is opened
         clientList.last()->initiateClient(buddies->AliasBuddyList[buddyIndex], buddies->IPBuddyList[buddyIndex]);
         connect(clientList.last(), SIGNAL(destroyClient(QString)), this, SLOT(clearClientFromActiveList(QString)));
+        connect(clientList.last(),SIGNAL(showTrayMessageTransferCompleted()),this,SLOT(showTrayMessageFileSentCompleted()));
         activeClientAliasList.append(clientList.last()->slmclientName);
     }
     else
@@ -225,6 +223,10 @@ void slm_machine::clientCreation(int buddyIndex)
         clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->setWindowState(clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->windowState() & ~Qt::WindowMinimized | Qt::WindowActive);
         clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->activateWindow();
     }
+}
+void slm_machine::showTrayMessageFileSentCompleted()
+{
+    trayIcon->showMessage("SLM File Transfer (Sending)", "File Transfer Completed",QSystemTrayIcon::Information,10000);
 }
 // TODO
 // Write more intelligent IP validating Code using RegExp!!

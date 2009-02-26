@@ -45,6 +45,7 @@ public:
 
 signals:
    void destroyClient(QString);
+   void showTrayMessageTransferCompleted();
 
 public slots:
    void sendMessagetoBuddy();
