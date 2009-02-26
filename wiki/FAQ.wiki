@@ -1,0 +1,13 @@
+#summary Frequently Asked Questions
+#labels Featured
+
+== About ==
+ * *What is SLM Machine?*
+//TODO
+
+ * *Why do we need SLM Machine?*
+//TODO
+
+== Getting Started==
+ * *How can i use SLM Machine on different platforms?*
+//TODO
