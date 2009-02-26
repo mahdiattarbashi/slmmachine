@@ -168,7 +168,7 @@ void slm_client::connectionBroken()
 void slm_client::fileSentCompleted()
 {
     progress->setValue(file_size_);
-    QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Completed"));
+    emit showTrayMessageTransferCompleted();
 }
 void slm_client::unknownMessage()
 {

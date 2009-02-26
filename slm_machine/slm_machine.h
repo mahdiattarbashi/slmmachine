@@ -69,6 +69,7 @@ public slots:
     void transferIsCancelled();
     void ongoingTransferExists();
     void updateReceivingProgress(quint32);
+    void showTrayMessageFileSentCompleted();
 
 private:
     Ui::slm_machineClass *ui;
