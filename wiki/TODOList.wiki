@@ -18,8 +18,9 @@
  # Debug Codes will be eliminated using a global macro.
  # ~~File Transfer Support will be added~~ * Completed *
  # Encryption support will be added to file transfer
- # Refactoring will be performed on the code. Before the relase candidate release.
- 
+ # Refactor: Refactoring will be performed on the code. Before the relase candidate release.
+ # Refactor: The namespaces of the code.
+
 =TO DO for the Release Candidate(RC) Release=
 
  # Buddy Icon support will be added
