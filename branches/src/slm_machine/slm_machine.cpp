@@ -1,11 +1,17 @@
 #include "slm_machine.h"
-#include "slm_server.h"
 
 slm_machine::slm_machine(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::slm_machineClass)
 {
 /************************** UI and Buddy Management *******************************/
     ui->setupUi(this);
+
+    //Buddy Management
+    buddies = new buddyManager();
+    buddies->loadBuddiesAndIPs();
+    buddyModel = new QStringListModel();
+    buddyModel->setStringList(buddies->AliasBuddyList);
+
     ui->buddyList->setModel(buddyModel);
     ui->buddyList->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -18,11 +24,7 @@ slm_machine::slm_machine(QWidget *parent)
     connect(ui->actionAbout_SLM, SIGNAL(triggered()), this, SLOT(aboutSLMPressed()));
     connect(ui->actionEncryption_Key, SIGNAL(triggered()), this, SLOT(encryptionKeyPressed()));
 
-    //Buddy Management
-    buddies = new buddyManager();
-    buddies->loadBuddiesAndIPs();
-    buddyModel = new QStringListModel();
-    buddyModel->setStringList(buddies->AliasBuddyList);
+
 /************************************************************************************/
 
 /************************** Message Server Management *******************************/
