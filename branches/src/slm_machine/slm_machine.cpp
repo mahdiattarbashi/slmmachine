@@ -37,7 +37,7 @@ slm_machine::slm_machine(QWidget *parent)
 
     //File Server Connections
     connect(FServer,SIGNAL(newDocumentArrived(QString,QString,quint32)),this,SLOT(incomingFileSlot(QString,QString,quint32)),Qt::QueuedConnection);
-    connect(FServer,SIGNAL(transferCompleted()),this,SLOT(incomingFileTransferCompleted()),Qt::QueuedConnection);
+    connect(FServer,SIGNAL(transferCompleted(QString)),this,SLOT(incomingFileTransferCompleted(QString)),Qt::QueuedConnection);
     connect(FServer,SIGNAL(transferCanceled()),this,SLOT(transferIsCancelled()),Qt::QueuedConnection);
     connect(FServer,SIGNAL(ongoingTransfer()),this,SLOT(ongoingTransferExists()),Qt::QueuedConnection);
     connect(FServer,SIGNAL(receivingProgress(quint32)),this,SLOT(updateReceivingProgress(quint32)),Qt::QueuedConnection);
@@ -105,14 +105,39 @@ void slm_machine::ongoingTransferExists()
 void slm_machine::transferIsCancelled()
 {
     QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer Cancelled"));
-    //TODO
-    //following line results in a crash in the receiving condition
-    //newClient->fileSenderThread->quit();
 }
-void slm_machine::incomingFileTransferCompleted()
+void slm_machine::incomingFileTransferCompleted(QString name)
 {
     progress->setValue(receivingFileSize);
-    trayIcon->showMessage("SLM File Transfer (Receiving)", "File Transfer Completed",QSystemTrayIcon::Information,10000);
+    trayIcon->showMessage("SLM File Transfer(Receiving)", "File Transfer Completed\nFile Decryption is started\nPlease wait until it finishes...",QSystemTrayIcon::Information,10000);
+
+    //Start decryption of incoming file
+
+    //give required information to the decryption object
+    incomingFileName = name;
+
+    decrypto = new fileCrypter();
+    decrypto->key = 2;
+
+    //Encrypted file name (file that will be decrypted)
+    decrypto->InputFile = name;
+
+    //real file name (Remove ".enc" from the end of the file name)
+    name.chop(4);
+    decrypto->OutputFile = name;
+
+    connect(decrypto,SIGNAL(destroyed()),this,SLOT(decryptionFinished()));
+
+    //Start decryption
+    QThreadPool::globalInstance()->start(decrypto);
+}
+void slm_machine::decryptionFinished()
+{
+    //remove the encrypted file (temp)
+    QFile::remove(incomingFileName);
+
+    //Inform User about process
+    trayIcon->showMessage("SLM File Decryption", "File Decryption Finished\nYou can access your file from the downloads folder",QSystemTrayIcon::Information,20000);
 }
 void slm_machine::showTrayMessageFileSentCompleted()
 {

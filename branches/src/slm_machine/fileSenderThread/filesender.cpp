@@ -48,7 +48,7 @@ void fileSender::continueFileTransfer(qint64 miktar)
   {
       qDebug() << fileSizeOfOutgoingFile;
       qDebug() << "Bytes Written: " << bytesWritten;
-
+      outgoingFile->close();
       emit transferFinished();
   }
 }

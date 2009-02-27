@@ -127,8 +127,7 @@ void slm_client::setEncryptionKey(QString Key)
 
 void slm_client::sendFileToBuddy()
 {
-    //crypto.startEnc("C:/slmLogo.png","C:/denemeEncryted.png");
-    //QTimer::singleShot(10000,this,SLOT(startDecoding()));
+
     filepathString = QFileDialog::getOpenFileName(this, "Choose a file");
     if(filepathString != "")
     {
@@ -145,21 +144,6 @@ void slm_client::sendFileToBuddy()
 
         emit encryptingStarted();
         QThreadPool::globalInstance()->start(crypto);
-
-       // encrypting->close();
-
-//        fileSenderThread =new fileSender();
-//
-//        connect(fileSenderThread,SIGNAL(transferFinished()),this,SLOT(fileSentCompleted()),Qt::QueuedConnection);
-//        connect(fileSenderThread,SIGNAL(unknownMessageReceived()),this,SLOT(unknownMessage()),Qt::QueuedConnection);
-//        connect(fileSenderThread,SIGNAL(peerConnectionClosed()),this,SLOT(connectionBroken()),Qt::QueuedConnection);
-//        connect(fileSenderThread,SIGNAL(sendingStarted(quint32)),this,SLOT(createFileProgress(quint32)),Qt::BlockingQueuedConnection);
-//        connect(fileSenderThread,SIGNAL(sendingCondition(quint32)),this,SLOT(updateFileProgress(quint32)),Qt::BlockingQueuedConnection);
-//
-//        //fileSenderThread->filePathOfOutgoingFile = filepathString;
-//        fileSenderThread->filePathOfOutgoingFile = encryptedFileName;
-//        fileSenderThread->peerIP = this->slmclientIPAddress;
-//        fileSenderThread->start();
     }
     else
     {
@@ -176,7 +160,6 @@ void slm_client::transfer()
     connect(fileSenderThread,SIGNAL(sendingStarted(quint32)),this,SLOT(createFileProgress(quint32)),Qt::BlockingQueuedConnection);
     connect(fileSenderThread,SIGNAL(sendingCondition(quint32)),this,SLOT(updateFileProgress(quint32)),Qt::BlockingQueuedConnection);
 
-    //fileSenderThread->filePathOfOutgoingFile = filepathString;
     fileSenderThread->filePathOfOutgoingFile = encryptedFileName;
     fileSenderThread->peerIP = this->slmclientIPAddress;
     fileSenderThread->start();
@@ -199,19 +182,13 @@ void slm_client::connectionBroken()
 void slm_client::fileSentCompleted()
 {
     progress->setValue(file_size_);
+    QFile::remove(encryptedFileName);
     emit showTrayMessageTransferCompleted();
 }
 void slm_client::unknownMessage()
 {
     QMessageBox::warning(this,QString("SLM File Transfer"),QString("An unknown message is received from the Buddy, Transfer is canceled!"));
 }
-//TODO
-//Following Code is only for test purposes and will be discarded after real implementation.
-void slm_client::startDecoding()
-{
-    //crypto.startDec("C:/denemeEncryted.png","C:/deneme2.png");
-}
-//
 slm_client::~slm_client()
 {
     delete m_ui;
