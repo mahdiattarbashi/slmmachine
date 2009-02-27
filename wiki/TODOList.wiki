@@ -29,3 +29,4 @@
   * Check Buddy's offline/online status manually (Eg: rigth click check status)
 
 =TO DO for the Gold Release =
+ # Group Chat Support will be added. 
