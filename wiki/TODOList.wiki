@@ -27,6 +27,8 @@
  # Emotion support will be added
  # Contex Menu will be implemented for user list
   * Check Buddy's offline/online status manually (Eg: rigth click check status)
+ # Improved customizable GUI
+ # Logging support will be added
 
 =TO DO for the Gold Release =
  # Group Chat Support will be added. 
