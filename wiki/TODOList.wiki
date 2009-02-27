@@ -17,7 +17,7 @@
  # Project svn folder will be re-arranged and header files will be changed accordingly
  # Debug Codes will be eliminated using a global macro.
  # ~~File Transfer Support will be added~~ * Completed *
- # Encryption support will be added to file transfer
+ # ~~Encryption support will be added to file transfer~~ *Completed*
  # Refactor: Refactoring will be performed on the code. Before the relase candidate release.
  # Refactor: The namespaces of the code.
 
