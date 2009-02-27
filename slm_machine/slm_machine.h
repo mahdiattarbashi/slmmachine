@@ -74,6 +74,8 @@ public slots:
     void transferIsCancelled();
     void incomingFileTransferCompleted();
     void showTrayMessageFileSentCompleted();
+    void showTrayMessageEncryptionStarted();
+    void showTrayMessageEncryptionFinished();
     /********************************************/
 
 private:

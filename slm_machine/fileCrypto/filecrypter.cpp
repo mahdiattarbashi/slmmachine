@@ -3,18 +3,23 @@
 #include <QDebug>
 fileCrypter::fileCrypter()
 {
+    this->key = 0;
+    this->setAutoDelete(1);
 }
-
-void fileCrypter::startEnc(QString inputFilePath, QString outputFilePath)
+void fileCrypter::run()
 {
-    this->algo1e(inputFilePath, outputFilePath);
+    switch(key)
+    {
+        case 1:
+                this->algo1e(InputFile, OutputFile);
+                break;
+        case 2:
+                this->algo1d(InputFile, OutputFile);
+                break;
+        default:
+                break;
+    }
 }
-
-void fileCrypter::startDec(QString inputFilePath, QString outputFilePath)
-{
-    this->algo1d(inputFilePath, outputFilePath);
-}
-
 void fileCrypter::algo1e(QString inputFile, QString outputFile)
 {
     unsigned long long count = 0;   // cryption counter

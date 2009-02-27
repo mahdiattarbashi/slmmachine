@@ -243,6 +243,8 @@ void slm_machine::clientCreation(int buddyIndex)
         clientList.last()->initiateClient(buddies->AliasBuddyList[buddyIndex], buddies->IPBuddyList[buddyIndex]);
         connect(clientList.last(), SIGNAL(destroyClient(QString)), this, SLOT(clearClientFromActiveList(QString)));
         connect(clientList.last(),SIGNAL(showTrayMessageTransferCompleted()),this,SLOT(showTrayMessageFileSentCompleted()));
+        connect(clientList.last(),SIGNAL(encryptingStarted()),this,SLOT(showTrayMessageEncryptionStarted()));
+        connect(clientList.last(),SIGNAL(encryptingFinished()),this,SLOT(showTrayMessageEncryptionFinished()));
         activeClientAliasList.append(clientList.last()->slmclientName);
     }
     else
@@ -251,6 +253,14 @@ void slm_machine::clientCreation(int buddyIndex)
         clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->setWindowState(clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->windowState() & ~Qt::WindowMinimized | Qt::WindowActive);
         clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->activateWindow();
     }
+}
+void slm_machine::showTrayMessageEncryptionStarted()
+{
+    trayIcon->showMessage("SLM File Encrytion", "File Encryption Started\nFile Transfer will start automatically after encryption process\nPlease Wait...",QSystemTrayIcon::Information,20000);
+}
+void slm_machine::showTrayMessageEncryptionFinished()
+{
+    trayIcon->showMessage("SLM File Encrytion", "File Encryption Finished\nFile Transfer is starting...\nWaiting for peer to accept file transfer",QSystemTrayIcon::Information,10000);
 }
 // TODO
 // Write more intelligent IP validating Code using RegExp!!

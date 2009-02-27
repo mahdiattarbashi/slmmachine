@@ -4,14 +4,17 @@
 #include <QObject>
 #include <QString>
 #include <QMessageBox>
+#include <QRunnable>
 
-class fileCrypter : public QObject
+class fileCrypter : public QObject, public QRunnable
 {
     Q_OBJECT
 public:
     fileCrypter();
-    void startEnc(QString,QString);
-    void startDec(QString,QString);
+    void run();
+    QString InputFile;
+    QString OutputFile;
+    int key;
 
 private:
     void algo1e(QString, QString);

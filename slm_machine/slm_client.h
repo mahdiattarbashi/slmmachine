@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QProgressDialog>
+#include <QThreadPool>
 #include "ui_slm_client.h"
 #include "securestring.h"
 #include "fileCrypto/filecrypter.h"
@@ -32,8 +33,10 @@ public:
     QString outGoingTextString;
     QByteArray outGoingTextArray;
     QProgressDialog *progress;
+
+    QMessageBox *encrypting;
     securestring encryptionObject;
-    fileCrypter crypto;
+    fileCrypter *crypto;
     fileSender *fileSenderThread;
 
     void initiateClient(QString, QString);
@@ -46,6 +49,8 @@ public:
 signals:
    void destroyClient(QString);
    void showTrayMessageTransferCompleted();
+   void encryptingStarted();
+   void encryptingFinished();
 
 public slots:
    void sendMessagetoBuddy();
@@ -57,6 +62,7 @@ public slots:
    void connectionBroken();
    void createFileProgress(quint32);
    void updateFileProgress(quint32);
+   void transfer();
    //TODO
    //Following Code is only for test purposes and will be discarded after real implementation.
    void startDecoding();
@@ -67,6 +73,9 @@ private:
     quint32 file_size_;
     QString EncryptionKey;
     Ui::slm_clientWindow *m_ui;
+
+    QString filepathString;
+    QString encryptedFileName;
 
 };
 
