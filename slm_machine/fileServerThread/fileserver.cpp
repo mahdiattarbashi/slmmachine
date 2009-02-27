@@ -193,9 +193,9 @@ void fileServer::finishDocument()
 
         QObject::disconnect(socket, SIGNAL(readyRead()), 0, 0);
         QObject::connect(socket,SIGNAL(readyRead()),this, SLOT(readMessage()),Qt::DirectConnection );
-        newDocument->flush();
+        emit transferCompleted(newDocument->fileName());
         newDocument->close();
-        emit transferCompleted();
+        newDocument->flush();
         delete answerSemaphore;
         initializeVariables();
       }

@@ -63,10 +63,6 @@ public slots:
    void createFileProgress(quint32);
    void updateFileProgress(quint32);
    void transfer();
-   //TODO
-   //Following Code is only for test purposes and will be discarded after real implementation.
-   void startDecoding();
-   //
 
 private:
     bool guiKey;

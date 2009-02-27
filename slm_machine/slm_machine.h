@@ -20,6 +20,7 @@
 #include "ui_addBuddy.h"
 #include "buddymanager.h"
 #include "fileServerThread/fileserver.h"
+#include "fileCrypto/fileCrypter.h"
 
 
 namespace Ui
@@ -46,6 +47,7 @@ public:
     buddyManager *buddies;
     slm_server *messageServer;
     slm_client *newClient;
+    fileCrypter *decrypto;
 
     void closeEvent( QCloseEvent *closeEvent );
     void changeEvent(QEvent *event); // to catch minimize event and send the application to the Tray
@@ -66,13 +68,14 @@ public slots:
     void cancelEncryptionKey();
     void iconActivated(QSystemTrayIcon::ActivationReason);
     void slotPlaceToTray();
+    void decryptionFinished();
 
     /**********File Server Slots******************/
     void incomingFileSlot(QString,QString,quint32);
     void updateReceivingProgress(quint32);
     void ongoingTransferExists();
     void transferIsCancelled();
-    void incomingFileTransferCompleted();
+    void incomingFileTransferCompleted(QString);
     void showTrayMessageFileSentCompleted();
     void showTrayMessageEncryptionStarted();
     void showTrayMessageEncryptionFinished();
@@ -84,6 +87,7 @@ private:
     Ui::encryptionKeyDialog * ui_encryption;
 
     fileServer *FServer;
+    QString incomingFileName;
 
     bool IPAddressValidator(QString);
     void clientCreation(int);
