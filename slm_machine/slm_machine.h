@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QProgressDialog>
+#include <QHostInfo>
 #include "slm_server.h"
 #include "slm_client.h"
 #include "ui_slm_machine.h"
