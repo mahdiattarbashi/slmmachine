@@ -1,4 +1,4 @@
-#include "include/securestring.h"
+#include "../include/securestring.h"
 
 securestring::securestring()
 {
