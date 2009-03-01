@@ -179,31 +179,61 @@ void slm_machine::slotPlaceToTray()
 }
 void slm_machine::L_addBuddyButtonPressed()
 {
+	//check if the alias and hostname or ip address is entered
+	if(ui_addBuddyScreen->L_buddyAliasLine->text().isEmpty())
+	{
+		QMessageBox::warning(this,QString("No Alias!"),QString("Please Enter an Alias For The Buddy!"));
 
-    if(!ui_addBuddyScreen->L_buddyAliasLine->text().isEmpty() && !ui_addBuddyScreen->L_buddyIPAddressLine->text().isEmpty())
-    {
-        if(!(this->IPAddressValidator(ui_addBuddyScreen->L_buddyIPAddressLine->text())))
-        {
-            QMessageBox::warning(this,QString("Wrong IP Address!"),QString("IP Address is not Valid!"));
-        }
-        else
-        {
-            buddies->AliasBuddyList.append(ui_addBuddyScreen->L_buddyAliasLine->text());
-            buddyModel->setStringList(buddies->AliasBuddyList);
-            ui->buddyList->setModel(buddyModel);
+	}
+	else if(ui_addBuddyScreen->L_buddyIPAddressLine->text().isEmpty() && ui_addBuddyScreen->L_buddyHostNameLine->text().isEmpty())
+	{
+		QMessageBox::warning(this,QString("No Host Name or IP Address!"),QString("Please Enter a Host Name or IP Address For The Buddy!"));
+	}
+	else if(!ui_addBuddyScreen->L_buddyIPAddressLine->text().isEmpty())
+	{
+		//validate the IP address
+		if(!(this->IPAddressValidator(ui_addBuddyScreen->L_buddyIPAddressLine->text())))
+		{
+			QMessageBox::warning(this,QString("Wrong IP Address!"),QString("IP Address is not Valid!"));
+		}
+		else
+		{
+			buddies->AliasBuddyList.append(ui_addBuddyScreen->L_buddyAliasLine->text());
+			buddyModel->setStringList(buddies->AliasBuddyList);
+			ui->buddyList->setModel(buddyModel);
 
-            buddies->IPBuddyList.append(ui_addBuddyScreen->L_buddyIPAddressLine->text());
+			buddies->IPBuddyList.append(ui_addBuddyScreen->L_buddyIPAddressLine->text());
 
-            qDebug() << buddies->IPBuddyList;
-            qDebug() << buddies->AliasBuddyList;
+			qDebug() << buddies->IPBuddyList;
+			qDebug() << buddies->AliasBuddyList;
 
-            addBuddyScreenDialog->close();
-        }
-    }
-    else
-    {
-        QMessageBox::warning(this,QString("Empty Field!"),QString("Please Fill the Form completely!"));
-    }
+			addBuddyScreenDialog->close();
+		}
+	}
+	else if(ui_addBuddyScreen->L_buddyIPAddressLine->text().isEmpty() && !ui_addBuddyScreen->L_buddyHostNameLine->text().isEmpty())
+	{
+		QHostInfo info = QHostInfo::fromName(ui_addBuddyScreen->L_buddyHostNameLine->text());
+                qDebug()<<info.addresses();
+
+                //check if a valid host name is found
+                if(info.addresses().isEmpty())
+                {
+                    QMessageBox::warning(this,QString("Host Error!"),QString("Host name cannot be found, you may try to enter buddy IP instead!"));
+                }
+                else
+                {
+                    buddies->AliasBuddyList.append(ui_addBuddyScreen->L_buddyAliasLine->text());
+                    buddyModel->setStringList(buddies->AliasBuddyList);
+                    ui->buddyList->setModel(buddyModel);
+
+                    buddies->IPBuddyList.append(info.addresses().first().toString());
+
+                    qDebug() << buddies->IPBuddyList;
+                    qDebug() << buddies->AliasBuddyList;
+
+                    addBuddyScreenDialog->close();
+                }
+	}
 }
 
 void slm_machine::L_cancelAddBuddyButtonPressed()
