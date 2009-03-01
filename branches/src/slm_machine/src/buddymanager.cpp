@@ -1,4 +1,4 @@
-#include "buddymanager.h"
+#include "include/buddymanager.h"
 
 buddyManager::buddyManager()
 {

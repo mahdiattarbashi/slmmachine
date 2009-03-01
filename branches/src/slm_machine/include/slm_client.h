@@ -12,7 +12,7 @@
 #include <QProgressDialog>
 #include <QThreadPool>
 #include "ui_slm_client.h"
-#include "securestring.h"
+#include "include/securestring.h"
 #include "fileCrypto/filecrypter.h"
 #include "fileSenderThread/filesender.h"
 

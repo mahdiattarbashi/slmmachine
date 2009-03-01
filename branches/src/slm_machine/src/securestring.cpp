@@ -1,11 +1,11 @@
-#include "securestring.h"
+#include "include/securestring.h"
 
 securestring::securestring()
 {
 }
 
 //TODO
-//Use more intelligent encryption and decryption method
+//Polish encryption and decryption method and remove eliminateTurkishCharacters function
 QString securestring::dencrypt(QString data, QString encryptionKey)
 {
     int x, y, t;

@@ -1,4 +1,4 @@
-#include "slm_client.h"
+#include "include/slm_client.h"
 
 slm_client::slm_client(QWidget *parent) :
     QMainWindow(parent),
