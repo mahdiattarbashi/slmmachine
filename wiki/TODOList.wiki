@@ -20,7 +20,7 @@
  # ~~Encryption support will be added to file transfer~~ *Completed*
  # Refactor: Refactoring will be performed on the code. Before the relase candidate release.
  # Refactor: The namespaces of the code.
- # Implement entering network name of the buddy computer instead of IP in Add Buddy Dialog
+ # ~~Implement entering network name of the buddy computer instead of IP in Add Buddy Dialog~~ * Completed
 
 =TO DO for the Release Candidate(RC) Release=
 
