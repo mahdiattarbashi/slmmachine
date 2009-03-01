@@ -4,27 +4,27 @@
 QT += network
 TARGET = SLM_v4
 TEMPLATE = app
-SOURCES += main.cpp \
-    slm_machine.cpp \
-    slm_server.cpp \
-    slm_socketmanager.cpp \
-    buddymanager.cpp \
-    slm_client.cpp \
-    securestring.cpp \
+SOURCES += src/main.cpp \
+    src/slm_client.cpp \
+    src/slm_machine.cpp \
+    src/slm_server.cpp \
+    src/slm_socketmanager.cpp \
+    src/securestring.cpp \
+    src/buddymanager.cpp \
     fileCrypto/filecrypter.cpp \
     fileSenderThread/filesender.cpp \
     fileServerThread/fileserver.cpp
-HEADERS += slm_machine.h \
-    slm_server.h \
-    slm_socketmanager.h \
-    buddymanager.h \
-    slm_client.h \
-    securestring.h \
+HEADERS += include/slm_server.h \
+    include/slm_socketmanager.h \
+    include/slm_machine.h \
+    include/slm_client.h \
+    include/securestring.h \
+    include/buddymanager.h \
     fileCrypto/filecrypter.h \
     fileSenderThread/filesender.h \
     fileServerThread/fileserver.h
-FORMS += slm_machine.ui \
-    addBuddy.ui \
-    slm_client.ui \
-    encryptionKeyDialog.ui
+FORMS += ui/slm_machine.ui \
+    ui/slm_client.ui \
+    ui/encryptionKeyDialog.ui \
+    ui/addBuddy.ui
 RESOURCES += resources/slm_resources.qrc

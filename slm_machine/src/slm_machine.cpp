@@ -1,4 +1,4 @@
-#include "slm_machine.h"
+#include "include/slm_machine.h"
 
 slm_machine::slm_machine(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::slm_machineClass)

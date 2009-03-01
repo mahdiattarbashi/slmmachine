@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
-#include "slm_server.h"
+#include "include/slm_server.h"
 
 class slm_socketmanager : public QObject
 {

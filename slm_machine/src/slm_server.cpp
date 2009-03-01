@@ -1,5 +1,5 @@
-#include "slm_server.h"
-#include "slm_socketmanager.cpp"
+#include "include/slm_server.h"
+#include "include/slm_socketmanager.h"
 
 slm_server* slm_server::m_instance = NULL;
 
