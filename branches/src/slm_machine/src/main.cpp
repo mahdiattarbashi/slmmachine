@@ -5,9 +5,11 @@
 
 int main(int argc, char *argv[])
 {
+	//Application Information for QSettings Object to store the application data
     QCoreApplication::setOrganizationName("Guru");
     QCoreApplication::setApplicationName("SLM");
 
+    //Apply utf8 text codecs for the application (support for Turkish Characters)
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("utf8"));
@@ -24,8 +26,15 @@ int main(int argc, char *argv[])
     // QString styleSheet = QLatin1String(file.readAll());
     // a.setStyleSheet(styleSheet);
 
+    //main user interface class
     slm_machine w;
-    w.setWindowFlags(w.windowFlags() & ~Qt::WindowMaximizeButtonHint); //disable maximize button
+
+    //disable maximize button
+    w.setWindowFlags(w.windowFlags() & ~Qt::WindowMaximizeButtonHint);
+
+    //start the user Interface
     w.show();
+
+    //enter application loop
     return a.exec();
 }
