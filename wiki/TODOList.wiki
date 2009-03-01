@@ -11,7 +11,7 @@
  # ~~Application setup will be created for Windows XP~~ * Completed *
  # Application setup will be created for Ubuntu
  # ~~A button will be added to the client window for cleaning the chat window~~ * Completed *
- # Encryption algorithm will be changed to blowfish using qt extension library
+ # Message Encryption algorithm will be reviewed and polished
  # Code will be commented for better understanding between developers
  # Documentation will be prepared in google docs.
  # Project svn folder will be re-arranged and header files will be changed accordingly
