@@ -24,11 +24,11 @@ void fileServer::run()
     // start listen for incoming connections
     if(!server->listen(QHostAddress::Any, 3333))
     {
-        qDebug()<<"File Server cannot be initialized";
+        qDebug()<<"Error: File Server cannot be Initialized";
     }
     else
     {
-        qDebug()<<"File Server initialized";
+        qDebug()<<"File Server Initialized: Listening on port 3333";
         QObject::connect(server,SIGNAL(newConnection()),this,SLOT(peerConnection()),Qt::DirectConnection);
     }
 
