@@ -9,11 +9,11 @@ slm_server::slm_server()
 
     if(!server->listen(QHostAddress::Any, 29999))
     {
-        qDebug()<<"Server Baslatilamadi";
+        qDebug()<<"Error: Message Server cannot be Initialized";
     }
     else
     {
-        qDebug()<<"Server Baslatildi";
+        qDebug()<<"Message Server Initialized: Listening on port 29999";
         connect(server, SIGNAL(newConnection()), this, SLOT(connectionEstablished()));
     }
 }

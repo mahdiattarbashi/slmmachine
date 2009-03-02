@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-	//Application Information for QSettings Object to store the application data
+    //Application Information for QSettings Object to store the application data
     QCoreApplication::setOrganizationName("Guru");
     QCoreApplication::setApplicationName("SLM");
 
