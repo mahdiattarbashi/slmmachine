@@ -34,7 +34,7 @@ void buddyManager::loadBuddiesAndIPs()
     }
     else
     {
-        this->setKey("qweertesdjhfgjhsdfsmg2008xbnxcvbnxvashgdahgdhafdajhfdvsbdcvgsdvf");
+        this->setKey("qazwsxedcSMG");
     }
 }
 
