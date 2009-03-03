@@ -1,4 +1,7 @@
-#include "../include/slm_client.h"
+#include "include/slm_client.h"
+#include "include/slm_Globals.h"
+
+using namespace SLM_Global::UserInterface;
 
 slm_client::slm_client(QWidget *parent) :
     QMainWindow(parent),
@@ -14,8 +17,8 @@ slm_client::slm_client(QWidget *parent) :
 
 void slm_client::initiateClient(QString clientName, QString clientIPAddress)
 {
-    slmclientName = clientName;
-
+    m_slmclientName = clientName;
+    m_isLastMessageSendByMe = false;
     slmclientIPAddress = clientIPAddress;
     this->setWindowTitle(clientName+ " @ " + clientIPAddress);
 
@@ -55,25 +58,34 @@ void slm_client::displayError(QAbstractSocket::SocketError socketError)
  }
 void slm_client::sendMessagetoBuddy()
 {
-    QDateTime currentTime;
-    QString shownMessage;
+    if(m_ui->slm_client_outgoingTextArea->text() != "")
+    {
+        QDateTime currentTime;
+        QString shownMessage;
 
-    outGoingTextString = m_ui->slm_client_outgoingTextArea->text();
+        outGoingTextString = m_ui->slm_client_outgoingTextArea->text();
 
-    qDebug() << "Unencrypted Text :: " << outGoingTextString;
+        qDebug() << "Unencrypted Text :: " << outGoingTextString;
+        if(!m_isLastMessageSendByMe)
+        {
+             shownMessage += MY_NAME + ": "+currentTime.currentDateTime().toString(DATE_FORMAT)+"\n";
+        }
 
-    shownMessage =  currentTime.currentDateTime().toString() + " Outgoing Message:" + "\n" + "\n" + outGoingTextString + "\n";
-    m_ui->slm_clientIncomingTextArea->append(shownMessage);
+        shownMessage += outGoingTextString;
+        m_isLastMessageSendByMe = true;
 
-    outGoingTextString = encryptionObject.dencrypt(outGoingTextString, this->EncryptionKey);
+        m_ui->slm_clientIncomingTextArea->append(shownMessage);
 
-    qDebug() << "Ecrypted Text" << "::" << outGoingTextString;
+        outGoingTextString = encryptionObject.dencrypt(outGoingTextString, this->EncryptionKey);
 
-    outGoingTextArray = outGoingTextString.toUtf8();
-    outgoingSocket->write(outGoingTextArray);
+        qDebug() << "Ecrypted Text" << "::" << outGoingTextString;
 
-    //clear the text field after writing the text
-    m_ui->slm_client_outgoingTextArea->clear();
+        outGoingTextArray = outGoingTextString.toUtf8();
+        outgoingSocket->write(outGoingTextArray);
+
+        //clear the text field after writing the text
+        m_ui->slm_client_outgoingTextArea->clear();
+    }
 }
 
 void slm_client::readMessagefromBuddy(QString incomingMessage, QHostAddress peerAddress)
@@ -96,8 +108,15 @@ void slm_client::readMessagefromBuddy(QString incomingMessage, QHostAddress peer
     {
         this->activateWindow();// if it is already opened, activate it before writing the message
     }
-    //show the message to the user by adding current data and time
-    shownMessage =  currentTime.currentDateTime().toString() + " Incoming Message From " + peerAddress.toString() + ": " + "\n" + "\n" + incomingMessage + "\n";
+    //show the message to the by formatting
+    if(m_isLastMessageSendByMe)
+    {
+         shownMessage += m_slmclientName + ": "+ currentTime.currentDateTime().toString(DATE_FORMAT)+"\n";
+    }
+    m_isLastMessageSendByMe = false;
+    shownMessage += incomingMessage;
+
+    //shownMessage =  currentTime.currentDateTime().toString() + " Incoming Message From " + peerAddress.toString() + ": " + "\n" + "\n" + incomingMessage + "\n";
     m_ui->slm_clientIncomingTextArea->append(shownMessage);
 }
 
@@ -106,7 +125,7 @@ void slm_client::closeEvent(QCloseEvent *event)
     event->ignore();
     this->setGuiKey(0); // set the gui key to zero to indicate it is closed
     outgoingSocket->disconnectFromHost();
-    emit destroyClient(slmclientName);
+    emit destroyClient(m_slmclientName);
     this->hide();
 }
 
@@ -194,4 +213,13 @@ void slm_client::unknownMessage()
 slm_client::~slm_client()
 {
     delete m_ui;
+}
+//Getters & Setters
+void slm_client::setClientName(QString clientName)
+{
+    m_slmclientName = clientName;
+}
+QString slm_client::getClientName() const
+{
+    return m_slmclientName;
 }

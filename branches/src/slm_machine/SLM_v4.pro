@@ -14,12 +14,7 @@ SOURCES += src/main.cpp \
     fileCrypto/filecrypter.cpp \
     fileSenderThread/filesender.cpp \
     fileServerThread/fileserver.cpp
-HEADERS += include/slm_server.h \
-    include/slm_socketmanager.h \
-    include/slm_machine.h \
-    include/slm_client.h \
-    include/securestring.h \
-    include/buddymanager.h \
+HEADERS += include/*.h \
     fileCrypto/filecrypter.h \
     fileSenderThread/filesender.h \
     fileServerThread/fileserver.h
