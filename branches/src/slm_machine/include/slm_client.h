@@ -27,7 +27,7 @@ public:
     explicit slm_client(QWidget *parent = 0);
     virtual ~slm_client();
     //TODO: Generate Getters&Setters
-    QTcpSocket *outgoingSocket;    
+    QTcpSocket *outgoingSocket;
     QString slmclientIPAddress;
     QString outGoingTextString;
     QByteArray outGoingTextArray;
@@ -66,6 +66,12 @@ public slots:
    void setClientName(QString clientName);
    QString getClientName() const;
 private:
+   enum EchoType
+   {
+     ERROR = 0,
+     WARNING,
+     INFO
+   };
     bool guiKey;
     QString m_slmclientName;
     quint32 file_size_;
@@ -74,6 +80,7 @@ private:
     QString filepathString;
     QString encryptedFileName;
     bool m_isLastMessageSendByMe;
+    void echo(EchoType type, QString message);
 
 };
 
