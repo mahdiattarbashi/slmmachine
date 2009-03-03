@@ -57,6 +57,7 @@ public slots:
    void clearTextArea();
    void fileSentCompleted();
    void sendFileToBuddy();
+   void saveConversation();
    void unknownMessage();
    void connectionBroken();
    void createFileProgress(quint32);

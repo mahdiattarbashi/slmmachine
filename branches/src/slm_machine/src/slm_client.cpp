@@ -13,8 +13,26 @@ slm_client::slm_client(QWidget *parent) :
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowMaximizeButtonHint);
     connect(m_ui->clearButton,SIGNAL(clicked()),this,SLOT(clearTextArea()));
     connect(m_ui->sendFileButton,SIGNAL(clicked()),this,SLOT(sendFileToBuddy()));
+    connect(m_ui->saveConversationButton,SIGNAL(clicked()),this,SLOT(saveConversation()));
 }
+void slm_client::saveConversation()
+{
+    QFile conservation;
+    QString fileName = QFileDialog::getSaveFileName(this);
 
+    conservation.setFileName(fileName);
+
+    if (!conservation.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::warning(this,tr("SLM"),tr("File cannot be saved!"));
+        return;
+    }
+
+    QTextStream out(&conservation);
+    out << m_ui->slm_clientIncomingTextArea->toPlainText();
+
+    conservation.close();
+}
 void slm_client::initiateClient(QString clientName, QString clientIPAddress)
 {
     m_slmclientName = clientName;
