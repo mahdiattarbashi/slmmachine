@@ -74,7 +74,8 @@ void slm_client::sendMessagetoBuddy()
         shownMessage += outGoingTextString;
         m_isLastMessageSendByMe = true;
 
-        m_ui->slm_clientIncomingTextArea->append(shownMessage);
+        //m_ui->slm_clientIncomingTextArea->append(shownMessage);
+        echo(INFO, shownMessage);
 
         outGoingTextString = encryptionObject.dencrypt(outGoingTextString, this->EncryptionKey);
 
@@ -117,7 +118,8 @@ void slm_client::readMessagefromBuddy(QString incomingMessage, QHostAddress peer
     shownMessage += incomingMessage;
 
     //shownMessage =  currentTime.currentDateTime().toString() + " Incoming Message From " + peerAddress.toString() + ": " + "\n" + "\n" + incomingMessage + "\n";
-    m_ui->slm_clientIncomingTextArea->append(shownMessage);
+    //m_ui->slm_clientIncomingTextArea->append(shownMessage);
+    echo(INFO, shownMessage);
 }
 
 void slm_client::closeEvent(QCloseEvent *event)
@@ -222,4 +224,29 @@ void slm_client::setClientName(QString clientName)
 QString slm_client::getClientName() const
 {
     return m_slmclientName;
+}
+
+//generic method for writing to QTextEdit area
+void slm_client::echo(EchoType type, QString message)
+{
+    QString messagePrefix;
+    switch(type)
+    {
+        case ERROR:
+            m_ui->slm_clientIncomingTextArea->setTextBackgroundColor(QColor(Qt::darkRed));
+            m_ui->slm_clientIncomingTextArea->setTextColor(QColor(Qt::white));
+            messagePrefix.append(tr("ERROR : "));
+        case WARNING:
+            m_ui->slm_clientIncomingTextArea->setTextBackgroundColor(QColor(Qt::yellow));
+            m_ui->slm_clientIncomingTextArea->setTextColor(QColor(Qt::black));
+            messagePrefix.append(tr("WARNING : "));
+        case INFO:
+            m_ui->slm_clientIncomingTextArea->setTextBackgroundColor(QColor(Qt::green));
+            m_ui->slm_clientIncomingTextArea->setTextColor(QColor(Qt::black));
+            messagePrefix.append(tr("INFO : "));
+    }
+    messagePrefix.append(message);
+    m_ui->slm_clientIncomingTextArea->append(messagePrefix);
+    //make the ui more responsive by processing pending events
+    QCoreApplication::processEvents(QEventLoop::AllEvents);
 }
