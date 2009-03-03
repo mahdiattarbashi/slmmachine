@@ -20,7 +20,7 @@
    <string>slm_machine</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources/slm_resources.qrc">
+   <iconset resource="../resources/slm_resources.qrc">
     <normaloff>:/icons/SLM_Logo</normaloff>:/icons/SLM_Logo</iconset>
   </property>
   <property name="locale">
@@ -83,21 +83,40 @@
    <addaction name="menuAbout"/>
   </widget>
   <action name="actionExit">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/slm_resources.qrc">
+     <normaloff>:/icons/exit</normaloff>:/icons/exit</iconset>
+   </property>
    <property name="text">
     <string>Exit</string>
    </property>
   </action>
   <action name="actionAbout_Qt">
+   <property name="icon">
+    <iconset resource="../resources/slm_resources.qrc">
+     <normaloff>:/icons/qtLogo</normaloff>:/icons/qtLogo</iconset>
+   </property>
    <property name="text">
     <string>About Qt</string>
    </property>
   </action>
   <action name="actionAbout_SLM">
+   <property name="icon">
+    <iconset resource="../resources/slm_resources.qrc">
+     <normaloff>:/icons/SLM_Alt_Logo</normaloff>:/icons/SLM_Alt_Logo</iconset>
+   </property>
    <property name="text">
     <string>About SLM</string>
    </property>
   </action>
   <action name="actionEncryption_Key">
+   <property name="icon">
+    <iconset resource="../resources/slm_resources.qrc">
+     <normaloff>:/icons/encryption</normaloff>:/icons/encryption</iconset>
+   </property>
    <property name="text">
     <string>Encryption Key</string>
    </property>
@@ -105,7 +124,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="resources/slm_resources.qrc"/>
+  <include location="../resources/slm_resources.qrc"/>
  </resources>
  <connections/>
 </ui>
