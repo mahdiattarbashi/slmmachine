@@ -196,11 +196,13 @@ void fileServer::finishDocument()
         emit transferCompleted(newDocument->fileName());
         newDocument->close();
         newDocument->flush();
+        socket->close();
+        delete socket;
         delete answerSemaphore;
         initializeVariables();
       }
 }
 void fileServer::destroySocket()
 {
-    delete socket;
+    //delete socket;
 }

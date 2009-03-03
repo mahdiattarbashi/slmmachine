@@ -177,7 +177,9 @@ void slm_client::updateFileProgress(quint32 writtenBytes)
 }
 void slm_client::connectionBroken()
 {
-    QMessageBox::warning(this,QString("SLM File Transfer"),QString("Connection is closed, Transfer is canceled!"));
+   //TODO
+   //Handle this situation (connection Broken in the middle)
+   // QMessageBox::warning(this,QString("SLM File Transfer"),QString("Connection is closed, Transfer is canceled!"));
 }
 void slm_client::fileSentCompleted()
 {

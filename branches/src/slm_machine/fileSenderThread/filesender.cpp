@@ -50,6 +50,8 @@ void fileSender::continueFileTransfer(qint64 miktar)
       qDebug() << "Bytes Written: " << bytesWritten;
       outgoingFile->close();
       emit transferFinished();
+      socket->disconnectFromHost();
+      QThread::quit();
   }
 }
 void fileSender::sendFileInfo()
