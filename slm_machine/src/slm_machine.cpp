@@ -300,7 +300,7 @@ void slm_machine::clientCreation(int buddyIndex)
         connect(clientList.last(),SIGNAL(showTrayMessageTransferCompleted()),this,SLOT(showTrayMessageFileSentCompleted()));
         connect(clientList.last(),SIGNAL(encryptingStarted()),this,SLOT(showTrayMessageEncryptionStarted()));
         connect(clientList.last(),SIGNAL(encryptingFinished()),this,SLOT(showTrayMessageEncryptionFinished()));
-        activeClientAliasList.append(clientList.last()->slmclientName);
+        activeClientAliasList.append(clientList.last()->getClientName());
     }
     else
     {

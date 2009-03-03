@@ -7,6 +7,7 @@ namespace SLM_Global
     namespace UserInterface
     {
         const QString DATE_FORMAT = "hh:mm:ss";
+        const QString MY_NAME = "me";
     }
 }
 

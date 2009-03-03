@@ -26,9 +26,8 @@ class slm_client : public QMainWindow {
 public:
     explicit slm_client(QWidget *parent = 0);
     virtual ~slm_client();
-
-    QTcpSocket *outgoingSocket;
-    QString slmclientName;
+    //TODO: Generate Getters&Setters
+    QTcpSocket *outgoingSocket;    
     QString slmclientIPAddress;
     QString outGoingTextString;
     QByteArray outGoingTextArray;
@@ -63,15 +62,18 @@ public slots:
    void createFileProgress(quint32);
    void updateFileProgress(quint32);
    void transfer();
-
+//Getters & Setters
+   void setClientName(QString clientName);
+   QString getClientName() const;
 private:
     bool guiKey;
+    QString m_slmclientName;
     quint32 file_size_;
     QString EncryptionKey;
     Ui::slm_clientWindow *m_ui;
-
     QString filepathString;
     QString encryptedFileName;
+    bool m_isLastMessageSendByMe;
 
 };
 
