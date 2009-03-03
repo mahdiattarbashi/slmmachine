@@ -21,7 +21,7 @@
  # Refactor: Refactoring will be performed on the code. Before the relase candidate release.
  # Refactor: The namespaces of the code.
  # ~~Implement entering network name of the buddy computer instead of IP in Add Buddy Dialog~~ *Completed*
- # Implement "save conversation" to the client window.  
+ # ~~Implement "save conversation" to the client window.~~ *Completed*
 
 =TO DO for the Release Candidate(RC) Release=
 
