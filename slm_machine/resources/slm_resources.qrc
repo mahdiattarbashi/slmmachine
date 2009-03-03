@@ -4,6 +4,10 @@
         <file alias="SLM_Alt_Logo" >icons/slmAlternativeLogo.png</file>
         <file alias="cleearIcon" >icons/clearIcon.png</file>
         <file alias="sendFile" >icons/senFile.png</file>
+        <file alias="qtLogo" >icons/qt-logo.png</file>
+        <file alias="encryption" >icons/PuzzleManiak.png</file>
+        <file alias="exit" >icons/exit.png</file>
+        <file alias="saveConversation" >icons/saveIcon.png</file>
     </qresource>
     <qresource prefix="/settings" >
         <file alias="style" >slm_style.qss</file>
