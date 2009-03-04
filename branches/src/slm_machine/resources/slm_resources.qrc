@@ -9,6 +9,7 @@
         <file alias="exit" >icons/exit.png</file>
         <file alias="saveConversation" >icons/saveIcon.png</file>
         <file alias="CheckOnline" >icons/user-online.png</file>
+        <file alias="restore" >icons/restore.png</file>
     </qresource>
     <qresource prefix="/settings" >
         <file alias="style" >slm_style.qss</file>
