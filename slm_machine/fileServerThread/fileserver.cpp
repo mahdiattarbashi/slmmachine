@@ -134,6 +134,10 @@ void fileServer::readMessage()
     }
     else
     {
+        socket->close();
+        delete socket;
+        delete answerSemaphore;
+        initializeVariables();
         emit unknownMessageArrived();
     }
 
@@ -204,5 +208,6 @@ void fileServer::finishDocument()
 }
 void fileServer::destroySocket()
 {
-    //delete socket;
+    socket->close();
+    initializeVariables();
 }
