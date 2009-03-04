@@ -11,7 +11,7 @@
  # Application setup will be created for Ubuntu
  # ~~A button will be added to the client window for cleaning the chat window~~ * Completed *
  # Code will be commented for better understanding between developers
- # Documentation preperation
+ # Documentation preperation using Doxygen
  # ~~Project svn folder will be re-arranged and header files will be changed accordingly~~*Completed*
  # Debug Codes will be eliminated using a global macro.
  # ~~File Transfer Support will be added~~ * Completed *
