@@ -72,6 +72,8 @@ public slots:
     void slotPlaceToTray();
     void decryptionFinished();
 
+    void checkUserOnline();
+
     /**********File Server Slots******************/
     void incomingFileSlot(QString,QString,quint32);
     void updateReceivingProgress(quint32);
@@ -97,11 +99,14 @@ private:
     //Tray Icon Related
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
+    QMenu *rightClickUserMenu;
+    QAction *checkOnline;
     QAction *restoreAction;
     QAction *quitAction;
     void createTrayIcon();
     void createActions();
 
+    bool eventFilter(QObject *obj, QEvent *event);
 signals:
     void signalPlaceToTray();
 };
