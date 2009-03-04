@@ -71,7 +71,9 @@ private:
    {
      ERROR = 0,
      WARNING,
-     INFO
+     INFO,
+     HEADER,
+     MESSAGE
    };
     bool guiKey;
     QString m_slmclientName;
