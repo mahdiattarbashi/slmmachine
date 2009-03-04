@@ -20,6 +20,9 @@ void slm_client::saveConversation()
     QFile conservation;
     QString fileName = QFileDialog::getSaveFileName(this);
 
+    if (fileName == "")
+        return;
+
     conservation.setFileName(fileName);
 
     if (!conservation.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -32,6 +35,7 @@ void slm_client::saveConversation()
     out << m_ui->slm_clientIncomingTextArea->toPlainText();
 
     conservation.close();
+    QMessageBox::information(this,tr("SLM"),tr("Conversation Saved!"));
 }
 void slm_client::initiateClient(QString clientName, QString clientIPAddress)
 {
