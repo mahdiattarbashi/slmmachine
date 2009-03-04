@@ -1,5 +1,5 @@
-#include "include/slm_client.h"
-#include "include/slm_Globals.h"
+#include "slm_client.h"
+#include "slm_Globals.h"
 
 using namespace SLM_Global::UserInterface;
 
