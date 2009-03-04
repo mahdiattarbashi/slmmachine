@@ -90,14 +90,12 @@ void slm_client::sendMessagetoBuddy()
         qDebug() << "Unencrypted Text :: " << outGoingTextString;
         if(!m_isLastMessageSendByMe)
         {
-             shownMessage += MY_NAME + ": "+currentTime.currentDateTime().toString(DATE_FORMAT)+"\n";
+             shownMessage += "(" + currentTime.currentDateTime().toString(DATE_FORMAT) + ") " + MY_NAME + ":";
         }
+        echo(HEADER,shownMessage);
+        echo(MESSAGE,outGoingTextString);
 
-        shownMessage += outGoingTextString;
         m_isLastMessageSendByMe = true;
-
-        //m_ui->slm_clientIncomingTextArea->append(shownMessage);
-        echo(INFO, shownMessage);
 
         outGoingTextString = encryptionObject.dencrypt(outGoingTextString, this->EncryptionKey);
 
@@ -134,14 +132,11 @@ void slm_client::readMessagefromBuddy(QString incomingMessage, QHostAddress peer
     //show the message to the by formatting
     if(m_isLastMessageSendByMe)
     {
-         shownMessage += m_slmclientName + ": "+ currentTime.currentDateTime().toString(DATE_FORMAT)+"\n";
+         shownMessage += "(" + currentTime.currentDateTime().toString(DATE_FORMAT) + ") " + m_slmclientName + ":";
     }
     m_isLastMessageSendByMe = false;
-    shownMessage += incomingMessage;
-
-    //shownMessage =  currentTime.currentDateTime().toString() + " Incoming Message From " + peerAddress.toString() + ": " + "\n" + "\n" + incomingMessage + "\n";
-    //m_ui->slm_clientIncomingTextArea->append(shownMessage);
-    echo(INFO, shownMessage);
+    echo(HEADER,shownMessage);
+    echo(MESSAGE,incomingMessage);
 }
 
 void slm_client::closeEvent(QCloseEvent *event)
@@ -266,9 +261,31 @@ void slm_client::echo(EchoType type, QString message)
             m_ui->slm_clientIncomingTextArea->setTextBackgroundColor(QColor(Qt::green));
             m_ui->slm_clientIncomingTextArea->setTextColor(QColor(Qt::black));
             messagePrefix.append(tr("INFO : "));
+        case HEADER:
+            m_ui->slm_clientIncomingTextArea->setTextBackgroundColor(QColor(Qt::white));
+            m_ui->slm_clientIncomingTextArea->setTextColor(QColor(Qt::blue));
+            m_ui->slm_clientIncomingTextArea->setFontItalic(1);
+            m_ui->slm_clientIncomingTextArea->setFontWeight(QFont::Bold);
+            break;
+        case MESSAGE:
+            m_ui->slm_clientIncomingTextArea->setTextBackgroundColor(QColor(Qt::white));
+            m_ui->slm_clientIncomingTextArea->setTextColor(QColor(Qt::black));
+            m_ui->slm_clientIncomingTextArea->setFontItalic(0);
+            m_ui->slm_clientIncomingTextArea->setFontWeight(QFont::Bold);
+            break;
+        default:
+            break;
     }
+
     messagePrefix.append(message);
+
+    if(type == MESSAGE)
+    {
+        messagePrefix.append("\n");
+    }
+
     m_ui->slm_clientIncomingTextArea->append(messagePrefix);
+
     //make the ui more responsive by processing pending events
     QCoreApplication::processEvents(QEventLoop::AllEvents);
 }
