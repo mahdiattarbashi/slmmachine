@@ -14,14 +14,14 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QHostInfo>
-#include "../include/slm_server.h"
-#include "../include/slm_client.h"
-#include "../include/buddymanager.h"
-#include "../fileServerThread/fileserver.h"
-#include "../fileCrypto/fileCrypter.h"
-#include "../ui_slm_machine.h"
-#include "../ui_encryptionKeyDialog.h"
-#include "../ui_addBuddy.h"
+#include "slm_server.h"
+#include "slm_client.h"
+#include "buddymanager.h"
+#include "fileserver.h"
+#include "fileCrypter.h"
+#include "ui_slm_machine.h"
+#include "ui_encryptionKeyDialog.h"
+#include "ui_addBuddy.h"
 
 
 

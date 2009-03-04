@@ -1,7 +1,7 @@
 #include <QtGui/QApplication>
 #include <qtextcodec.h>
 #include <QFile>
-#include "../include/slm_machine.h"
+#include "slm_machine.h"
 
 int main(int argc, char *argv[])
 {

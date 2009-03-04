@@ -4,6 +4,11 @@
 QT += network
 TARGET = SLM_v4
 TEMPLATE = app
+INCLUDEPATH += include \
+               src \
+               fileCrypto \
+               fileSenderThread \
+               fileServerThread
 SOURCES += src/main.cpp \
     src/slm_client.cpp \
     src/slm_machine.cpp \

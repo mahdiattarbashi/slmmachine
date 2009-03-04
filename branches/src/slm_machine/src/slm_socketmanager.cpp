@@ -1,4 +1,4 @@
-#include "../include/slm_socketmanager.h"
+#include "slm_socketmanager.h"
 
 slm_socketmanager::slm_socketmanager(QTcpServer *server)
 {

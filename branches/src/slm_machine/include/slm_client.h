@@ -11,10 +11,10 @@
 #include <QFileDialog>
 #include <QProgressDialog>
 #include <QThreadPool>
-#include "../ui_slm_client.h"
-#include "../include/securestring.h"
-#include "../fileCrypto/filecrypter.h"
-#include "../fileSenderThread/filesender.h"
+#include "ui_slm_client.h"
+#include "securestring.h"
+#include "filecrypter.h"
+#include "filesender.h"
 
 namespace Ui {
     class slm_client;
