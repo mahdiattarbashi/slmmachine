@@ -6,8 +6,8 @@
  # ~~System Tray Support will be added~~ *Completed*
  # ~~Encryption Key will be made a configuration Item~~ * Completed *
  # ~~Application Icon will be created~~ * Completed *
- # More intelligent IP validation code will be written with QRegExp
- # Application fonts will be review and changed if necessary
+ # More intelligent IP validation code with QRegExp
+ # User Interface Polishing
  # ~~Application setup will be created for Windows XP~~ * Completed *
  # Application setup will be created for Ubuntu
  # ~~A button will be added to the client window for cleaning the chat window~~ * Completed *
