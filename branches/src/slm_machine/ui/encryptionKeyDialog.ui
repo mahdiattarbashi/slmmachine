@@ -14,7 +14,7 @@
    <string>Dialog</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources/slm_resources.qrc">
+   <iconset resource="../resources/slm_resources.qrc">
     <normaloff>:/icons/SLM_Logo</normaloff>:/icons/SLM_Logo</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -34,7 +34,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="resources/slm_resources.qrc"/>
+  <include location="../resources/slm_resources.qrc"/>
  </resources>
  <connections>
   <connection>
