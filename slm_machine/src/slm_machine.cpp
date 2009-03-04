@@ -15,6 +15,8 @@ slm_machine::slm_machine(QWidget *parent)
     ui->buddyList->setModel(buddyModel);
     ui->buddyList->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+    this->setWindowTitle("SLM");
+
     //UI connections
     connect(ui->addBuddyButton, SIGNAL(clicked()),this, SLOT(addBuddyPressed()));
     connect(ui->removeBuddyButton, SIGNAL(clicked()), this, SLOT(removeBuddypressed()));
@@ -65,6 +67,7 @@ slm_machine::slm_machine(QWidget *parent)
 
     //Show application icon in the tray
     trayIcon->setIcon(QIcon(":/icons/SLM_Logo"));
+    trayIcon->setToolTip("SLM (SMG Lan Messenger)");
     trayIcon->show();
 /**********************************************************************************/
 }
@@ -455,9 +458,11 @@ void slm_machine::closeEvent(QCloseEvent *closeEvent)
 void slm_machine::createActions()
 {
     restoreAction = new QAction(tr("&Restore"), this);
+    restoreAction->setIcon(QIcon(":/icons/restore"));
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
 
     quitAction = new QAction(tr("&Quit"), this);
+    quitAction->setIcon(QIcon(":/icons/exit"));
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 }
 
