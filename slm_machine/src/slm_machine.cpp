@@ -135,9 +135,18 @@ void slm_machine::decryptionFinished()
 {
     //remove the encrypted file (temp)
     QFile::remove(incomingFileName);
-
+    QString DownloadFolder;
+#ifdef Q_WS_WIN32
+    DownloadFolder = "C:/SLM_Downloads/";
+#endif
+#ifdef Q_WS_X11
+    DownloadFolder = "/tmp/SLM_Downloads/";
+#endif
+#ifdef Q_WS_MAC
+    DownloadFolder = "/tmp/SLM_Downloads/";
+#endif
     //Inform User about process
-    trayIcon->showMessage("SLM File Decryption", "File Decryption Finished\nYou can access your file from the downloads folder",QSystemTrayIcon::Information,20000);
+    trayIcon->showMessage(tr("SLM File Decryption"), tr("File Decryption Finished\nYou can access your file from the %1 folder").arg(DownloadFolder),QSystemTrayIcon::Information,20000);
 }
 void slm_machine::showTrayMessageFileSentCompleted()
 {
