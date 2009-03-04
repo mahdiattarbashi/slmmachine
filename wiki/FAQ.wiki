@@ -3,7 +3,7 @@
 
 == About ==
  * *What is SLM Machine?*
-//TODO
+ Main idea behind SLM is to achieve colleague communication with minimum network load. It is espacially designed for low network traffic. Similar LAN messengers are using [http://en.wikipedia.org/wiki/User_Datagram_Protocol UDP] broadcasting to find online peers, SLM on the other hand eliminates broadcast messaging. This makes unnecessary network loads and might be detected by firewalls or IT guys. Especially in the secure company intranets many conventional messengers are useless. In SLM, buddy list is constructed manually by entering an alias and corresponding IP address or Host Name of the buddy.
 
  * *Why do we need SLM Machine?*
 //TODO
