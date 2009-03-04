@@ -17,14 +17,13 @@
  # Refactor: The namespaces of the code.
  # ~~Implement entering network name of the buddy computer instead of IP in Add Buddy Dialog~~ *Completed*
  # ~~Implement "save conversation" to the client window.~~ *Completed*
-
+ # ~~Contex Menu will be implemented for user list~~
+  * ~~Check Buddy's offline/online status manually (Eg: rigth click check status)~~ *Completed*
 =TO DO for the Release Candidate(RC) Release=
 
  # Buddy Icon support will be added
  # Support for pluggable architecture
  # Emotion support will be added
- # Contex Menu will be implemented for user list
-  * Check Buddy's offline/online status manually (Eg: rigth click check status)
  # Improved customizable GUI
  # Logging support will be added
 
