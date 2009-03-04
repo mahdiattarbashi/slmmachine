@@ -24,7 +24,6 @@ slm_machine::slm_machine(QWidget *parent)
     connect(ui->actionAbout_SLM, SIGNAL(triggered()), this, SLOT(aboutSLMPressed()));
     connect(ui->actionEncryption_Key, SIGNAL(triggered()), this, SLOT(encryptionKeyPressed()));
 
-
 /************************************************************************************/
 
 /************************** Message Server Management *******************************/
@@ -46,6 +45,15 @@ slm_machine::slm_machine(QWidget *parent)
     FServer->start();
 /***********************************************************************************/
 
+/***************************** Buddy List Right Click *******************************/
+    checkOnline = new QAction(tr("&Check Online"), this);
+    checkOnline->setIcon(QIcon(":/icons/CheckOnline"));
+    rightClickUserMenu = new QMenu();
+    rightClickUserMenu->addAction(checkOnline);
+    connect(checkOnline,SIGNAL(triggered()),this,SLOT(checkUserOnline()));
+    ui->buddyList->installEventFilter(this);
+/***********************************************************************************/
+
 /***************************** Tray Icon Management ********************************/
     //Create tray icon and contex menu actions
     this->createActions();
@@ -60,7 +68,35 @@ slm_machine::slm_machine(QWidget *parent)
     trayIcon->show();
 /**********************************************************************************/
 }
-
+void slm_machine::checkUserOnline()
+{
+    QTcpSocket *checkUser = new QTcpSocket();
+    checkUser->connectToHost(buddies->IPBuddyList[ui->buddyList->currentIndex().row()], 3333,QIODevice::ReadOnly);
+    if(checkUser->waitForConnected(500))
+    {
+        QMessageBox::information(this,"SLM User Check","User is Online");
+    }
+    else
+    {
+        QMessageBox::warning(this,"SLM User Check", "User is offline");
+    }
+    checkUser->disconnectFromHost();
+    checkUser->close();
+    delete checkUser;
+}
+bool slm_machine::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::ContextMenu)
+    {
+        rightClickUserMenu->exec(QCursor::pos());
+        return true;
+    }
+    else
+    {
+        // standard event processing
+        return QObject::eventFilter(obj, event);
+    }
+}
 /********************************************************************************************/
 /*
 * File Server Slots:
