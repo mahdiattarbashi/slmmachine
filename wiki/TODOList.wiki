@@ -7,17 +7,18 @@
  # ~~Encryption Key will be made a configuration Item~~ * Completed *
  # ~~Application Icon will be created~~ * Completed *
  # ~~Application setup will be created for Windows XP~~ * Completed *
- # Application setup will be created for Ubuntu
  # ~~A button will be added to the client window for cleaning the chat window~~ * Completed *
  # ~~Project svn folder will be re-arranged and header files will be changed accordingly~~*Completed*
  # ~~File Transfer Support will be added~~ * Completed *
  # ~~Encryption support will be added to file transfer~~ *Completed*
- # Refactor: Refactoring will be performed on the code. Before the relase candidate release.
- # Refactor: The namespaces of the code.
  # ~~Implement entering network name of the buddy computer instead of IP in Add Buddy Dialog~~ *Completed*
  # ~~Implement "save conversation" to the client window.~~ *Completed*
  # ~~Contex Menu will be implemented for user list~~
   * ~~Check Buddy's offline/online status manually (Eg: rigth click check status)~~ *Completed*
+ # Application setup will be created for Ubuntu
+ # Refactor: Refactoring will be performed on the code.
+ # Refactor: The namespaces of the code.
+
 =TO DO for the Release Candidate(RC) Release=
 
  # Buddy Icon support will be added
@@ -26,7 +27,11 @@
  # User Interface Polishing
   * Improved customizable GUI
  # Logging support will be added
+ # Refactor: Refactoring will be performed on the code.
+ # Refactor: The namespaces of the code.
 
 =TO DO for the Gold Release =
  # Group Chat Support will be added. 
  # Documentation preperation using Doxygen
+ # Refactor: Refactoring will be performed on the code.
+ # Refactor: The namespaces of the code.
