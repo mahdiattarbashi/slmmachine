@@ -1,6 +1,6 @@
 #labels Featured
 Screenshots of SLM Beta Version that will be released 15 March 2009
----
+----
 http://dl.getdropbox.com/u/161208/Media/Photos/SLM/SLM_Screenshots/SLM_MainScreen.jpg
 http://dl.getdropbox.com/u/161208/Media/Photos/SLM/SLM_Screenshots/SLM_MessageWindow.jpg
 http://dl.getdropbox.com/u/161208/Media/Photos/SLM/SLM_Screenshots/SLM_about.jpg
