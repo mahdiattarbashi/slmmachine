@@ -41,6 +41,7 @@ void slm_client::initiateClient(QString clientName, QString clientIPAddress)
 {
     m_slmclientName = clientName;
     m_isLastMessageSendByMe = false;
+    isFirstMessage = 1;
     slmclientIPAddress = clientIPAddress;
     this->setWindowTitle(clientName+ " @ " + clientIPAddress);
 
@@ -58,10 +59,19 @@ void slm_client::clearTextArea()
     //Socket Connection Error Slot
 void slm_client::displayError(QAbstractSocket::SocketError socketError)
  {
+    int answer;
      switch (socketError)
      {
          case QAbstractSocket::RemoteHostClosedError:
                 QMessageBox::warning(this,tr("SLM"),tr("Client closed the application"));
+                answer = QMessageBox::question(this, "SLM Save Conversation",
+                                     tr("Do you want to save the conversation?"),
+                                     QMessageBox::Yes|QMessageBox::Default,
+                                     QMessageBox::No|QMessageBox::Escape);
+                if(answer & QMessageBox::Yes)
+                {
+                    this->saveConversation();
+                }
                 this->close();
                 break;
          case QAbstractSocket::HostNotFoundError:
@@ -91,8 +101,9 @@ void slm_client::sendMessagetoBuddy()
         if(!m_isLastMessageSendByMe)
         {
              shownMessage += "(" + currentTime.currentDateTime().toString(DATE_FORMAT) + ") " + MY_NAME + ":";
+             echo(HEADER,shownMessage);
         }
-        echo(HEADER,shownMessage);
+
         echo(MESSAGE,outGoingTextString);
 
         m_isLastMessageSendByMe = true;
@@ -124,19 +135,23 @@ void slm_client::readMessagefromBuddy(QString incomingMessage, QHostAddress peer
     {
         this->show();
         this->setGuiKey(1);// set the gui key to one to indicate it is opened
+        isFirstMessage = 1;
     }
     else
     {
         this->activateWindow();// if it is already opened, activate it before writing the message
     }
+
     //show the message to the by formatting
-    if(m_isLastMessageSendByMe)
+    if(m_isLastMessageSendByMe || (isFirstMessage == 1))
     {
          shownMessage += "(" + currentTime.currentDateTime().toString(DATE_FORMAT) + ") " + m_slmclientName + ":";
+         echo(HEADER,shownMessage);
+         isFirstMessage = 0;
     }
-    m_isLastMessageSendByMe = false;
-    echo(HEADER,shownMessage);
     echo(MESSAGE,incomingMessage);
+
+    m_isLastMessageSendByMe = false;
 }
 
 void slm_client::closeEvent(QCloseEvent *event)
@@ -278,11 +293,6 @@ void slm_client::echo(EchoType type, QString message)
     }
 
     messagePrefix.append(message);
-
-    if(type == MESSAGE)
-    {
-        messagePrefix.append("\n");
-    }
 
     m_ui->slm_clientIncomingTextArea->append(messagePrefix);
 
