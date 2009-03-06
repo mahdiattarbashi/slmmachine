@@ -6,7 +6,6 @@
  # ~~System Tray Support will be added~~ *Completed*
  # ~~Encryption Key will be made a configuration Item~~ * Completed *
  # ~~Application Icon will be created~~ * Completed *
- # User Interface Polishing
  # ~~Application setup will be created for Windows XP~~ * Completed *
  # Application setup will be created for Ubuntu
  # ~~A button will be added to the client window for cleaning the chat window~~ * Completed *
@@ -24,7 +23,8 @@
  # Buddy Icon support will be added
  # Support for pluggable architecture
  # Emotion support will be added
- # Improved customizable GUI
+ # User Interface Polishing
+  * Improved customizable GUI
  # Logging support will be added
 
 =TO DO for the Gold Release =
