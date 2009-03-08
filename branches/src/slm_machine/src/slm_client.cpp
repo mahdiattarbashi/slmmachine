@@ -14,6 +14,10 @@ slm_client::slm_client(QWidget *parent) :
     connect(m_ui->clearButton,SIGNAL(clicked()),this,SLOT(clearTextArea()));
     connect(m_ui->sendFileButton,SIGNAL(clicked()),this,SLOT(sendFileToBuddy()));
     connect(m_ui->saveConversationButton,SIGNAL(clicked()),this,SLOT(saveConversation()));
+    connect(m_ui->encSendFileButton,SIGNAL(clicked()),this,SLOT(sendEncFileToBuddy()));
+    m_ui->slm_client_outgoingTextArea->setFocus();
+    encOrNot = 0;
+    isCleared = 0;
 }
 void slm_client::saveConversation()
 {
@@ -55,6 +59,7 @@ void slm_client::clearTextArea()
 {
     m_ui->slm_clientIncomingTextArea->clear();
     m_ui->slm_client_outgoingTextArea->setFocus();
+    isCleared = 1;
 }
     //Socket Connection Error Slot
 void slm_client::displayError(QAbstractSocket::SocketError socketError)
@@ -143,11 +148,12 @@ void slm_client::readMessagefromBuddy(QString incomingMessage, QHostAddress peer
     }
 
     //show the message to the by formatting
-    if(m_isLastMessageSendByMe || (isFirstMessage == 1))
+    if(m_isLastMessageSendByMe || (isFirstMessage == 1) || (isCleared == 1))
     {
          shownMessage += "(" + currentTime.currentDateTime().toString(DATE_FORMAT) + ") " + m_slmclientName + ":";
          echo(HEADER,shownMessage);
          isFirstMessage = 0;
+         isCleared = 0;
     }
     echo(MESSAGE,incomingMessage);
 
@@ -178,25 +184,37 @@ void slm_client::setEncryptionKey(QString Key)
     EncryptionKey = Key;
 }
 
+void slm_client::sendEncFileToBuddy()
+{
+    this->encOrNot = 1;
+    sendFileToBuddy();
+}
 void slm_client::sendFileToBuddy()
 {
-
+    filepathString = "";
     filepathString = QFileDialog::getOpenFileName(this, "Choose a file");
     if(filepathString != "")
     {
-        //Encrypt the file first
-        encryptedFileName = filepathString + ".enc";
+        if(this->encOrNot == 1)
+        {
+            //Encrypt the file first
+            encryptedFileName = filepathString + ".enc";
 
-        crypto = new fileCrypter();
+            crypto = new fileCrypter();
 
-        crypto->InputFile = filepathString;
-        crypto->OutputFile = encryptedFileName;
-        crypto->key = 1;
+            crypto->InputFile = filepathString;
+            crypto->OutputFile = encryptedFileName;
+            crypto->key = 1;
 
-        connect(crypto,SIGNAL(destroyed()),this,SLOT(transfer()));
+            connect(crypto,SIGNAL(destroyed()),this,SLOT(transfer()));
 
-        emit encryptingStarted();
-        QThreadPool::globalInstance()->start(crypto);
+            emit encryptingStarted();
+            QThreadPool::globalInstance()->start(crypto);
+        }
+        else
+        {
+            transfer();
+        }
     }
     else
     {
@@ -205,7 +223,10 @@ void slm_client::sendFileToBuddy()
 }
 void slm_client::transfer()
 {
-    emit encryptingFinished();
+    if(encOrNot == 1)
+    {
+        emit encryptingFinished();
+    }
     fileSenderThread =new fileSender();
     connect(fileSenderThread,SIGNAL(transferFinished()),this,SLOT(fileSentCompleted()),Qt::QueuedConnection);
     connect(fileSenderThread,SIGNAL(unknownMessageReceived()),this,SLOT(unknownMessage()),Qt::QueuedConnection);
@@ -213,7 +234,16 @@ void slm_client::transfer()
     connect(fileSenderThread,SIGNAL(sendingStarted(quint32)),this,SLOT(createFileProgress(quint32)),Qt::BlockingQueuedConnection);
     connect(fileSenderThread,SIGNAL(sendingCondition(quint32)),this,SLOT(updateFileProgress(quint32)),Qt::BlockingQueuedConnection);
 
-    fileSenderThread->filePathOfOutgoingFile = encryptedFileName;
+    if(encOrNot == 1)
+    {
+        fileSenderThread->filePathOfOutgoingFile = encryptedFileName;
+        fileSenderThread->encOrNot = 1;
+    }
+    else
+    {
+        fileSenderThread->filePathOfOutgoingFile = filepathString;
+        fileSenderThread->encOrNot = 0;
+    }
     fileSenderThread->peerIP = this->slmclientIPAddress;
     fileSenderThread->start();
 }
@@ -237,8 +267,12 @@ void slm_client::connectionBroken()
 void slm_client::fileSentCompleted()
 {
     progress->setValue(file_size_);
-    QFile::remove(encryptedFileName);
+    if(encOrNot == 1)
+    {
+        QFile::remove(encryptedFileName);
+    }
     emit showTrayMessageTransferCompleted();
+    encOrNot = 0;
 }
 void slm_client::unknownMessage()
 {
@@ -257,7 +291,6 @@ QString slm_client::getClientName() const
 {
     return m_slmclientName;
 }
-
 //generic method for writing to QTextEdit area
 void slm_client::echo(EchoType type, QString message)
 {

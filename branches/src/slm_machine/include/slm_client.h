@@ -57,6 +57,7 @@ public slots:
    void clearTextArea();
    void fileSentCompleted();
    void sendFileToBuddy();
+   void sendEncFileToBuddy();
    void saveConversation();
    void unknownMessage();
    void connectionBroken();
@@ -76,8 +77,10 @@ private:
      MESSAGE
    };
     bool guiKey;
+    bool encOrNot;
     QString m_slmclientName;
     quint32 file_size_;
+    bool isCleared;
     QString EncryptionKey;
     Ui::slm_clientWindow *m_ui;
     QString filepathString;

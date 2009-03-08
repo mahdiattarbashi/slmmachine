@@ -37,7 +37,7 @@ slm_machine::slm_machine(QWidget *parent)
     FServer = new fileServer();
 
     //File Server Connections
-    connect(FServer,SIGNAL(newDocumentArrived(QString,QString,quint32)),this,SLOT(incomingFileSlot(QString,QString,quint32)),Qt::QueuedConnection);
+    connect(FServer,SIGNAL(newDocumentArrived(QString,QString,quint32,quint8)),this,SLOT(incomingFileSlot(QString,QString,quint32,quint8)),Qt::QueuedConnection);
     connect(FServer,SIGNAL(transferCompleted(QString)),this,SLOT(incomingFileTransferCompleted(QString)),Qt::QueuedConnection);
     connect(FServer,SIGNAL(transferCanceled()),this,SLOT(transferIsCancelled()),Qt::QueuedConnection);
     connect(FServer,SIGNAL(ongoingTransfer()),this,SLOT(ongoingTransferExists()),Qt::QueuedConnection);
@@ -111,14 +111,28 @@ bool slm_machine::eventFilter(QObject *obj, QEvent *event)
 * 5- void incomingFileTransferCompleted();
 * 6- void showTrayMessageFileSentCompleted();
 */
-void slm_machine::incomingFileSlot(QString fileName, QString infoString, quint32 fileSize)
+void slm_machine::incomingFileSlot(QString fileName, QString infoString, quint32 fileSize, quint8 isEnc)
 {
     int gui_return_answer;
-    gui_return_answer = QMessageBox::question(this, "SLM File Transfer",
-                                     tr("Incoming file: %1 (%2). Do you want to save it?")
+
+    if(isEnc == 'E')
+    {
+        encOrNot = 1;
+        gui_return_answer = QMessageBox::question(this, "SLM File Transfer",
+                                     tr("Incoming file with Encryption: %1 (%2). Do you want to save it?")
                                      .arg(fileName).arg(infoString),
                                      QMessageBox::Yes|QMessageBox::Default,
                                      QMessageBox::No|QMessageBox::Escape);
+    }
+    else if(isEnc == 'P')
+    {
+        encOrNot = 0;
+        gui_return_answer = QMessageBox::question(this, "SLM File Transfer",
+                                     tr("Incoming file without Encryption: %1 (%2). Do you want to save it?")
+                                     .arg(fileName).arg(infoString),
+                                     QMessageBox::Yes|QMessageBox::Default,
+                                     QMessageBox::No|QMessageBox::Escape);
+    }
 
     FServer->answerSemaphore->acquire();
 
@@ -147,28 +161,45 @@ void slm_machine::transferIsCancelled()
 }
 void slm_machine::incomingFileTransferCompleted(QString name)
 {
+    QString DownloadFolder;
     progress->setValue(receivingFileSize);
-    trayIcon->showMessage("SLM File Transfer(Receiving)", "File Transfer Completed\nFile Decryption is started\nPlease wait until it finishes...",QSystemTrayIcon::Information,10000);
+    if(encOrNot == 1)
+    {
+        trayIcon->showMessage("SLM File Transfer(Receiving)", "File Transfer Completed\nFile Decryption is started\nPlease wait until it finishes...",QSystemTrayIcon::Information,10000);
 
-    //Start decryption of incoming file
+        //Start decryption of incoming file
 
-    //give required information to the decryption object
-    incomingFileName = name;
+        //give required information to the decryption object
+        incomingFileName = name;
 
-    decrypto = new fileCrypter();
-    decrypto->key = 2;
+        decrypto = new fileCrypter();
+        decrypto->key = 2;
 
-    //Encrypted file name (file that will be decrypted)
-    decrypto->InputFile = name;
+        //Encrypted file name (file that will be decrypted)
+        decrypto->InputFile = name;
 
-    //real file name (Remove ".enc" from the end of the file name)
-    name.chop(4);
-    decrypto->OutputFile = name;
+        //real file name (Remove ".enc" from the end of the file name)
+        name.chop(4);
+        decrypto->OutputFile = name;
 
-    connect(decrypto,SIGNAL(destroyed()),this,SLOT(decryptionFinished()));
+        connect(decrypto,SIGNAL(destroyed()),this,SLOT(decryptionFinished()));
 
-    //Start decryption
-    QThreadPool::globalInstance()->start(decrypto);
+        //Start decryption
+        QThreadPool::globalInstance()->start(decrypto);
+    }
+    else
+    {
+#ifdef Q_WS_WIN32
+        DownloadFolder = "C:/SLM_Downloads/";
+#endif
+#ifdef Q_WS_X11
+        DownloadFolder = "/tmp/SLM_Downloads/";
+#endif
+#ifdef Q_WS_MAC
+        DownloadFolder = "/tmp/SLM_Downloads/";
+#endif
+        trayIcon->showMessage("SLM File Transfer(Receiving)", tr("File Transfer Finished\nYou can access your file from the %1 folder").arg(DownloadFolder),QSystemTrayIcon::Information,10000);
+    }
 }
 void slm_machine::decryptionFinished()
 {
@@ -190,6 +221,14 @@ void slm_machine::decryptionFinished()
 void slm_machine::showTrayMessageFileSentCompleted()
 {
     trayIcon->showMessage("SLM File Transfer (Sending)", "File Transfer Completed",QSystemTrayIcon::Information,10000);
+}
+void slm_machine::showTrayMessageEncryptionStarted()
+{
+    trayIcon->showMessage("SLM File Encrytion", "File Encryption Started\nFile Transfer will start automatically after encryption process\nPlease Wait...",QSystemTrayIcon::Information,20000);
+}
+void slm_machine::showTrayMessageEncryptionFinished()
+{
+    trayIcon->showMessage("SLM File Encrytion", "File Encryption Finished\nFile Transfer is starting...\nWaiting for peer to accept file transfer",QSystemTrayIcon::Information,10000);
 }
 /********************************************************************************************/
 
@@ -357,14 +396,7 @@ void slm_machine::clientCreation(int buddyIndex)
         clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->activateWindow();
     }
 }
-void slm_machine::showTrayMessageEncryptionStarted()
-{
-    trayIcon->showMessage("SLM File Encrytion", "File Encryption Started\nFile Transfer will start automatically after encryption process\nPlease Wait...",QSystemTrayIcon::Information,20000);
-}
-void slm_machine::showTrayMessageEncryptionFinished()
-{
-    trayIcon->showMessage("SLM File Encrytion", "File Encryption Finished\nFile Transfer is starting...\nWaiting for peer to accept file transfer",QSystemTrayIcon::Information,10000);
-}
+
 // TODO
 // Write more intelligent IP validating Code using RegExp!!
 bool slm_machine::IPAddressValidator(QString IPtobeValidated)
@@ -463,7 +495,7 @@ void slm_machine::createActions()
 
     quitAction = new QAction(tr("&Quit"), this);
     quitAction->setIcon(QIcon(":/icons/exit"));
-    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(quitAction, SIGNAL(triggered()), this, SLOT(closeApplication()));
 }
 
 void slm_machine::createTrayIcon()

@@ -73,7 +73,14 @@ void fileSender::sendFileInfo()
 
     out.setVersion(QDataStream::Qt_4_0);
     out << (quint16)0;
-    out << (quint8)'I' << fileNameofOutgoingFile << filesize;
+    if(this->encOrNot == 1)
+    {
+        out << (quint8)'I' << (quint8) 'E' << fileNameofOutgoingFile << filesize;
+    }
+    else
+    {
+        out << (quint8)'I' << (quint8) 'P' << fileNameofOutgoingFile << filesize;
+    }
     out.device()->seek(0);
     out << (quint16)(block.size() - sizeof(quint16));
 

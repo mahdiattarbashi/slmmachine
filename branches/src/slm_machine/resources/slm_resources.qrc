@@ -10,6 +10,7 @@
         <file alias="saveConversation" >icons/saveIcon.png</file>
         <file alias="CheckOnline" >icons/user-online.png</file>
         <file alias="restore" >icons/restore.png</file>
+        <file alias="sendFileSecurely" >icons/sendFileSecurely.png</file>
     </qresource>
     <qresource prefix="/settings" >
         <file alias="style" >slm_style.qss</file>

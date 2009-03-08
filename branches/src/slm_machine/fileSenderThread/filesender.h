@@ -17,6 +17,7 @@ public:
     void run();
     QString peerIP;
     QString filePathOfOutgoingFile;
+    bool encOrNot;
 private:
     QTcpSocket *socket;
 
