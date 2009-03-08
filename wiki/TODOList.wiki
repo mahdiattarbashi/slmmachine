@@ -15,8 +15,8 @@
  # ~~Implement "save conversation" to the client window.~~ *Completed*
  # ~~Contex Menu will be implemented for user list~~
   * ~~Check Buddy's offline/online status manually (Eg: rigth click check status)~~ *Completed*
+ # ~~Unencrypted File Transfer Choice together with encrypted file transfer~~ *Completed*
  # Application setup will be created for Ubuntu
- # Unencrypted File Transfer Choice together with encrypted file transfer
  # Refactor: Refactoring will be performed on the code.
  # Refactor: The namespaces of the code.
 
