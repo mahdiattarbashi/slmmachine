@@ -75,7 +75,7 @@ public slots:
     void checkUserOnline();
 
     /**********File Server Slots******************/
-    void incomingFileSlot(QString,QString,quint32);
+    void incomingFileSlot(QString,QString,quint32,quint8);
     void updateReceivingProgress(quint32);
     void ongoingTransferExists();
     void transferIsCancelled();
@@ -92,6 +92,8 @@ private:
 
     fileServer *FServer;
     QString incomingFileName;
+
+    bool encOrNot;
 
     bool IPAddressValidator(QString);
     void clientCreation(int);

@@ -44,7 +44,7 @@ public slots:
     void finishDocument();
 
 signals:
-    void newDocumentArrived(QString,QString,quint32);
+    void newDocumentArrived(QString,QString,quint32,quint8);
     void transferCompleted(QString);
     void transferCanceled();
     void unknownMessageArrived();

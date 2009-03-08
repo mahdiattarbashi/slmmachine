@@ -63,10 +63,12 @@ void fileServer::readMessage()
     }
 
     quint8 messageType;
+    quint8 isEnc;
     QString incomingFileName;
     QString fileDescriptorString;
 
     in >> messageType;
+    in >> isEnc;
 
     if(messageType == 'I')
     {
@@ -90,7 +92,7 @@ void fileServer::readMessage()
         }
 
         //Inform GUI Thread about incoming file
-        emit newDocumentArrived(incomingFileName, fileDescriptorString, (static_cast<double>(IncomingFileSize)));
+        emit newDocumentArrived(incomingFileName, fileDescriptorString, (static_cast<double>(IncomingFileSize)),isEnc);
 
 
         //TODO
