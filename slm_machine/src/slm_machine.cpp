@@ -114,24 +114,32 @@ bool slm_machine::eventFilter(QObject *obj, QEvent *event)
 void slm_machine::incomingFileSlot(QString fileName, QString infoString, quint32 fileSize, quint8 isEnc)
 {
     int gui_return_answer;
-
-    if(isEnc == 'E')
+    
+    switch(isEnc)
     {
+        case 'E':
         encOrNot = 1;
         gui_return_answer = QMessageBox::question(this, "SLM File Transfer",
                                      tr("Incoming file with Encryption: %1 (%2). Do you want to save it?")
                                      .arg(fileName).arg(infoString),
                                      QMessageBox::Yes|QMessageBox::Default,
                                      QMessageBox::No|QMessageBox::Escape);
-    }
-    else if(isEnc == 'P')
-    {
+        break;
+        
+        
+        case 'P':
         encOrNot = 0;
         gui_return_answer = QMessageBox::question(this, "SLM File Transfer",
                                      tr("Incoming file without Encryption: %1 (%2). Do you want to save it?")
                                      .arg(fileName).arg(infoString),
                                      QMessageBox::Yes|QMessageBox::Default,
                                      QMessageBox::No|QMessageBox::Escape);
+        break;
+        
+               
+        default:
+        qDebug() << "Unknown Message";
+        return;
     }
 
     FServer->answerSemaphore->acquire();
