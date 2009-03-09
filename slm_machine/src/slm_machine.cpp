@@ -377,6 +377,7 @@ void slm_machine::buddyPressed(QModelIndex buddy)
 
 void slm_machine::clearClientFromActiveList(QString clientName)
 {
+    clientList.at(activeClientAliasList.indexOf(clientName,0))->~slm_client();
     clientList.removeAt(activeClientAliasList.indexOf(clientName,0));
     activeClientAliasList.removeAt(activeClientAliasList.indexOf(clientName,0));
 }
@@ -385,9 +386,8 @@ void slm_machine::clientCreation(int buddyIndex)
 {
     if(!activeClientAliasList.contains(buddies->AliasBuddyList[buddyIndex],Qt::CaseInsensitive))
     {
-        newClient = new slm_client();
-        newClient->setEncryptionKey(buddies->getKey());
-        clientList << newClient;
+        clientList.append(new slm_client());
+        clientList.last()->setEncryptionKey(buddies->getKey());
         clientList.last()->show();
         clientList.last()->setGuiKey(1); // set the gui key to one to indicate it is opened
         clientList.last()->initiateClient(buddies->AliasBuddyList[buddyIndex], buddies->IPBuddyList[buddyIndex]);

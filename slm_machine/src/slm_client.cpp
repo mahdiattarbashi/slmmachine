@@ -166,7 +166,6 @@ void slm_client::closeEvent(QCloseEvent *event)
     this->setGuiKey(0); // set the gui key to zero to indicate it is closed
     outgoingSocket->disconnectFromHost();
     emit destroyClient(m_slmclientName);
-    this->hide();
 }
 
 void slm_client::setGuiKey(bool key)
@@ -281,6 +280,9 @@ void slm_client::unknownMessage()
 slm_client::~slm_client()
 {
     delete m_ui;
+    outgoingSocket->disconnectFromHost();
+    outgoingSocket->close();
+    delete outgoingSocket;
 }
 //Getters & Setters
 void slm_client::setClientName(QString clientName)
