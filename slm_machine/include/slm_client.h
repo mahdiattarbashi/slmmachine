@@ -88,6 +88,7 @@ private:
     bool m_isLastMessageSendByMe;
     void echo(EchoType type, QString message);
     bool isFirstMessage;
+    bool ongoingTransfer;
 
 };
 

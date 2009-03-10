@@ -18,6 +18,7 @@ slm_client::slm_client(QWidget *parent) :
     m_ui->slm_client_outgoingTextArea->setFocus();
     encOrNot = 0;
     isCleared = 0;
+    ongoingTransfer = 0;
 }
 void slm_client::saveConversation()
 {
@@ -162,10 +163,18 @@ void slm_client::readMessagefromBuddy(QString incomingMessage, QHostAddress peer
 
 void slm_client::closeEvent(QCloseEvent *event)
 {
-    event->ignore();
-    this->setGuiKey(0); // set the gui key to zero to indicate it is closed
-    outgoingSocket->disconnectFromHost();
-    emit destroyClient(m_slmclientName);
+    if(ongoingTransfer)
+    {
+        event->ignore();
+        QMessageBox::warning(this,QString("SLM Messgenger"),QString("Please Wait until file transfer finishes!"));
+    }
+    else
+    {
+        event->ignore();
+        this->setGuiKey(0); // set the gui key to zero to indicate it is closed
+        outgoingSocket->disconnectFromHost();
+        emit destroyClient(m_slmclientName);
+    }
 }
 
 void slm_client::setGuiKey(bool key)
@@ -218,6 +227,7 @@ void slm_client::sendFileToBuddy()
     else
     {
         QMessageBox::warning(this,QString("SLM File Transfer"),QString("Please Choose a File!"));
+        this->encOrNot = 0;
     }
 }
 void slm_client::transfer()
@@ -244,6 +254,9 @@ void slm_client::transfer()
         fileSenderThread->encOrNot = 0;
     }
     fileSenderThread->peerIP = this->slmclientIPAddress;
+
+    ongoingTransfer=1;
+
     fileSenderThread->start();
 }
 void slm_client::createFileProgress(quint32 fileSize)
@@ -266,6 +279,7 @@ void slm_client::connectionBroken()
 void slm_client::fileSentCompleted()
 {
     progress->setValue(file_size_);
+    ongoingTransfer = 0;
     if(encOrNot == 1)
     {
         QFile::remove(encryptedFileName);
