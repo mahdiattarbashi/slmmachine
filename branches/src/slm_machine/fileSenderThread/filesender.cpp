@@ -103,6 +103,12 @@ void fileSender::readPeerMessage()
     {
         startFileTransfer();
     }
+    else if(mesajTipi == 'R')
+    {
+        emit transferRejected();
+        socket->disconnectFromHost();
+        QThread::quit();
+    }
     else
     {
         emit unknownMessageReceived();

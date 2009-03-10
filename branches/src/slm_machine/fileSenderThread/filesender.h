@@ -44,6 +44,7 @@ signals:
     void transferFinished();
     void unknownMessageReceived();
     void peerConnectionClosed();
+    void transferRejected();
 };
 
 #endif // FILESENDER_H

@@ -64,6 +64,7 @@ public slots:
    void createFileProgress(quint32);
    void updateFileProgress(quint32);
    void transfer();
+   void transferRejectedByPeer();
 //Getters & Setters
    void setClientName(QString clientName);
    QString getClientName() const;

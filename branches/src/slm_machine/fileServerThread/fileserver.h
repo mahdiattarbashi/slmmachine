@@ -27,6 +27,7 @@ private:
     QFile *newDocument;
 
     void sendAcceptMessage();
+    void sendRejectMessage();
 
     quint16 block_size;
     quint32 IncomingFileSize;
