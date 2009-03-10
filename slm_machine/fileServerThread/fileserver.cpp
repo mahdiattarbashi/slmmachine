@@ -124,8 +124,13 @@ void fileServer::readMessage()
             }
             else if(userAnswer == 0 && userAnswered == 1)
             {
+                //TODO
+                // send response to the peer about transfer is cancelled
+                sendRejectMessage();
+                //
                 QObject::disconnect(socket, SIGNAL(readyRead()), 0, 0);
                 QObject::connect(socket,SIGNAL(readyRead()),this, SLOT(readMessage()),Qt::DirectConnection );
+                socket->disconnectFromHost();
                 initializeVariables();
                 emit transferCanceled();
                 break;
@@ -179,6 +184,19 @@ void fileServer::sendAcceptMessage()
 
     out << (quint16)0;
     out << (quint8)'A';
+    out.device()->seek(0);
+    out << (quint16)(block.size() - sizeof(quint16));
+
+    socket->write(block);
+}
+void fileServer::sendRejectMessage()
+{
+    QByteArray block;
+    QDataStream out(&block, QIODevice::WriteOnly);
+    out.setVersion(QDataStream::Qt_4_0);
+
+    out << (quint16)0;
+    out << (quint8)'R';
     out.device()->seek(0);
     out << (quint16)(block.size() - sizeof(quint16));
 

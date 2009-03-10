@@ -242,7 +242,7 @@ void slm_client::transfer()
     connect(fileSenderThread,SIGNAL(peerConnectionClosed()),this,SLOT(connectionBroken()),Qt::QueuedConnection);
     connect(fileSenderThread,SIGNAL(sendingStarted(quint32)),this,SLOT(createFileProgress(quint32)),Qt::BlockingQueuedConnection);
     connect(fileSenderThread,SIGNAL(sendingCondition(quint32)),this,SLOT(updateFileProgress(quint32)),Qt::BlockingQueuedConnection);
-
+    connect(fileSenderThread,SIGNAL(transferRejected()),this,SLOT(transferRejectedByPeer()));
     if(encOrNot == 1)
     {
         fileSenderThread->filePathOfOutgoingFile = encryptedFileName;
@@ -258,6 +258,11 @@ void slm_client::transfer()
     ongoingTransfer=1;
 
     fileSenderThread->start();
+}
+void slm_client::transferRejectedByPeer()
+{
+    ongoingTransfer = 0;
+    QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer is Rejected by Peer!"));
 }
 void slm_client::createFileProgress(quint32 fileSize)
 {
