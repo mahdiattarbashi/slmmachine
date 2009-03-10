@@ -377,7 +377,7 @@ void slm_machine::buddyPressed(QModelIndex buddy)
 
 void slm_machine::clearClientFromActiveList(QString clientName)
 {
-    clientList.at(activeClientAliasList.indexOf(clientName,0))->~slm_client();
+    delete clientList.at(activeClientAliasList.indexOf(clientName,0));
     clientList.removeAt(activeClientAliasList.indexOf(clientName,0));
     activeClientAliasList.removeAt(activeClientAliasList.indexOf(clientName,0));
 }
