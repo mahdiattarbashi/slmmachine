@@ -85,6 +85,7 @@ void fileSender::sendFileInfo()
     out << (quint16)(block.size() - sizeof(quint16));
 
     socket->write(block);
+    emit waitingUserResponse();
 }
 
 void fileSender::readPeerMessage()

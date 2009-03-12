@@ -395,6 +395,7 @@ void slm_machine::clientCreation(int buddyIndex)
         connect(clientList.last(),SIGNAL(showTrayMessageTransferCompleted()),this,SLOT(showTrayMessageFileSentCompleted()));
         connect(clientList.last(),SIGNAL(encryptingStarted()),this,SLOT(showTrayMessageEncryptionStarted()));
         connect(clientList.last(),SIGNAL(encryptingFinished()),this,SLOT(showTrayMessageEncryptionFinished()));
+        connect(clientList.last(),SIGNAL(informUserWaitForPeer()),this,SLOT(showTrayMessageWaitingForUsertoAccept()));
         activeClientAliasList.append(clientList.last()->getClientName());
     }
     else
@@ -404,7 +405,10 @@ void slm_machine::clientCreation(int buddyIndex)
         clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->activateWindow();
     }
 }
-
+void slm_machine::showTrayMessageWaitingForUsertoAccept()
+{
+    trayIcon->showMessage("SLM File Transfer", "Waiting For Peer to Accept File Transfer",QSystemTrayIcon::Information,5000);
+}
 // TODO
 // Write more intelligent IP validating Code using RegExp!!
 bool slm_machine::IPAddressValidator(QString IPtobeValidated)

@@ -50,6 +50,7 @@ signals:
    void showTrayMessageTransferCompleted();
    void encryptingStarted();
    void encryptingFinished();
+   void informUserWaitForPeer();
 
 public slots:
    void sendMessagetoBuddy();
@@ -65,6 +66,7 @@ public slots:
    void updateFileProgress(quint32);
    void transfer();
    void transferRejectedByPeer();
+   void informUserWaitingFileTransfer();
 //Getters & Setters
    void setClientName(QString clientName);
    QString getClientName() const;
