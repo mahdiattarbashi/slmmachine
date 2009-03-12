@@ -104,10 +104,11 @@ void slm_client::sendMessagetoBuddy()
         outGoingTextString = m_ui->slm_client_outgoingTextArea->text();
 
         qDebug() << "Unencrypted Text :: " << outGoingTextString;
-        if(!m_isLastMessageSendByMe)
+        if(!m_isLastMessageSendByMe || (isCleared == 1))
         {
              shownMessage += "(" + currentTime.currentDateTime().toString(DATE_FORMAT) + ") " + MY_NAME + ":";
              echo(HEADER,shownMessage);
+             isCleared = 0;
         }
 
         echo(MESSAGE,outGoingTextString);
@@ -243,6 +244,7 @@ void slm_client::transfer()
     connect(fileSenderThread,SIGNAL(sendingStarted(quint32)),this,SLOT(createFileProgress(quint32)),Qt::BlockingQueuedConnection);
     connect(fileSenderThread,SIGNAL(sendingCondition(quint32)),this,SLOT(updateFileProgress(quint32)),Qt::BlockingQueuedConnection);
     connect(fileSenderThread,SIGNAL(transferRejected()),this,SLOT(transferRejectedByPeer()));
+    connect(fileSenderThread,SIGNAL(waitingUserResponse()),this,SLOT(informUserWaitingFileTransfer()));
     if(encOrNot == 1)
     {
         fileSenderThread->filePathOfOutgoingFile = encryptedFileName;
@@ -258,6 +260,10 @@ void slm_client::transfer()
     ongoingTransfer=1;
 
     fileSenderThread->start();
+}
+void slm_client::informUserWaitingFileTransfer()
+{
+    emit informUserWaitForPeer();
 }
 void slm_client::transferRejectedByPeer()
 {
