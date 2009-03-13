@@ -84,6 +84,7 @@ public slots:
     void showTrayMessageEncryptionStarted();
     void showTrayMessageEncryptionFinished();
     void showTrayMessageWaitingForUsertoAccept();
+    void setOngoingTransferFlag(bool);
     /********************************************/
 
 private:

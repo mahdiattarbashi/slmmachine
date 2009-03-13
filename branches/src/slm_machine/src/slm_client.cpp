@@ -246,6 +246,7 @@ void slm_client::transfer()
     fileSenderThread->peerIP = this->slmclientIPAddress;
 
     ongoingTransfer=1;
+    emit informMainScreenForFileTransfer(true);
 
     fileSenderThread->start();
 }
@@ -256,6 +257,7 @@ void slm_client::informUserWaitingFileTransfer()
 void slm_client::transferRejectedByPeer()
 {
     ongoingTransfer = 0;
+    emit informMainScreenForFileTransfer(false);
     QMessageBox::warning(this,QString("SLM File Transfer"),QString("File Transfer is Rejected by Peer!"));
 }
 void slm_client::createFileProgress(quint32 fileSize)
@@ -292,6 +294,7 @@ void slm_client::fileSentCompleted()
     m_ui->fileTransferProgressBar->setValue(file_size_);
     setProgressBarVisibility(false);
     ongoingTransfer = 0;
+    emit informMainScreenForFileTransfer(false);
 
     if(encOrNot == 1)
     {
