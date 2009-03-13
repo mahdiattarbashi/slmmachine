@@ -87,6 +87,25 @@ void slm_machine::checkUserOnline()
     checkUser->close();
     delete checkUser;
 }
+bool slm_machine::checkBuddyOnline(QString Buddy)
+{
+    QTcpSocket *checkUser = new QTcpSocket();
+    checkUser->connectToHost(buddies->IPBuddyList[buddies->AliasBuddyList.indexOf(Buddy,0)], 3333,QIODevice::ReadOnly);
+    if(checkUser->waitForConnected(500))
+    {
+        checkUser->disconnectFromHost();
+        checkUser->close();
+        delete checkUser;
+        return 1;
+    }
+    else
+    {
+        checkUser->disconnectFromHost();
+        checkUser->close();
+        delete checkUser;
+        return 0;
+    }
+}
 bool slm_machine::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::ContextMenu)
@@ -386,17 +405,24 @@ void slm_machine::clientCreation(int buddyIndex)
 {
     if(!activeClientAliasList.contains(buddies->AliasBuddyList[buddyIndex],Qt::CaseInsensitive))
     {
-        clientList.append(new slm_client());
-        clientList.last()->setEncryptionKey(buddies->getKey());
-        clientList.last()->show();
-        clientList.last()->setGuiKey(1); // set the gui key to one to indicate it is opened
-        clientList.last()->initiateClient(buddies->AliasBuddyList[buddyIndex], buddies->IPBuddyList[buddyIndex]);
-        connect(clientList.last(), SIGNAL(destroyClient(QString)), this, SLOT(clearClientFromActiveList(QString)));
-        connect(clientList.last(),SIGNAL(showTrayMessageTransferCompleted()),this,SLOT(showTrayMessageFileSentCompleted()));
-        connect(clientList.last(),SIGNAL(encryptingStarted()),this,SLOT(showTrayMessageEncryptionStarted()));
-        connect(clientList.last(),SIGNAL(encryptingFinished()),this,SLOT(showTrayMessageEncryptionFinished()));
-        connect(clientList.last(),SIGNAL(informUserWaitForPeer()),this,SLOT(showTrayMessageWaitingForUsertoAccept()));
-        activeClientAliasList.append(clientList.last()->getClientName());
+        if(checkBuddyOnline(buddies->AliasBuddyList[buddyIndex]))
+        {
+            clientList.append(new slm_client());
+            clientList.last()->setEncryptionKey(buddies->getKey());
+            clientList.last()->show();
+            clientList.last()->setGuiKey(1); // set the gui key to one to indicate it is opened
+            clientList.last()->initiateClient(buddies->AliasBuddyList[buddyIndex], buddies->IPBuddyList[buddyIndex]);
+            connect(clientList.last(), SIGNAL(destroyClient(QString)), this, SLOT(clearClientFromActiveList(QString)));
+            connect(clientList.last(),SIGNAL(showTrayMessageTransferCompleted()),this,SLOT(showTrayMessageFileSentCompleted()));
+            connect(clientList.last(),SIGNAL(encryptingStarted()),this,SLOT(showTrayMessageEncryptionStarted()));
+            connect(clientList.last(),SIGNAL(encryptingFinished()),this,SLOT(showTrayMessageEncryptionFinished()));
+            connect(clientList.last(),SIGNAL(informUserWaitForPeer()),this,SLOT(showTrayMessageWaitingForUsertoAccept()));
+            activeClientAliasList.append(clientList.last()->getClientName());
+        }
+        else
+        {
+            QMessageBox::warning(this,QString("User Not Online"),QString(buddies->AliasBuddyList[buddyIndex] + " is not online! You cannot send messages while user is offline"));
+        }
     }
     else
     {
