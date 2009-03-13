@@ -66,33 +66,17 @@ void slm_client::clearTextArea()
 void slm_client::displayError(QAbstractSocket::SocketError socketError)
  {
     int answer;
-     switch (socketError)
-     {
-         case QAbstractSocket::RemoteHostClosedError:
-                QMessageBox::warning(this,tr("SLM"),tr("Client closed the application"));
-                answer = QMessageBox::question(this, "SLM Save Conversation",
+    QMessageBox::warning(this,tr("SLM"),tr("Connection Error"));
+    answer = QMessageBox::question(this, "SLM Save Conversation",
                                      tr("Do you want to save the conversation?"),
                                      QMessageBox::Yes|QMessageBox::Default,
                                      QMessageBox::No|QMessageBox::Escape);
-                if(answer & QMessageBox::Yes)
-                {
-                    this->saveConversation();
-                }
-                this->close();
-                break;
-         case QAbstractSocket::HostNotFoundError:
-                QMessageBox::information(this, tr("SLM"),tr("The host was not found. Please check the host name."));
-                this->close();
-                break;
-         case QAbstractSocket::ConnectionRefusedError:
-                QMessageBox::information(this, tr("SLM"), tr("The connection was refused by the peer. Make sure the other client is running, and check that the host name is correct."));
-                this->close();
-                break;
-         default:
-                QMessageBox::information(this, tr("SLM"), tr("The following error occurred: %1.").arg(outgoingSocket->errorString()));
-                this->close();
-                break;
-     }
+    if(answer & QMessageBox::Yes)
+    {
+        this->saveConversation();
+    }
+    m_ui->slm_client_outgoingTextArea->setDisabled(1);
+    echo(ERROR,"CONNECTION ERROR. PLEASE CLOSE YOUR MESSAGE WINDOW!");
  }
 void slm_client::sendMessagetoBuddy()
 {
@@ -328,14 +312,17 @@ void slm_client::echo(EchoType type, QString message)
             m_ui->slm_clientIncomingTextArea->setTextBackgroundColor(QColor(Qt::darkRed));
             m_ui->slm_clientIncomingTextArea->setTextColor(QColor(Qt::white));
             messagePrefix.append(tr("ERROR : "));
+            break;
         case WARNING:
             m_ui->slm_clientIncomingTextArea->setTextBackgroundColor(QColor(Qt::yellow));
             m_ui->slm_clientIncomingTextArea->setTextColor(QColor(Qt::black));
             messagePrefix.append(tr("WARNING : "));
+            break;
         case INFO:
             m_ui->slm_clientIncomingTextArea->setTextBackgroundColor(QColor(Qt::green));
             m_ui->slm_clientIncomingTextArea->setTextColor(QColor(Qt::black));
             messagePrefix.append(tr("INFO : "));
+            break;
         case HEADER:
             m_ui->slm_clientIncomingTextArea->setTextBackgroundColor(QColor(Qt::white));
             m_ui->slm_clientIncomingTextArea->setTextColor(QColor(Qt::blue));

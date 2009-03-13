@@ -54,6 +54,7 @@ public:
     void closeEvent( QCloseEvent *closeEvent );
     void changeEvent(QEvent *event); // to catch minimize event and send the application to the Tray
 
+    bool checkBuddyOnline(QString);
 public slots:
     void addBuddyPressed();
     void removeBuddypressed();
