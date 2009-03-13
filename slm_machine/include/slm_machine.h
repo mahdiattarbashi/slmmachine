@@ -12,7 +12,7 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QMessageBox>
-#include <QProgressDialog>
+#include <QProgressBar>
 #include <QHostInfo>
 #include "slm_server.h"
 #include "slm_client.h"
@@ -40,7 +40,6 @@ public:
     QDialog *addBuddyScreenDialog;
     QDialog *encryptionKeyWindow;
     QStringListModel *buddyModel;
-    QProgressDialog *progress;
     quint32 receivingFileSize;
 
     QList<slm_client *> clientList;
@@ -96,6 +95,7 @@ private:
     QString incomingFileName;
 
     bool encOrNot;
+    bool onGoingFileTransfer;
 
     bool IPAddressValidator(QString);
     void clientCreation(int);
@@ -109,6 +109,7 @@ private:
     QAction *quitAction;
     void createTrayIcon();
     void createActions();
+    void setProgressBarVisibility(bool);
 
     bool eventFilter(QObject *obj, QEvent *event);
 signals:

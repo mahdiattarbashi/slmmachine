@@ -9,7 +9,7 @@
 #include <QCloseEvent>
 #include <QMessageBox>
 #include <QFileDialog>
-#include <QProgressDialog>
+#include <QProgressBar>
 #include <QThreadPool>
 #include "ui_slm_client.h"
 #include "securestring.h"
@@ -31,7 +31,6 @@ public:
     QString slmclientIPAddress;
     QString outGoingTextString;
     QByteArray outGoingTextArray;
-    QProgressDialog *progress;
 
     QMessageBox *encrypting;
     securestring encryptionObject;
@@ -92,6 +91,7 @@ private:
     void echo(EchoType type, QString message);
     bool isFirstMessage;
     bool ongoingTransfer;
+    void setProgressBarVisibility(bool);
 
 };
 

@@ -5,7 +5,7 @@ slm_machine::slm_machine(QWidget *parent)
 {
 /************************** UI and Buddy Management *******************************/
     ui->setupUi(this);
-
+    setProgressBarVisibility(false);
     //Buddy Management
     buddies = new buddyManager();
     buddies->loadBuddiesAndIPs();
@@ -34,6 +34,8 @@ slm_machine::slm_machine(QWidget *parent)
 /************************************************************************************/
 
 /***************************** File Server Management *******************************/
+    onGoingFileTransfer = false;
+
     FServer = new fileServer();
 
     //File Server Connections
@@ -70,6 +72,12 @@ slm_machine::slm_machine(QWidget *parent)
     trayIcon->setToolTip("SLM (SMG Lan Messenger)");
     trayIcon->show();
 /**********************************************************************************/
+}
+void slm_machine::setProgressBarVisibility(bool KEY)
+{
+    ui->fileTransferProgressBar->setVisible(KEY);
+    ui->fileTransferLabel->setVisible(KEY);
+    ui->buddyList->repaint();
 }
 void slm_machine::checkUserOnline()
 {
@@ -169,18 +177,30 @@ void slm_machine::incomingFileSlot(QString fileName, QString infoString, quint32
     FServer->answerSemaphore->release();
     if((gui_return_answer & QMessageBox::Yes))
     {
+        onGoingFileTransfer = true;
         receivingFileSize = fileSize;
-        progress = new QProgressDialog("Receiving File...", "Abort Copy", 0, fileSize, this);
-        progress->setValue(0);
+
+        ui->fileTransferProgressBar->setMinimum(0);
+        ui->fileTransferProgressBar->setMaximum(fileSize);
+
+        setProgressBarVisibility(true);
+
+        if(this->isHidden())
+        {
+            this->show();
+            this->setWindowState(Qt::WindowActive);
+        }
+
+        ui->fileTransferProgressBar->setValue(0);
     }
 }
 void slm_machine::updateReceivingProgress(quint32 size)
 {
-    progress->setValue(size*2);
+    ui->fileTransferProgressBar->setValue(size*2);
 }
 void slm_machine::ongoingTransferExists()
 {
-    QMessageBox::warning(this,QString("SLM File Transfer"),QString("There is an on-going Transfer!"));
+    QMessageBox::warning(this,QString("SLM File Transfer"),QString("There is an on-going Transfer! Please Wait To Be Finished"));
 }
 void slm_machine::transferIsCancelled()
 {
@@ -189,7 +209,10 @@ void slm_machine::transferIsCancelled()
 void slm_machine::incomingFileTransferCompleted(QString name)
 {
     QString DownloadFolder;
-    progress->setValue(receivingFileSize);
+    ui->fileTransferProgressBar->setValue(receivingFileSize);
+    setProgressBarVisibility(false);
+    onGoingFileTransfer = false;
+
     if(encOrNot == 1)
     {
         trayIcon->showMessage("SLM File Transfer(Receiving)", "File Transfer Completed\nFile Decryption is started\nPlease wait until it finishes...",QSystemTrayIcon::Information,10000);
@@ -384,9 +407,16 @@ void slm_machine::messageHandler(QByteArray incomingMessage, QHostAddress peerAd
 
 void slm_machine::closeApplication()
 {
-    // Store the Latest Contact List
-    buddies->storeBuddies();
-    QApplication::quit();
+    if(onGoingFileTransfer)
+    {
+        ongoingTransferExists();
+    }
+    else
+    {
+        // Store the Latest Contact List
+        buddies->storeBuddies();
+        QApplication::quit();
+    }
 }
 
 void slm_machine::buddyPressed(QModelIndex buddy)
@@ -523,6 +553,7 @@ void slm_machine::closeEvent(QCloseEvent *closeEvent)
 {
     closeEvent->type(); //dummy line for preventing compiler warnings
     this->closeApplication();
+
 }
 
 void slm_machine::createActions()
