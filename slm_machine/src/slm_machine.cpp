@@ -515,7 +515,7 @@ void slm_machine::aboutQTPressed()
 
 void slm_machine::aboutSLMPressed()
 {
-    QString AboutSLM = "SMG LAN MESSENGER\n\nSLM stands for SMG LAN Messenger developed for hobby purposes only.\n\nThis program is free software; you can redistribute it and-or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nDevelopers\nAhmet KURUKOSE (ahmetkurukose@yahoo.com)\nFatih AKSEL\n\nConsultants\nUmut DENIZ\nCengiz YILMAZ";
+    QString AboutSLM = "SMG LAN MESSENGER\n\nSLM stands for SMG LAN Messenger developed for hobby purposes only.\n\nThis program is free software; you can redistribute it and-or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nDevelopers\nAhmet KURUKOSE (ahmetkurukose@yahoo.com)\nFatih AKSEL\nBulent Dag\n\nConsultants\nUmut DENIZ\nCengiz YILMAZ";
     QMessageBox::about(this, QString(":: SMG LAN Messenger ::"), AboutSLM);
 }
 
