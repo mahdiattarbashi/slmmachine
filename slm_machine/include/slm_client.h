@@ -50,6 +50,7 @@ signals:
    void encryptingStarted();
    void encryptingFinished();
    void informUserWaitForPeer();
+   void informMainScreenForFileTransfer(bool);
 
 public slots:
    void sendMessagetoBuddy();

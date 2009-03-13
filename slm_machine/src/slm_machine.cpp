@@ -447,6 +447,7 @@ void slm_machine::clientCreation(int buddyIndex)
             connect(clientList.last(),SIGNAL(encryptingStarted()),this,SLOT(showTrayMessageEncryptionStarted()));
             connect(clientList.last(),SIGNAL(encryptingFinished()),this,SLOT(showTrayMessageEncryptionFinished()));
             connect(clientList.last(),SIGNAL(informUserWaitForPeer()),this,SLOT(showTrayMessageWaitingForUsertoAccept()));
+            connect(clientList.last(),SIGNAL(informMainScreenForFileTransfer(bool)),this,SLOT(setOngoingTransferFlag(bool)));
             activeClientAliasList.append(clientList.last()->getClientName());
         }
         else
@@ -460,6 +461,10 @@ void slm_machine::clientCreation(int buddyIndex)
         clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->setWindowState(clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->windowState() & ~Qt::WindowMinimized | Qt::WindowActive);
         clientList[(activeClientAliasList.indexOf(buddies->AliasBuddyList[buddyIndex],0))]->activateWindow();
     }
+}
+void slm_machine::setOngoingTransferFlag(bool flag)
+{
+    onGoingFileTransfer = flag;
 }
 void slm_machine::showTrayMessageWaitingForUsertoAccept()
 {
