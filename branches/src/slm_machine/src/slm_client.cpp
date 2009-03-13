@@ -8,6 +8,9 @@ slm_client::slm_client(QWidget *parent) :
     m_ui(new Ui::slm_clientWindow)
 {
     m_ui->setupUi(this);
+
+    setProgressBarVisibility(false);
+
     connect(m_ui->slm_client_outgoingTextArea, SIGNAL(returnPressed()), this, SLOT(sendMessagetoBuddy()));
     this->setGuiKey(0);
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowMaximizeButtonHint);
@@ -259,12 +262,18 @@ void slm_client::createFileProgress(quint32 fileSize)
 {
     qDebug() << "File Size: " <<fileSize;
     file_size_ = fileSize;
-    progress = new QProgressDialog("Sending File...", "Abort Copy", 0, (int)fileSize, this);
-    progress->setValue(0);
+
+    m_ui->fileTransferProgressBar->setMinimum(0);
+    m_ui->fileTransferProgressBar->setMaximum((int)fileSize);
+
+    setProgressBarVisibility(true);
+
+    m_ui->fileTransferProgressBar->setValue(0);
+
 }
 void slm_client::updateFileProgress(quint32 writtenBytes)
 {
-    progress->setValue(((int)writtenBytes * 2));
+    m_ui->fileTransferProgressBar->setValue(((int)writtenBytes * 2));
 }
 void slm_client::connectionBroken()
 {
@@ -272,10 +281,18 @@ void slm_client::connectionBroken()
    //Handle this situation (connection Broken in the middle)
    // QMessageBox::warning(this,QString("SLM File Transfer"),QString("Connection is closed, Transfer is canceled!"));
 }
+void slm_client::setProgressBarVisibility(bool key)
+{
+    m_ui->fileTransferProgressBar->setVisible(key);
+    m_ui->fileTransferLabel->setVisible(key);
+    m_ui->slm_clientIncomingTextArea->repaint();
+}
 void slm_client::fileSentCompleted()
 {
-    progress->setValue(file_size_);
+    m_ui->fileTransferProgressBar->setValue(file_size_);
+    setProgressBarVisibility(false);
     ongoingTransfer = 0;
+
     if(encOrNot == 1)
     {
         QFile::remove(encryptedFileName);
