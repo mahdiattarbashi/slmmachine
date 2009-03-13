@@ -76,7 +76,8 @@ void slm_client::displayError(QAbstractSocket::SocketError socketError)
         this->saveConversation();
     }
     m_ui->slm_client_outgoingTextArea->setDisabled(1);
-    echo(ERROR,"CONNECTION ERROR. PLEASE CLOSE YOUR MESSAGE WINDOW!");
+    echo(ERROR,"CONNECTION BROKEN. PLEASE CLOSE YOUR MESSAGE WINDOW!");
+    m_ui->slm_clientIncomingTextArea->setDisabled(1);
  }
 void slm_client::sendMessagetoBuddy()
 {
