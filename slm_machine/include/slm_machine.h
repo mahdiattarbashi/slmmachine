@@ -18,7 +18,7 @@
 #include "slm_client.h"
 #include "buddymanager.h"
 #include "fileserver.h"
-#include "fileCrypter.h"
+#include "filecrypter.h"
 #include "ui_slm_machine.h"
 #include "ui_encryptionKeyDialog.h"
 #include "ui_addBuddy.h"

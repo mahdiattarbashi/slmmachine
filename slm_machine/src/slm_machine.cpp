@@ -380,13 +380,24 @@ void slm_machine::L_cancelAddBuddyButtonPressed()
 
 void slm_machine::removeBuddypressed()
 {
-    int a = ui->buddyList->currentIndex().row();
+     int gui_return_answer = QMessageBox::question(this, "Remove Buddy",
+                                     tr("Do you really want to remove the buddy from your contacts?"),
+                                     QMessageBox::Yes|QMessageBox::Default,
+                                     QMessageBox::No|QMessageBox::Escape);
+    if((gui_return_answer & QMessageBox::Yes))
+    {
+        int a = ui->buddyList->currentIndex().row();
 
-    buddies->AliasBuddyList.removeAt(a);
-    buddies->IPBuddyList.removeAt(a);
+        buddies->AliasBuddyList.removeAt(a);
+        buddies->IPBuddyList.removeAt(a);
 
-    buddyModel->setStringList(buddies->AliasBuddyList);
-    ui->buddyList->setModel(buddyModel);
+        buddyModel->setStringList(buddies->AliasBuddyList);
+        ui->buddyList->setModel(buddyModel);
+    }
+    else
+    {
+        return;
+    }
 }
 
 void slm_machine::messageHandler(QByteArray incomingMessage, QHostAddress peerAddress)
