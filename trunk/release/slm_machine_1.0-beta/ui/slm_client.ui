@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>slm_clientWindow</class>
+ <widget class="QMainWindow" name="slm_clientWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>403</width>
+    <height>310</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Sans Serif</family>
+   </font>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/slm_resources.qrc">
+    <normaloff>:/icons/SLM_Logo</normaloff>:/icons/SLM_Logo</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QToolButton" name="sendFileButton">
+        <property name="toolTip">
+         <string>Send File without Encryption</string>
+        </property>
+        <property name="text">
+         <string>Send File Securely</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/slm_resources.qrc">
+          <normaloff>:/icons/sendFile</normaloff>:/icons/sendFile</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>19</width>
+          <height>19</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="encSendFileButton">
+        <property name="toolTip">
+         <string>Send File with Encryption</string>
+        </property>
+        <property name="text">
+         <string>dneeme</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/slm_resources.qrc">
+          <normaloff>:/icons/sendFileSecurely</normaloff>:/icons/sendFileSecurely</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>19</width>
+          <height>19</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="saveConversationButton">
+        <property name="toolTip">
+         <string>Save Conversation to a Text File</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/slm_resources.qrc">
+          <normaloff>:/icons/saveConversation</normaloff>:/icons/saveConversation</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>19</width>
+          <height>19</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QToolButton" name="clearButton">
+        <property name="toolTip">
+         <string>Clear Incoming Text Area</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources/slm_resources.qrc">
+          <normaloff>:/icons/cleearIcon</normaloff>:/icons/cleearIcon</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>19</width>
+          <height>19</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="slm_clientIncomingTextArea">
+      <property name="font">
+       <font>
+        <family>Sans Serif</family>
+       </font>
+      </property>
+      <property name="locale">
+       <locale language="Turkish" country="Turkey"/>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="fileTransferLabel">
+        <property name="text">
+         <string>File Transfer</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="fileTransferProgressBar">
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="slm_client_outgoingTextArea">
+      <property name="locale">
+       <locale language="Turkish" country="Turkey"/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>slm_client_outgoingTextArea</tabstop>
+  <tabstop>slm_clientIncomingTextArea</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../resources/slm_resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
