@@ -118,8 +118,16 @@ bool slm_machine::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::ContextMenu)
     {
-        rightClickUserMenu->exec(QCursor::pos());
-        return true;
+        QModelIndex index=ui->buddyList->indexAt(dynamic_cast<QContextMenuEvent*>(event)->pos());
+        if(index.isValid())
+        {
+            rightClickUserMenu->exec(QCursor::pos());
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     else
     {
