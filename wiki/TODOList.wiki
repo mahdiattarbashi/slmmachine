@@ -16,7 +16,7 @@
  # ~~Contex Menu will be implemented for user list~~
   * ~~Check Buddy's offline/online status manually (Eg: rigth click check status)~~ *Completed*
  # ~~Unencrypted File Transfer Choice together with encrypted file transfer~~ *Completed*
- # Application setup will be created for Ubuntu
+ # ~~Application setup will be created for Ubuntu~~ *Completed*
  # Refactor: Refactoring will be performed on the code.
  # Refactor: The namespaces of the code.
 
